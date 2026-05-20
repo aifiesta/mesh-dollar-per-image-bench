@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mesh Dollar per Image Bench — cover</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 1600px; height: 900px; overflow: hidden; }
+  body {
+    background: #fafafa;
+    font-family: 'Charter','Georgia','Cambria','Times New Roman',serif;
+    color: #1a1a1a;
+    position: relative;
+  }
+  .accent { color: #1A83FE; }
+  .crimson { color: #b31b1b; }
+
+  /* Header bar with logo */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 36px 56px 24px;
+    border-bottom: 1px solid #e5e5e5;
+  }
+  .header img { height: 64px; width: auto; display: block; }
+  .header .tag {
+    background: #1A83FE; color: #fff;
+    padding: 4px 12px; border-radius: 4px;
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-size: 14px; font-weight: 700; letter-spacing: 0.5px;
+  }
+
+  /* Title block */
+  .title {
+    padding: 30px 56px 18px;
+  }
+  .title h1 {
+    font-size: 48px; font-weight: 700; line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .title .sub {
+    margin-top: 10px; font-size: 19px; color: #555;
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-weight: 400;
+  }
+  .title .sub strong { color: #1a1a1a; font-weight: 700; }
+
+  /* Two-column body */
+  .body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    padding: 14px 56px 0;
+    align-items: start;
+  }
+
+  .left {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    padding: 16px 20px 18px;
+  }
+  .left .kicker {
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.18em;
+    color: #b31b1b; margin-bottom: 8px;
+  }
+  .left .headline {
+    font-size: 28px; font-weight: 700; line-height: 1.18;
+    letter-spacing: -0.01em;
+  }
+  .left .headline .price { color: #1A83FE; }
+  .left .headline .danger { color: #b31b1b; }
+  .left .body-text {
+    margin-top: 14px;
+    font-size: 16px; line-height: 1.42;
+    color: #333;
+  }
+  .left .stats {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    border-top: 1px solid #eee;
+    padding-top: 14px;
+  }
+  .left .stat .num {
+    font-size: 30px; font-weight: 700; color: #1A83FE;
+    line-height: 1;
+  }
+  .left .stat .lbl {
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-size: 11px; color: #777; margin-top: 4px;
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+
+  .right {
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .right .figure-pair {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .right figure {
+    background: #fff; border: 1px solid #e5e5e5; border-radius: 6px;
+    overflow: hidden;
+  }
+  .right figure img {
+    width: 100%; aspect-ratio: 1; object-fit: cover; display: block;
+  }
+  .right figure .caption {
+    padding: 6px 10px 8px;
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-size: 11.5px; color: #555; line-height: 1.35;
+  }
+  .right figure .caption strong { color: #1a1a1a; }
+  .right figure .caption .price { color: #1A83FE; font-weight: 700; }
+
+  .right .footer-finding {
+    background: #fff8e6; border-left: 4px solid #f0b400;
+    padding: 12px 16px; border-radius: 4px;
+    font-size: 14.5px; line-height: 1.4; color: #333;
+  }
+  .right .footer-finding strong { color: #b31b1b; }
+
+  /* Footer */
+  .footer {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 18px 56px 22px;
+    background: #fafafa;
+    border-top: 1px solid #e5e5e5;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+  }
+  .footer .url {
+    font-family: 'JetBrains Mono','SF Mono',Consolas,monospace;
+    font-size: 15px; color: #1a1a1a; font-weight: 700;
+  }
+  .footer .url .at { color: #1A83FE; }
+  .footer .meta {
+    font-size: 12px; color: #777;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <img src="mesh_api_logo.svg" alt="Mesh API" />
+  <span class="tag">PILOT v0.1 &middot; 2026-05-21</span>
+</div>
+
+<div class="title">
+  <h1>Mesh Dollar per Image Bench</h1>
+  <div class="sub">
+    7 frontier text-to-image models &middot; 12 prompt categories &middot;
+    <strong>Two judges, two temperatures, $1.27 to reproduce.</strong>
+  </div>
+</div>
+
+<div class="body">
+  <div class="left">
+    <div class="kicker">The headline finding</div>
+    <div class="headline">
+      A <span class="price">$0.008</span> model ties a <span class="price">$0.060</span> model on routine prompts.<br>
+      On hyper-complex prompts the most expensive model drops to&nbsp;<span class="danger">LAST place.</span>
+    </div>
+    <div class="body-text">
+      All 5 pilot models scored within <strong>0.17 quality-points</strong> of each other on the first five
+      categories — a <strong>7.5× cost spread</strong> bought 3.4% of the 1–5 quality scale. On the
+      hyper-complex (boss-fight) sub-pilot, the saturation collapses: <strong>GPT-Image-2 leads at Q=3.58</strong>
+      but takes <strong>189 s</strong> per image. <strong>Imagen 4 Ultra drops to last.</strong>
+    </div>
+    <div class="stats">
+      <div class="stat">
+        <div class="num">7.5×</div>
+        <div class="lbl">cost spread,<br>0.17 pt quality spread</div>
+      </div>
+      <div class="stat">
+        <div class="num">7.8×</div>
+        <div class="lbl">p50 latency<br>spread (7 s &harr; 57 s)</div>
+      </div>
+      <div class="stat">
+        <div class="num">189 s</div>
+        <div class="lbl">GPT-Image-2 latency<br>on hyper-complex</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="figure-pair">
+      <figure>
+        <img src="images/openai_gpt-image-1-mini__T2I-011.png" alt="GPT-Image-1 Mini OPEN 24 HOURS" />
+        <div class="caption"><strong>GPT-Image-1 Mini</strong> &middot; <span class="price">$0.008/img</span><br>"OPEN 24 HOURS" &middot; 38 s &middot; Q=5.00</div>
+      </figure>
+      <figure>
+        <img src="images/google_imagen-4-ultra__T2I-011.png" alt="Imagen 4 Ultra OPEN 24 HOURS" />
+        <div class="caption"><strong>Imagen 4 Ultra</strong> &middot; <span class="price">$0.060/img</span><br>"OPEN 24 HOURS" &middot; 16 s &middot; Q=4.88</div>
+      </figure>
+    </div>
+    <div class="footer-finding">
+      <strong>Hyper-complex finding:</strong> all 3 Imagen variants label the right lung as <em>"2 lobes"</em> when correct is&nbsp;3. <strong>Consistent factual error across an entire model family</strong> — would silently propagate into any medical-illustration product using Imagen.
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <span class="url">github.com/aifiesta<span class="at">/</span>mesh-dollar-per-image-bench</span>
+  <span class="meta">Reproducible &middot; MIT &middot; n=5 per model &middot; routed through Mesh API</span>
+</div>
+
+</body>
+</html>
