@@ -1,0 +1,6 @@
+model_id,model_display,tier,n_total,n_ok,n_refused,n_error,refusal_rate,error_rate,watermark_rate,p50_latency_ms,p95_latency_ms,mean_latency_ms,raw_cost_usd,effective_cost_usd,cost_per_image_raw,cost_per_image_effective,cost_per_unrefused_image,quality_score,quality_variance,axis_adherence_mean,axis_aesthetic_mean,axis_photoreal_mean,axis_text_mean,axis_anatomy_mean,auto_vqa_mean,auto_clip_mean,auto_aesthetic_mean,cost_per_quality_point,judge_a_mean,judge_b_mean,judge_ensemble_spread,retry_rate
+openai/gpt-image-1-mini,GPT-Image-1 Mini,budget_proprietary,3,3,0,0,0.0,0.0,0.0,39481,41590,40134,0.024,0.024,0.008,0.008,0.008,2.975,0.348,2.333,3.333,3.5,3.0,2.833,,,,0.008067,2.975,,,0.0
+google/imagen-4-fast,Imagen 4 Fast,budget_proprietary,3,3,0,0,0.0,0.0,0.0,7237,7510,6786,0.06,0.06,0.02,0.02,0.02,2.681,0.204,2.333,3.0,3.0,2.0,2.833,,,,0.02238,2.681,,,0.0
+openai/gpt-image-1.5,GPT-Image-1.5,premium_high,3,3,0,0,0.0,0.0,0.0,41181,42218,40247,0.096,0.096,0.032,0.032,0.032,3.3,0.205,2.667,3.667,4.0,3.0,3.333,,,,0.029091,3.3,,,0.0
+google/imagen-4-ultra,Imagen 4 Ultra,premium_high,3,3,0,0,0.0,0.0,0.0,23745,24085,23188,0.18,0.18,0.06,0.06,0.06,2.633,0.33,2.0,3.0,3.0,2.0,3.0,,,,0.068354,2.633,,,0.0
+openai/gpt-image-2,GPT-Image-2,premium_high,3,0,0,3,0.0,1.0,0.0,120487,120508,120403,0,0,0.0,0.0,,,,,,,,,,,,,,,,2.0

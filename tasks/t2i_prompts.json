@@ -1,0 +1,990 @@
+{
+  "_schema": {
+    "id": "string, format T2I-NNN",
+    "category": "one of: photoreal_portrait, typography, compositional_spatial, multi_subject, style_artistic, long_prompt, knowledge_facts, counting_numerical, negative_space, edge_case_policy, multilingual, hyper_complex",
+    "prompt": "the text prompt sent to the model verbatim",
+    "eval_focus": "list of attributes the judge should pay attention to",
+    "vqa_questions": "list of yes/no questions for VQAScore",
+    "negative_prompt": "optional; sent to models that accept it",
+    "has_text_to_render": "bool; true if the prompt asks for in-image text"
+  },
+  "_metadata": {
+    "version": 3,
+    "authored": "2026-05-20",
+    "author": "Mesh Dollar per Image Bench v1",
+    "notes": "Original prompts written from scratch. Structural inspiration from PartiPrompts, DrawBench, GenAI-Bench, and HEIM's multilingual aspect; no text copied. 120 prompts across 12 categories, 10 per category. Category 11 (multilingual) probes non-Latin script rendering AND cultural-context fidelity together. Category 12 (hyper_complex) is the boss-fight tier: 10+ named subjects per prompt, exact positional constraints, multi-stylistic composition, counting, text, and scene-knowledge all simultaneously — designed to expose where premium-tier models earn their bill."
+  },
+  "items": [
+    {
+      "id": "T2I-001",
+      "category": "photoreal_portrait",
+      "prompt": "A photorealistic portrait of a 70-year-old woman with silver hair tied in a low bun, warm hazel eyes with visible crows feet, soft golden hour light from camera left, shallow depth of field, 85mm lens, neutral gray backdrop.",
+      "eval_focus": ["age=70s", "hair=silver low bun", "eye color=hazel", "lighting=golden hour left", "depth of field=shallow", "background=neutral gray"],
+      "vqa_questions": ["Is the person elderly?", "Does the person have silver hair?", "Is the hair in a bun?", "Is the lighting warm and directional?", "Is the background a neutral gray?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-002",
+      "category": "photoreal_portrait",
+      "prompt": "Close-up portrait of a young Black man with a neatly trimmed beard, wearing round wire-frame glasses, laughing genuinely, even studio softbox lighting from front and slightly above, plain white background.",
+      "eval_focus": ["young adult", "Black man", "trimmed beard", "round wire glasses", "genuine laugh", "soft front lighting", "white background"],
+      "vqa_questions": ["Is the man young?", "Does he have a trimmed beard?", "Is he wearing round glasses?", "Is he laughing?", "Is the background plain white?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-003",
+      "category": "photoreal_portrait",
+      "prompt": "A portrait of a tired night-shift nurse in pale blue scrubs sitting on a hospital break room couch, harsh fluorescent overhead light, dark circles under her eyes, holding a paper coffee cup with both hands, photorealistic.",
+      "eval_focus": ["nurse in scrubs", "pale blue scrubs", "tired expression", "dark circles", "harsh fluorescent light", "coffee cup in both hands", "couch setting"],
+      "vqa_questions": ["Is the person wearing pale blue scrubs?", "Does she look tired?", "Is the lighting harsh and fluorescent?", "Is she holding a coffee cup with both hands?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-004",
+      "category": "photoreal_portrait",
+      "prompt": "A child's hand resting on an open book, age approximately 8, fingernails slightly dirty from playing outside, late afternoon side light, photorealistic, anatomically correct fingers and proportions.",
+      "eval_focus": ["child hand", "open book under hand", "five visible fingers in correct anatomy", "afternoon side light", "fingernail dirt detail"],
+      "vqa_questions": ["Is a child's hand visible?", "Is the hand resting on a book?", "Are exactly five fingers visible on the hand?", "Are the fingers anatomically correct?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-005",
+      "category": "photoreal_portrait",
+      "prompt": "Full-body portrait of a ballet dancer mid-pirouette in a sunlit studio, wooden floor, mirrored back wall reflecting her motion, white practice tutu, motion blur on the skirt only, sharp focus on the face.",
+      "eval_focus": ["ballet dancer", "mid-pirouette pose", "wooden floor", "mirror back wall with reflection", "white tutu", "motion blur on skirt", "sharp face"],
+      "vqa_questions": ["Is the person a ballet dancer?", "Are they spinning?", "Is there a wooden floor?", "Is there a mirrored wall behind?", "Is the tutu white?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-006",
+      "category": "photoreal_portrait",
+      "prompt": "Two elderly best friends sitting on a park bench laughing, one wearing a maroon cardigan, the other in a forest green windbreaker, autumn leaves on the ground, soft overcast lighting, photorealistic.",
+      "eval_focus": ["two elderly people", "park bench setting", "both laughing", "one in maroon cardigan", "one in forest green windbreaker", "autumn leaves visible", "overcast lighting"],
+      "vqa_questions": ["Are there two elderly people?", "Are they on a park bench?", "Are they laughing?", "Is one wearing maroon?", "Is one wearing forest green?", "Are there autumn leaves on the ground?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-007",
+      "category": "photoreal_portrait",
+      "prompt": "A construction worker on a steel beam high above a city skyline at sunrise, safety harness clipped, holding a thermos in one hand and a rolled blueprint in the other, dramatic golden light, photorealistic.",
+      "eval_focus": ["construction worker", "steel beam setting", "city skyline below", "sunrise lighting", "safety harness visible", "thermos in one hand", "blueprint in the other hand"],
+      "vqa_questions": ["Is the person a construction worker?", "Are they on a steel beam?", "Is the city skyline visible?", "Is the lighting golden?", "Is a thermos visible?", "Is a blueprint visible?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-008",
+      "category": "photoreal_portrait",
+      "prompt": "A South Asian bride in traditional red and gold lehenga, intricate henna on both hands clearly visible palms-up, gold jewelry, soft window light from the right, sitting on a low cushion, photorealistic.",
+      "eval_focus": ["South Asian bride", "red and gold lehenga", "henna on both hands palms-up", "gold jewelry", "soft window light from right", "seated low"],
+      "vqa_questions": ["Is the woman wearing a red and gold outfit?", "Is henna visible on her hands?", "Are her palms facing up?", "Is the lighting from the right?", "Is she seated low?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-009",
+      "category": "photoreal_portrait",
+      "prompt": "A fisherman in his 60s wearing a bright yellow rain jacket, gray stubble beard, weathered tan skin, stormy ocean spray in the background, holding a wooden ship wheel with both hands, photorealistic.",
+      "eval_focus": ["fisherman 60s", "yellow rain jacket", "gray stubble", "weathered tan skin", "stormy ocean background", "wooden ship wheel held with both hands"],
+      "vqa_questions": ["Is the person elderly?", "Is the jacket yellow?", "Does he have a gray stubble beard?", "Is there a stormy ocean behind?", "Is he holding a wooden ship wheel with both hands?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-010",
+      "category": "photoreal_portrait",
+      "prompt": "A musician playing a cello in a candlelit room, eyes closed in concentration, bow held correctly in the right hand, instrument resting between the knees, warm orange tones, photorealistic anatomy of both hands.",
+      "eval_focus": ["cello player", "eyes closed", "candlelit warm light", "bow in right hand", "cello between knees", "anatomically correct hands"],
+      "vqa_questions": ["Is the person playing a cello?", "Are their eyes closed?", "Is the lighting warm and candle-lit?", "Is the bow in their right hand?", "Are the hands anatomically correct?"],
+      "has_text_to_render": false
+    },
+
+    {
+      "id": "T2I-011",
+      "category": "typography",
+      "prompt": "A vintage diner sign at night with the text 'OPEN 24 HOURS' in bright red neon, mounted on the brick exterior of a 1950s American diner, slight rain on the sidewalk reflecting the neon.",
+      "eval_focus": ["text reads exactly OPEN 24 HOURS", "red neon", "diner exterior", "brick wall", "wet sidewalk reflection"],
+      "vqa_questions": ["Does the sign say 'OPEN 24 HOURS'?", "Is the text in red neon?", "Is it a diner exterior?", "Is the sidewalk wet?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-012",
+      "category": "typography",
+      "prompt": "A modern minimalist book cover with the title 'Quiet Engineering' in large serif type on the upper third, author name 'Marina Okafor' in smaller sans-serif below, off-white background, single small black geometric icon centered at the bottom.",
+      "eval_focus": ["title text=Quiet Engineering", "author text=Marina Okafor", "serif title", "sans-serif author", "off-white background", "geometric icon at bottom"],
+      "vqa_questions": ["Does the title say 'Quiet Engineering'?", "Does the author say 'Marina Okafor'?", "Is the title in serif type?", "Is the background off-white?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-013",
+      "category": "typography",
+      "prompt": "A handwritten chalkboard menu in a coffee shop reading: 'Today's special: Lavender Honey Latte $5.50', cursive chalk handwriting, slightly smudged, wooden frame around the chalkboard.",
+      "eval_focus": ["text reads exactly Today's special: Lavender Honey Latte $5.50", "cursive chalk", "smudged appearance", "wooden frame"],
+      "vqa_questions": ["Does the chalkboard read 'Today's special: Lavender Honey Latte $5.50'?", "Is the writing cursive?", "Is it on a chalkboard?", "Is there a wooden frame?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-014",
+      "category": "typography",
+      "prompt": "A retro travel poster with the destination name 'KYOTO' in bold geometric sans-serif across the top, a stylized illustration of a temple against Mount Fuji below, subdued autumnal color palette of orange, deep red, and cream.",
+      "eval_focus": ["text=KYOTO", "bold geometric sans-serif", "temple illustration", "Mount Fuji", "autumnal palette"],
+      "vqa_questions": ["Does the poster say 'KYOTO'?", "Is the text bold and geometric?", "Is there a temple in the illustration?", "Is the color palette autumnal?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-015",
+      "category": "typography",
+      "prompt": "A street protest sign held up in a crowd: white poster board with hand-painted black block letters reading 'WE THE PEOPLE', held by hands at the bottom of the frame.",
+      "eval_focus": ["text=WE THE PEOPLE", "block letters", "black on white", "held by visible hands"],
+      "vqa_questions": ["Does the sign say 'WE THE PEOPLE'?", "Are the letters black blocks?", "Is the board white?", "Are hands visible at the bottom?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-016",
+      "category": "typography",
+      "prompt": "A storefront window of a Parisian bakery with 'Boulangerie Patisserie' in elegant gold leaf script across the glass, fresh baguettes and croissants visible inside, morning light, photorealistic.",
+      "eval_focus": ["text=Boulangerie Patisserie", "gold leaf script", "glass storefront", "baguettes and croissants visible", "morning light"],
+      "vqa_questions": ["Does the storefront say 'Boulangerie Patisserie'?", "Is the text gold?", "Is the text in elegant script?", "Are baguettes visible?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-017",
+      "category": "typography",
+      "prompt": "A modern startup t-shirt mockup hung on a wooden hanger, the chest text reads 'Ship Things That Matter', plain black t-shirt, white text in clean sans-serif, neutral background.",
+      "eval_focus": ["text=Ship Things That Matter", "white text on black t-shirt", "sans-serif", "wooden hanger", "neutral background"],
+      "vqa_questions": ["Does the t-shirt say 'Ship Things That Matter'?", "Is it a black t-shirt with white text?", "Is the text sans-serif?", "Is it on a wooden hanger?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-018",
+      "category": "typography",
+      "prompt": "A vintage typewritten letter on yellowed paper, top line reads 'Dear Eleanor,' in typewriter font, two more lines beneath reading 'I hope this finds you well. The garden is in full bloom this June.', a fountain pen resting on the paper.",
+      "eval_focus": ["text matches exactly Dear Eleanor, / I hope this finds you well. / The garden is in full bloom this June.", "typewriter font", "yellowed paper", "fountain pen on paper"],
+      "vqa_questions": ["Does the letter say 'Dear Eleanor,'?", "Does it mention 'I hope this finds you well'?", "Does it mention 'The garden is in full bloom this June'?", "Is there a fountain pen?", "Is the paper yellowed?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-019",
+      "category": "typography",
+      "prompt": "A bottle of craft beer with a circular label reading 'NORTHWIND IPA' across the top arc, 'Brewed in Maine since 1987' across the bottom arc, central illustration of a stylized compass rose, deep navy blue label with copper accents.",
+      "eval_focus": ["top arc text=NORTHWIND IPA", "bottom arc text=Brewed in Maine since 1987", "compass rose center", "navy blue with copper"],
+      "vqa_questions": ["Does the label say 'NORTHWIND IPA'?", "Does it say 'Brewed in Maine since 1987'?", "Is there a compass rose?", "Is the label navy and copper?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-020",
+      "category": "typography",
+      "prompt": "A black and yellow construction zone road sign reading 'ROAD WORK AHEAD 500 FT', diamond shape, mounted on a temporary post by the side of an empty highway at dusk.",
+      "eval_focus": ["text=ROAD WORK AHEAD 500 FT", "diamond shape", "black on yellow", "highway dusk"],
+      "vqa_questions": ["Does the sign say 'ROAD WORK AHEAD 500 FT'?", "Is the sign diamond-shaped?", "Is it black text on yellow?", "Is it a roadside sign at dusk?"],
+      "has_text_to_render": true
+    },
+
+    {
+      "id": "T2I-021",
+      "category": "compositional_spatial",
+      "prompt": "A red wooden cube on the left side of the frame and a blue glass sphere on the right side, both sitting on a polished concrete floor, soft north-window light, photographic studio still life.",
+      "eval_focus": ["red wooden cube on left", "blue glass sphere on right", "concrete floor", "north-window light"],
+      "vqa_questions": ["Is there a red cube on the left?", "Is there a blue sphere on the right?", "Is the cube made of wood?", "Is the sphere made of glass?", "Is the floor concrete?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-022",
+      "category": "compositional_spatial",
+      "prompt": "A small orange kitten sitting directly above a sleeping golden retriever's head, kitten centered on the dog's forehead, both calm, photographed from the side, warm living room lighting.",
+      "eval_focus": ["orange kitten on top", "golden retriever beneath sleeping", "kitten on the dog's forehead specifically", "side angle"],
+      "vqa_questions": ["Is there an orange kitten?", "Is there a golden retriever?", "Is the kitten on top of the dog?", "Is the kitten on the dog's head?", "Is the dog sleeping?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-023",
+      "category": "compositional_spatial",
+      "prompt": "Three coffee mugs in a row from left to right: white ceramic, then matte black, then transparent glass, all filled with coffee, on a wooden table, eye-level photograph.",
+      "eval_focus": ["three mugs in a row", "left=white ceramic", "middle=matte black", "right=transparent glass", "all filled with coffee"],
+      "vqa_questions": ["Are there three mugs?", "Is the leftmost white?", "Is the middle matte black?", "Is the rightmost transparent glass?", "Are they all filled with coffee?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-024",
+      "category": "compositional_spatial",
+      "prompt": "A green bicycle leaning against the trunk of a large oak tree on the left of the frame; a wooden park bench with a folded newspaper on it on the right of the frame; grass between them; midday light.",
+      "eval_focus": ["green bicycle leaning on oak tree on left", "wooden bench with newspaper on right", "grass between them", "midday light"],
+      "vqa_questions": ["Is there a green bicycle on the left?", "Is it leaning against a tree?", "Is there a wooden bench on the right?", "Is there a newspaper on the bench?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-025",
+      "category": "compositional_spatial",
+      "prompt": "A small drone hovering in the upper right corner of the sky above a single tall pine tree centered in the lower frame, clear blue sky background, the drone is much smaller than the tree.",
+      "eval_focus": ["drone in upper right of sky", "single pine tree centered lower", "drone smaller than tree", "blue sky background"],
+      "vqa_questions": ["Is there a drone in the upper right?", "Is there a pine tree in the lower center?", "Is the drone smaller than the tree?", "Is the sky clear blue?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-026",
+      "category": "compositional_spatial",
+      "prompt": "A teapot on a stove burner that is turned on with a small visible blue flame ring underneath, steam rising from the spout, kettle is white enameled steel.",
+      "eval_focus": ["white enameled teapot", "stove burner under the teapot", "visible blue flame ring", "steam rising from spout"],
+      "vqa_questions": ["Is there a white teapot?", "Is it on a stove burner?", "Is there a visible blue flame under it?", "Is steam coming from the spout?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-027",
+      "category": "compositional_spatial",
+      "prompt": "A bookshelf with exactly seven books arranged horizontally on one shelf; from left to right the spine colors are red, orange, yellow, green, blue, indigo, violet (a rainbow); plain wooden shelf, plain wall behind.",
+      "eval_focus": ["exactly seven books", "horizontal arrangement", "rainbow order left to right", "wooden shelf"],
+      "vqa_questions": ["Are there exactly seven books on the shelf?", "Are they arranged horizontally?", "Are they in rainbow order from left to right?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-028",
+      "category": "compositional_spatial",
+      "prompt": "A pair of black leather shoes on the floor, with a folded charcoal gray suit jacket draped over the back of a wooden chair behind them, dark wood floor, single side window light.",
+      "eval_focus": ["black leather shoes on floor", "charcoal suit jacket draped on wooden chair behind shoes", "dark wood floor", "side window light"],
+      "vqa_questions": ["Are there black leather shoes on the floor?", "Is there a chair behind them?", "Is a suit jacket draped over the chair?", "Is the jacket charcoal gray?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-029",
+      "category": "compositional_spatial",
+      "prompt": "A small silver key inside a glass jar that is sitting on top of a thick leather-bound book, the book is on a desk, soft afternoon light from a window on the right.",
+      "eval_focus": ["silver key inside glass jar", "jar on top of leather-bound book", "book on desk", "afternoon light from right"],
+      "vqa_questions": ["Is there a silver key inside a glass jar?", "Is the jar on top of a book?", "Is the book leather-bound?", "Is the light coming from the right?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-030",
+      "category": "compositional_spatial",
+      "prompt": "A wide pier extending into a calm lake; a small wooden rowboat tied to the very end of the pier (far from the camera); a single seagull flying directly above the rowboat; dawn light.",
+      "eval_focus": ["pier extending into lake", "rowboat at the far end of pier", "seagull directly above the rowboat", "dawn light"],
+      "vqa_questions": ["Is there a pier extending into water?", "Is there a rowboat at the far end?", "Is there a seagull above the rowboat?", "Is the lighting like dawn?"],
+      "has_text_to_render": false
+    },
+
+    {
+      "id": "T2I-031",
+      "category": "multi_subject",
+      "prompt": "Two cats on a windowsill: the cat on the left is a fluffy Maine Coon with tabby markings, the cat on the right is a sleek black short-hair, both looking at a bird outside; afternoon light.",
+      "eval_focus": ["left cat=Maine Coon tabby", "right cat=black short-hair", "both on windowsill", "both looking out", "bird outside the window"],
+      "vqa_questions": ["Are there two cats?", "Is the left cat fluffy and tabby?", "Is the right cat sleek and black?", "Are they on a windowsill?", "Are they looking outside?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-032",
+      "category": "multi_subject",
+      "prompt": "A father and his young daughter (age ~5) baking together in a kitchen: the father is wearing a navy apron and kneading dough, the daughter is wearing a striped pink-and-white apron and holding a wooden spoon, flour dusted on the counter, warm kitchen light.",
+      "eval_focus": ["father in navy apron kneading dough", "daughter in pink-and-white striped apron holding wooden spoon", "daughter ~5 years old", "flour on counter", "warm kitchen light"],
+      "vqa_questions": ["Are there two people, an adult and a child?", "Is the adult wearing a navy apron?", "Is the child wearing a pink and white striped apron?", "Is the adult kneading dough?", "Is the child holding a wooden spoon?", "Is there flour on the counter?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-033",
+      "category": "multi_subject",
+      "prompt": "Three musicians on a small stage at sunset: drummer in the back wearing a red t-shirt, bass player on the left wearing a black hoodie playing a white bass guitar, lead guitarist on the right wearing a denim jacket playing a red electric guitar, festival crowd silhouettes in the foreground.",
+      "eval_focus": ["three musicians", "drummer back red t-shirt", "left bass player black hoodie white bass", "right lead guitarist denim jacket red guitar", "sunset", "crowd silhouettes"],
+      "vqa_questions": ["Are there three musicians on stage?", "Is there a drummer in the back?", "Is the drummer wearing a red shirt?", "Is the bass player on the left wearing a black hoodie?", "Is the bass guitar white?", "Is the lead guitarist on the right in denim?", "Is the lead guitar red?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-034",
+      "category": "multi_subject",
+      "prompt": "A vet examining a small brown dog on an exam table; the vet is wearing a white coat with a stethoscope around her neck; a worried-looking owner stands to the right wearing a yellow rain jacket holding a leash; bright clinic lighting.",
+      "eval_focus": ["vet in white coat with stethoscope examining brown dog", "owner on right wearing yellow rain jacket holding leash", "exam table setting", "bright clinic light"],
+      "vqa_questions": ["Is there a vet examining a dog?", "Is the dog small and brown?", "Is the vet wearing a white coat?", "Is there a stethoscope around her neck?", "Is the owner on the right wearing yellow?", "Is the owner holding a leash?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-035",
+      "category": "multi_subject",
+      "prompt": "A delivery cyclist handing a brown paper bag to a customer at an apartment door: cyclist is wearing a teal jacket and a black helmet, customer is wearing pajama pants and a gray hoodie barefoot, doormat reads HELLO, late evening hallway light.",
+      "eval_focus": ["cyclist in teal jacket black helmet", "customer in pajama pants gray hoodie barefoot", "brown paper bag being handed over", "doormat reads HELLO", "evening hallway"],
+      "vqa_questions": ["Are there two people at a door?", "Is the cyclist wearing a teal jacket?", "Is the cyclist wearing a black helmet?", "Is the customer in pajama pants?", "Is the customer barefoot?", "Does the doormat say 'HELLO'?", "Is a brown paper bag being passed?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-036",
+      "category": "multi_subject",
+      "prompt": "Two engineers in a server room: one on the left holding a tablet wearing a forest green polo and dark jeans, the other on the right kneeling and connecting cables wearing a gray hoodie and tan cargo pants, blue server LEDs glowing in the background.",
+      "eval_focus": ["two engineers in server room", "left holding tablet forest green polo dark jeans", "right kneeling connecting cables gray hoodie tan cargo pants", "blue LEDs background"],
+      "vqa_questions": ["Are there two engineers in a server room?", "Is the left person holding a tablet?", "Is the left person wearing a green polo?", "Is the right person kneeling?", "Is the right person wearing a gray hoodie?", "Are there blue server lights in the background?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-037",
+      "category": "multi_subject",
+      "prompt": "Four diverse kids at a science fair table: a Korean girl in a lab coat explaining a baking-soda volcano, a Mexican boy in a yellow polo holding a clipboard, a Black girl in a purple dress operating a small robot, a white boy in a blue striped shirt taking notes. School gym setting.",
+      "eval_focus": ["four kids", "Korean girl in lab coat with volcano", "Mexican boy in yellow polo with clipboard", "Black girl in purple dress with robot", "white boy blue striped shirt taking notes", "school gym"],
+      "vqa_questions": ["Are there four children?", "Is one wearing a lab coat?", "Is one holding a clipboard?", "Is one operating a small robot?", "Is one taking notes?", "Is this a science fair setting?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-038",
+      "category": "multi_subject",
+      "prompt": "A pair of horses in a stable: a chestnut horse on the left with a white blaze on its forehead and four white socks, an all-black horse on the right with no markings, both eating from a shared trough of hay; morning light through a high stable window.",
+      "eval_focus": ["two horses", "left chestnut with white blaze and four white socks", "right all-black no markings", "shared hay trough", "morning light high window"],
+      "vqa_questions": ["Are there two horses?", "Is the left horse chestnut?", "Does the left horse have a white blaze?", "Does the left horse have white socks?", "Is the right horse all black?", "Are they sharing a hay trough?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-039",
+      "category": "multi_subject",
+      "prompt": "An elderly woman in a green knitted cardigan teaching a teenage girl in a black band t-shirt how to play chess; chess board between them showing a mid-game position; cozy library with bookshelves; reading lamp warm light.",
+      "eval_focus": ["elderly woman in green cardigan", "teenage girl in black band t-shirt", "chess board mid-game between them", "library bookshelves", "warm reading lamp"],
+      "vqa_questions": ["Are there two people, an elderly woman and a teenager?", "Is the elderly woman wearing green?", "Is the teenager wearing a black t-shirt?", "Are they playing chess?", "Is the setting a library?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-040",
+      "category": "multi_subject",
+      "prompt": "Two firefighters in full gear walking out of smoke: the firefighter on the left is carrying a coiled red hose over the shoulder, the firefighter on the right is carrying a yellow first-aid kit; both wear helmets with the number 23 on the front; dramatic backlight.",
+      "eval_focus": ["two firefighters", "left carrying coiled red hose", "right carrying yellow first-aid kit", "both helmets numbered 23", "dramatic backlight smoke"],
+      "vqa_questions": ["Are there two firefighters?", "Is one carrying a red hose?", "Is the other carrying a yellow first-aid kit?", "Do their helmets show the number 23?", "Is there smoke and dramatic backlighting?"],
+      "has_text_to_render": true
+    },
+
+    {
+      "id": "T2I-041",
+      "category": "style_artistic",
+      "prompt": "A watercolor painting of a small wooden cottage in a snowy pine forest at dusk, soft pink and lavender sky, warm yellow window light, loose brushwork visible, paper grain visible, no photorealism.",
+      "eval_focus": ["watercolor style", "loose brushwork", "paper grain", "wooden cottage", "snowy pine forest", "pink and lavender dusk sky", "warm window light"],
+      "vqa_questions": ["Does this look like a watercolor painting?", "Is there a wooden cottage?", "Is it a snowy pine forest scene?", "Is the sky pink and lavender?", "Are window lights warm yellow?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-042",
+      "category": "style_artistic",
+      "prompt": "An anime-style illustration of a teenage girl with long teal hair standing on a Tokyo rooftop at sunset, cherry blossom petals blowing past, in the style of a 2000s magical girl anime, cell-shaded with thick black lineart.",
+      "eval_focus": ["anime style", "cell-shaded thick lineart", "2000s magical girl aesthetic", "teal long hair", "Tokyo rooftop sunset", "cherry blossom petals"],
+      "vqa_questions": ["Does this look like an anime illustration?", "Does the character have long teal hair?", "Is the setting a rooftop at sunset?", "Are cherry blossoms blowing?", "Is there visible thick black lineart?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-043",
+      "category": "style_artistic",
+      "prompt": "A 1970s polaroid photograph of three friends at a beach bonfire, slight color shift toward warm orange, visible film grain, mild light leak on the right edge, white polaroid border, late evening.",
+      "eval_focus": ["polaroid format with white border", "1970s color shift to warm orange", "film grain", "light leak right edge", "three friends at beach bonfire"],
+      "vqa_questions": ["Does this look like a vintage polaroid?", "Is there a visible white polaroid border?", "Is there warm color shift and film grain?", "Are there three people at a bonfire?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-044",
+      "category": "style_artistic",
+      "prompt": "An oil painting in the style of late-19th-century Impressionism: a Parisian café terrace at midday, visible brushstrokes, soft color blending, dappled light through nearby trees, no sharp edges.",
+      "eval_focus": ["Impressionist oil painting", "visible brushstrokes", "soft color blending", "no sharp edges", "Parisian café terrace", "dappled tree light"],
+      "vqa_questions": ["Does this look like an Impressionist oil painting?", "Are brushstrokes clearly visible?", "Is the subject a café terrace?", "Is there dappled light?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-045",
+      "category": "style_artistic",
+      "prompt": "A flat vector illustration in the style of a 1950s mid-century children's book: a friendly red fox tipping its hat to a small mouse, limited color palette of red, cream, mustard, and forest green, screen-print texture overlay.",
+      "eval_focus": ["flat vector mid-century style", "1950s children's book aesthetic", "limited 4-color palette", "screen-print texture", "fox tipping hat to mouse"],
+      "vqa_questions": ["Does this look like a flat vector illustration?", "Does it have a mid-century children's book feel?", "Is there a fox and a mouse?", "Is the fox tipping a hat?", "Is the color palette limited and earthy?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-046",
+      "category": "style_artistic",
+      "prompt": "A black-and-white charcoal drawing of an old fisherman mending nets on a dock, heavy shadows, paper texture, smudge marks visible, no color, dramatic chiaroscuro lighting.",
+      "eval_focus": ["charcoal drawing", "black and white only", "paper texture", "smudge marks", "heavy chiaroscuro", "fisherman mending nets on dock"],
+      "vqa_questions": ["Is this a black-and-white charcoal drawing?", "Are smudges and paper texture visible?", "Is there a fisherman mending nets?", "Is the lighting dramatic with heavy shadows?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-047",
+      "category": "style_artistic",
+      "prompt": "A pixel art scene in the style of an early-90s SNES JRPG: a small hero in green tunic standing at the entrance of a forest, 32-bit color palette, visible chunky pixels, slight CRT scanline overlay.",
+      "eval_focus": ["SNES-era pixel art", "32-bit palette", "visible chunky pixels", "CRT scanline overlay", "hero in green tunic at forest entrance"],
+      "vqa_questions": ["Does this look like SNES-era pixel art?", "Are individual pixels clearly visible?", "Is there a small character in a green tunic?", "Is there a forest entrance?", "Is there a CRT scanline overlay?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-048",
+      "category": "style_artistic",
+      "prompt": "An art deco travel poster of a 1930s ocean liner cutting through waves at dawn, stylized geometric clouds, golden sun rays, limited palette of cream, navy, gold, and coral, strong vertical lines, illustrated not photographic.",
+      "eval_focus": ["art deco style", "geometric stylization", "limited palette cream navy gold coral", "ocean liner at dawn", "vertical line composition"],
+      "vqa_questions": ["Does this look like an art deco poster?", "Is the ocean liner geometrically stylized?", "Is the palette cream, navy, gold and coral?", "Is this illustration, not a photo?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-049",
+      "category": "style_artistic",
+      "prompt": "A stained glass window depicting a medieval knight kneeling before a queen, deep cobalt blues, rich reds, and emerald greens divided by heavy black lead lines, sunlight backlighting the glass, gothic arch frame.",
+      "eval_focus": ["stained glass aesthetic", "black lead lines", "deep cobalt, red, emerald", "backlit by sun", "kneeling knight before queen", "gothic arch frame"],
+      "vqa_questions": ["Does this look like stained glass?", "Are there visible heavy black lead lines?", "Is the palette cobalt, red, and emerald?", "Is there a knight kneeling before a queen?", "Is there a gothic arch frame?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-050",
+      "category": "style_artistic",
+      "prompt": "An ukiyo-e woodblock print in the style of Hokusai: a great wave curling over a small fishing boat with Mount Fuji in the distance, flat color planes, no shading, characteristic blue and white wave foam.",
+      "eval_focus": ["ukiyo-e woodblock style", "Hokusai-style wave", "flat color planes no shading", "characteristic blue and white", "fishing boat", "Mount Fuji distance"],
+      "vqa_questions": ["Does this look like a Japanese woodblock print?", "Is there a large curling wave?", "Is there a small boat?", "Is Mount Fuji visible in the distance?", "Are there flat color planes with no shading?"],
+      "has_text_to_render": false
+    },
+
+    {
+      "id": "T2I-051",
+      "category": "long_prompt",
+      "prompt": "A photorealistic wide-angle interior shot of a small independent bookstore at sunset: floor-to-ceiling oak bookshelves on both side walls packed densely with hundreds of mixed paperback and hardcover books in earth tones, a rolling brass library ladder leaning against the left shelf, a black cat curled asleep on the third shelf from the bottom on the right wall, a single round Persian rug in deep maroon at center, a wooden reading chair with a knitted gray throw blanket on the left of the rug, a small side table with a half-empty cup of tea and a closed leather notebook on the right of the rug, golden afternoon light streaming horizontally through tall front windows at the back of the shot creating long shadows, a hand-painted wooden sign hanging above the front door visible at the far back reading 'Bramble & Vine Books', dust motes visible in the light beams.",
+      "eval_focus": ["bookstore interior wide angle", "floor-to-ceiling oak bookshelves both walls", "rolling brass ladder on left shelf", "black cat sleeping third shelf from bottom on right", "round maroon Persian rug center", "wooden reading chair with gray knit throw on left of rug", "side table tea cup leather notebook on right of rug", "horizontal golden afternoon light back windows", "sign reading 'Bramble & Vine Books'", "visible dust motes"],
+      "vqa_questions": ["Is this a bookstore interior?", "Are there floor-to-ceiling bookshelves?", "Is there a rolling ladder?", "Is there a black cat on a shelf?", "Is there a Persian rug?", "Is there a chair with a throw blanket?", "Is there a tea cup on a side table?", "Does the sign say 'Bramble & Vine Books'?", "Is the light golden afternoon light?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-052",
+      "category": "long_prompt",
+      "prompt": "A bird's-eye top-down photograph of a Japanese-style ramen bowl on a dark wooden table: the broth is a rich tonkotsu cream color, two soft-boiled eggs cut in half showing jammy yolks on the upper-left rim, three slices of chashu pork laid across the upper-right rim, a small handful of finely sliced green scallions sprinkled across the center, a single sheet of nori standing vertically at the bottom-left edge, a bamboo spoon resting on the right edge of the bowl handle pointing outward, chopsticks crossed at the upper edge of the table above the bowl, a small ceramic dish of red chili oil at the bottom-right of the frame, a folded indigo cloth napkin at the bottom-left of the frame.",
+      "eval_focus": ["top-down view", "tonkotsu broth", "two halved soft-boiled eggs upper-left", "three chashu slices upper-right", "scallions center", "nori sheet bottom-left edge of bowl", "bamboo spoon right edge", "chopsticks crossed at top of table", "chili oil dish bottom-right", "indigo napkin bottom-left"],
+      "vqa_questions": ["Is this a top-down view of a ramen bowl?", "Are there two halved eggs?", "Are there pork slices?", "Are there scallions sprinkled?", "Is there nori?", "Are there chopsticks?", "Is there a dish of chili oil?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-053",
+      "category": "long_prompt",
+      "prompt": "A detailed isometric illustration of a small mountain hiking base camp at twilight: three orange dome tents arranged in a triangle around a central campfire with visible flames and a small column of gray smoke, a wooden picnic table on the right with three backpacks of different colors (red, blue, and dark green), a folded paper map and a metal coffee pot on the table, two wooden chopped-log seats next to the campfire, a tall pine tree at the top-left of the scene with a small lantern hanging from a low branch glowing warm yellow, three sleeping bags rolled neatly in front of one of the tents, a small dog (golden retriever) lying down between the tents and the campfire, a star-filled deep blue twilight sky background, soft snow patches on the ground.",
+      "eval_focus": ["isometric perspective", "three orange dome tents in triangle", "central campfire flames and smoke", "picnic table with red, blue, dark green backpacks", "map and coffee pot on table", "two log seats by fire", "pine tree top-left with hanging lantern", "three rolled sleeping bags in front of one tent", "golden retriever between tents and fire", "twilight star sky", "snow patches"],
+      "vqa_questions": ["Is this an isometric illustration?", "Are there three orange tents?", "Is there a campfire?", "Is there a picnic table with backpacks?", "Are there three different colored backpacks?", "Is there a dog?", "Is the sky a starry twilight?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-054",
+      "category": "long_prompt",
+      "prompt": "A photorealistic high-detail product shot of a vintage mechanical wristwatch laid face-up on a folded charcoal wool fabric background: round 38mm stainless steel case with a slightly worn brushed finish, white porcelain dial with small black Roman numerals at 12, 3, 6, and 9 only, black sword-shaped hour and minute hands, a thin red second hand, small subdial at 6 o'clock position showing the date '17', exposed crown on the right side at the 3 position with mild scratches, brown alligator leather strap with cream stitching, soft directional studio lighting from upper-left creating a clean specular highlight on the top of the case, no other props.",
+      "eval_focus": ["vintage mechanical watch", "round 38mm steel case", "white porcelain dial", "Roman numerals at 12 3 6 9 only", "black sword hands", "red second hand", "date subdial reads 17", "crown right at 3 with scratches", "brown alligator strap cream stitching", "charcoal wool background", "upper-left specular highlight"],
+      "vqa_questions": ["Is this a vintage wristwatch?", "Is the case stainless steel?", "Are the numerals Roman and only at 12, 3, 6, 9?", "Are the hands sword-shaped and black?", "Is the second hand red?", "Does the date subdial show 17?", "Is the strap brown alligator with cream stitching?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-055",
+      "category": "long_prompt",
+      "prompt": "A wide cinematic shot of a Mars-base laboratory interior: large curved panoramic window across the back wall showing the orange-red Martian landscape outside with two small habitat domes visible in the distance, four scientists in white pressurized suits without helmets working at four separate stations, the leftmost scientist examining a soil sample under a microscope, the second from left typing at a holographic display, the third from left holding a transparent tablet showing a green plant simulation, the rightmost scientist drinking water from a metal pouch, polished white floor reflecting the warm overhead LED panel lighting, a small autonomous wheeled robot rolling across the floor between stations carrying a tray of test tubes.",
+      "eval_focus": ["Mars laboratory interior wide cinematic", "panoramic window with Martian landscape and two distant habitat domes", "four scientists in white suits no helmets", "leftmost using microscope", "second typing holographic display", "third holding tablet with green plant", "rightmost drinking water pouch", "warm overhead LED", "small wheeled robot carrying test tubes between stations"],
+      "vqa_questions": ["Is this a Mars laboratory interior?", "Is there a large window showing a Martian landscape?", "Are there four scientists at four stations?", "Is one using a microscope?", "Is one looking at a holographic display?", "Is one holding a tablet?", "Is there a small wheeled robot?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-056",
+      "category": "long_prompt",
+      "prompt": "A cozy hand-painted illustration of a witch's tea-time scene: a small wooden round table covered with a faded purple lace tablecloth, an ornate porcelain teapot with delicate floral patterns in the center of the table, two mismatched teacups (one chipped, one with a gold rim), a tiered cake stand with three layers (top: tiny tarts, middle: scones, bottom: finger sandwiches), a fluffy black cat curled in the witch's lap, the witch herself wearing a deep emerald green dress and a wide-brimmed pointed hat with a single moth pin, a tall stack of leather spellbooks on the right side of the table, a glowing crystal ball on the left side of the table with faint sparks inside, cozy warm window light from the right.",
+      "eval_focus": ["hand-painted illustration", "purple lace tablecloth", "ornate floral teapot center", "two mismatched cups (one chipped, one gold-rimmed)", "three-tier cake stand (tarts/scones/sandwiches)", "black cat in lap", "emerald dress and pointed hat with moth pin", "spellbook stack right", "crystal ball with sparks left", "warm window light right"],
+      "vqa_questions": ["Is this a hand-painted illustration of a witch?", "Is there a teapot on the table?", "Is there a tiered cake stand?", "Is there a black cat?", "Is the witch wearing green?", "Is there a pointed hat?", "Is there a crystal ball?", "Is there a stack of books?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-057",
+      "category": "long_prompt",
+      "prompt": "A documentary-style photograph of a busy New York street food cart at lunch rush: a steel-paneled halal-style cart on the corner with a yellow striped umbrella, the vendor (a middle-aged Bangladeshi man in a white apron and red baseball cap) handing a foil-wrapped sandwich to a customer in a navy business suit, a line of seven people of varied dress and demographics waiting behind, the cart's menu board on the front showing prices for chicken over rice and lamb gyro, steam rising from the cooking surface, yellow taxis blurred in the background, mid-afternoon overcast lighting.",
+      "eval_focus": ["NYC halal cart corner", "yellow striped umbrella", "Bangladeshi vendor white apron red cap", "customer in navy suit receiving foil sandwich", "line of 7 people varied demographics", "menu board with prices visible", "steam from grill", "yellow taxis blurred background", "overcast lighting"],
+      "vqa_questions": ["Is this a documentary photo of a street food cart?", "Is the umbrella yellow striped?", "Is the vendor wearing a red cap and white apron?", "Is the customer in a navy suit?", "Is there a line of people waiting?", "Are yellow taxis visible in the background?", "Is there a visible menu board?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-058",
+      "category": "long_prompt",
+      "prompt": "A high-fantasy concept art piece of a floating sky castle: massive stone fortress with five tall spires of varying heights, the central spire taller than the rest and crowned with a glowing blue crystal, suspended in the sky on a giant chunk of inverted-pyramid rock with cascading waterfalls falling off the edges of the rock into a misty void below, dragons (specifically three smaller red ones and one large gold one) flying in formation around the castle, a long stone bridge extending from the castle's main gate out to a smaller cliff-edge waypoint, dusk lighting with orange and pink clouds, intricate banner flags flying from each spire.",
+      "eval_focus": ["floating sky castle concept art", "five spires of varying heights", "central tallest spire with glowing blue crystal", "inverted-pyramid rock base with waterfalls", "three small red dragons and one large gold dragon", "stone bridge to small waypoint", "dusk orange/pink clouds", "banner flags on each spire"],
+      "vqa_questions": ["Is this a fantasy floating castle?", "Does it have multiple spires?", "Is there a glowing crystal on the tallest spire?", "Are there waterfalls falling from the rock base?", "Are there dragons flying nearby?", "Are there both red and gold dragons?", "Is there a bridge extending from the castle?", "Is the sky dusk colored?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-059",
+      "category": "long_prompt",
+      "prompt": "A clean editorial-style flat-lay overhead photograph of a home office desk surface: a slim 14-inch laptop centered open with a blank gray screen, a small leather notebook to the right of the laptop with a black ballpoint pen lying diagonally across it, a steaming ceramic mug of coffee at the upper left corner of the frame, a small succulent plant in a white pot at the upper right corner, a pair of round tortoiseshell reading glasses folded at the lower right, a small stack of three opened envelopes at the lower left, a beige linen cloth fully covering the desk surface, even soft daylight from directly above.",
+      "eval_focus": ["flat-lay overhead view", "14 inch laptop centered open with blank gray screen", "leather notebook right of laptop with pen on it", "steaming coffee mug upper left", "succulent in white pot upper right", "tortoiseshell glasses lower right", "three envelopes lower left", "beige linen background", "even overhead light"],
+      "vqa_questions": ["Is this a flat-lay overhead view?", "Is there a laptop centered?", "Is the laptop screen blank?", "Is there a notebook with a pen?", "Is there a coffee mug in the upper left?", "Is there a small plant in the upper right?", "Are there glasses in the lower right?", "Are there envelopes in the lower left?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-060",
+      "category": "long_prompt",
+      "prompt": "A retro 1960s-style hand-drawn cutaway illustration of a submarine interior: a long cigar-shaped cross-section with five distinct rooms visible from left to right: torpedo room on the far left with two stacked torpedoes, then the bridge with a captain in a navy uniform looking through a periscope, then the crew quarters with three bunk beds stacked vertically and a sailor reading, then the engine room with a chief engineer in coveralls turning a large red valve, then the galley on the far right with a cook in a white apron stirring a large pot, the entire submarine drawn in cross-section with cream and pale blue color scheme, technical labels not included.",
+      "eval_focus": ["1960s cutaway illustration style", "submarine cross-section long cigar shape", "five rooms left to right: torpedo room, bridge, crew quarters, engine room, galley", "torpedo room with two torpedoes", "captain at periscope bridge", "three stacked bunks crew quarters", "chief engineer with red valve", "cook stirring pot galley", "cream and pale blue palette"],
+      "vqa_questions": ["Is this a cutaway illustration of a submarine?", "Are there multiple rooms visible in cross-section?", "Is there a torpedo room?", "Is there someone looking through a periscope?", "Are there stacked bunk beds?", "Is there an engine room with a red valve?", "Is there a galley with a cook?", "Is the color scheme cream and pale blue?"],
+      "has_text_to_render": false
+    },
+
+    {
+      "id": "T2I-061",
+      "category": "knowledge_facts",
+      "prompt": "The Eiffel Tower photographed from the Trocadéro plaza at sunset, the tower centered in the frame with the symmetrical fountains and walkways of Trocadéro in the foreground, golden hour light on the tower, photorealistic.",
+      "eval_focus": ["Eiffel Tower correct geometry", "view specifically from Trocadéro (symmetrical fountains in foreground)", "centered composition", "golden hour"],
+      "vqa_questions": ["Is the Eiffel Tower visible?", "Are the Trocadéro fountains and plaza in the foreground?", "Is the tower centered?", "Is the lighting golden hour?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-062",
+      "category": "knowledge_facts",
+      "prompt": "The Great Pyramid of Giza with the Sphinx in the foreground, photographed from the Sphinx-temple viewing angle (Sphinx facing camera-left, pyramid behind and to the right), clear noon Egyptian desert light, no other tourists in the frame.",
+      "eval_focus": ["Great Pyramid of Giza correct shape", "Sphinx in foreground facing camera-left", "pyramid to the right and behind Sphinx", "noon desert light"],
+      "vqa_questions": ["Is the Great Pyramid visible?", "Is the Sphinx in the foreground?", "Is the Sphinx facing left?", "Is the pyramid behind and to the right of the Sphinx?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-063",
+      "category": "knowledge_facts",
+      "prompt": "Times Square at night with the famous illuminated billboards on all sides, looking north toward Duffy Square, the red TKTS booth and steps clearly visible at center, yellow taxis on the street, light rain reflecting the neon.",
+      "eval_focus": ["Times Square correctly identifiable", "looking north toward Duffy Square", "red TKTS booth and steps centered", "yellow taxis", "wet reflective street"],
+      "vqa_questions": ["Is this Times Square?", "Are illuminated billboards visible on multiple sides?", "Is there a red booth and steps in the center?", "Are there yellow taxis?", "Is the street wet and reflective?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-064",
+      "category": "knowledge_facts",
+      "prompt": "The Sydney Opera House and the Sydney Harbour Bridge in the same frame, photographed from a low angle on a ferry crossing Sydney Harbour, the Opera House on the right and the bridge on the left, midday clear sky.",
+      "eval_focus": ["Sydney Opera House correct architecture (sail-like shells)", "Sydney Harbour Bridge", "Opera House right, bridge left", "low angle from harbour"],
+      "vqa_questions": ["Is the Sydney Opera House visible?", "Is the Sydney Harbour Bridge visible?", "Is the Opera House on the right?", "Is the bridge on the left?", "Is the angle from water level?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-065",
+      "category": "knowledge_facts",
+      "prompt": "Mount Fuji reflected perfectly in Lake Kawaguchi at dawn, snow-capped peak symmetric and centered, autumn maple trees in vivid red and orange in the foreground, no clouds.",
+      "eval_focus": ["Mount Fuji correct shape and snowcap", "perfect reflection in lake (Kawaguchi)", "autumn red and orange maple foreground", "dawn light"],
+      "vqa_questions": ["Is Mount Fuji visible?", "Is the snowcap correct?", "Is there a clear reflection in a lake?", "Are there red and orange autumn trees in the foreground?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-066",
+      "category": "knowledge_facts",
+      "prompt": "The Roman Colosseum exterior at golden hour, three-quarter view showing both the largely intact south wall (taller, with the four tiers of arches stacked) and the partially collapsed north wall on the right side, no tourists or modern signage in frame.",
+      "eval_focus": ["Roman Colosseum correctly", "three-quarter view", "intact south wall four tiers visible", "partially collapsed north wall on right", "golden hour"],
+      "vqa_questions": ["Is this the Roman Colosseum?", "Are the four tiers of arches visible on one side?", "Is the opposite side partially collapsed?", "Is the lighting golden hour?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-067",
+      "category": "knowledge_facts",
+      "prompt": "The Taj Mahal photographed straight-on from the long reflecting pool, perfect symmetry, white marble dome and four minarets, the reflection visible in the pool, clear soft morning light.",
+      "eval_focus": ["Taj Mahal straight-on symmetric", "long reflecting pool foreground", "four minarets", "white marble dome", "reflection in pool"],
+      "vqa_questions": ["Is this the Taj Mahal?", "Are four minarets visible?", "Is there a reflecting pool in the foreground?", "Is the building reflected in the pool?", "Is the lighting soft morning?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-068",
+      "category": "knowledge_facts",
+      "prompt": "Machu Picchu seen from the classic upper viewpoint (Guardian House angle), with Huayna Picchu mountain rising sharply behind the ruins, morning mist still partially covering the lower terraces, vivid green vegetation.",
+      "eval_focus": ["Machu Picchu correct layout", "view from upper Guardian House angle", "Huayna Picchu mountain sharply behind", "morning mist on lower terraces"],
+      "vqa_questions": ["Is this Machu Picchu?", "Is there a sharp mountain rising behind the ruins?", "Is there morning mist on lower terraces?", "Is the vegetation vivid green?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-069",
+      "category": "knowledge_facts",
+      "prompt": "The Golden Gate Bridge at dawn with fog rolling in from the Pacific, photographed from Battery Spencer viewpoint on the Marin side, the bridge towers piercing through the fog, San Francisco skyline barely visible in the distance.",
+      "eval_focus": ["Golden Gate Bridge correctly", "view from Battery Spencer (Marin side, elevated, north of bridge)", "fog rolling in", "towers piercing fog", "SF skyline distant"],
+      "vqa_questions": ["Is this the Golden Gate Bridge?", "Is there fog rolling in?", "Are the bridge towers visible through the fog?", "Is the view from an elevated angle?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-070",
+      "category": "knowledge_facts",
+      "prompt": "Stonehenge at sunrise on the summer solstice, the rising sun aligned with the Heel Stone visible through the central trilithon, dramatic orange and pink sky, a few silhouetted human figures visible in respectful distance.",
+      "eval_focus": ["Stonehenge correct ring shape", "summer solstice sunrise alignment through the trilithons", "Heel Stone visible", "orange/pink sky", "distant silhouettes"],
+      "vqa_questions": ["Is this Stonehenge?", "Is the sun rising and aligned through the stones?", "Is the sky orange and pink?", "Are there silhouettes of people in the distance?"],
+      "has_text_to_render": false
+    },
+
+    {
+      "id": "T2I-071",
+      "category": "counting_numerical",
+      "prompt": "Exactly four red apples arranged in a perfect square on a wooden kitchen table, soft morning light from the left, photorealistic, no other fruit in the frame.",
+      "eval_focus": ["count = 4 apples", "color = red", "arrangement = square", "wooden table", "morning light from left"],
+      "vqa_questions": ["Are there exactly four apples?", "Are the apples red?", "Are they arranged in a square pattern?", "Is the table wooden?", "Are there any other fruits visible?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-072",
+      "category": "counting_numerical",
+      "prompt": "Seven yellow rubber ducks lined up in a single straight row on the edge of a white porcelain bathtub, facing camera-right, soft bathroom light, no water visible.",
+      "eval_focus": ["exactly 7 ducks", "yellow color", "single straight row", "facing camera-right", "porcelain bathtub edge"],
+      "vqa_questions": ["Are there exactly seven ducks?", "Are they yellow?", "Are they in a single row?", "Are they all facing the same direction?", "Are they on a bathtub edge?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-073",
+      "category": "counting_numerical",
+      "prompt": "A clock on a plain white wall showing exactly the time 10:10, classic analog face with twelve black hour markers, black sword-shaped hour and minute hands, no second hand visible.",
+      "eval_focus": ["analog clock", "time exactly 10:10", "12 hour markers", "black hands", "no second hand", "plain white wall"],
+      "vqa_questions": ["Is there an analog clock?", "Does the clock show approximately 10:10?", "Are there twelve hour markers?", "Is the background a plain white wall?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-074",
+      "category": "counting_numerical",
+      "prompt": "A pair of dice on a green felt surface, the left die showing 5 pips on the top face, the right die showing 2 pips on the top face, photorealistic, soft directional light from upper-left.",
+      "eval_focus": ["two dice", "left die top face = 5 pips", "right die top face = 2 pips", "green felt"],
+      "vqa_questions": ["Are there exactly two dice?", "Is the left die showing 5?", "Is the right die showing 2?", "Is the surface green felt?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-075",
+      "category": "counting_numerical",
+      "prompt": "A vase of nine sunflowers (count exactly nine flowers), each flower fully bloomed and visible, vase is plain clear glass on a white tablecloth, soft window light from the right.",
+      "eval_focus": ["exactly 9 sunflowers", "each flower visible", "clear glass vase", "white tablecloth", "right window light"],
+      "vqa_questions": ["Are there exactly nine sunflowers?", "Are all flowers fully bloomed?", "Is the vase clear glass?", "Is the tablecloth white?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-076",
+      "category": "counting_numerical",
+      "prompt": "Exactly three black ravens perched on a power line against a pale gray overcast sky, all three facing the same direction (camera-left), evenly spaced, no other birds visible.",
+      "eval_focus": ["exactly 3 ravens", "black color", "all facing camera-left", "evenly spaced on power line", "overcast gray sky"],
+      "vqa_questions": ["Are there exactly three birds?", "Are they black?", "Are they on a power line?", "Are they all facing the same direction?", "Is the sky overcast?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-077",
+      "category": "counting_numerical",
+      "prompt": "A box with exactly twelve identical glazed donuts arranged in a 3x4 grid, top-down view, the glaze a uniform pale pink, cardboard donut box visible.",
+      "eval_focus": ["exactly 12 donuts", "3x4 grid arrangement", "top-down view", "pale pink glaze uniform", "cardboard box"],
+      "vqa_questions": ["Are there exactly twelve donuts?", "Are they arranged in a 3 by 4 grid?", "Is this a top-down view?", "Are all donuts pale pink?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-078",
+      "category": "counting_numerical",
+      "prompt": "Five hot air balloons of different colors floating against a pale blue morning sky over a green countryside; left to right the balloon colors are red, orange, yellow, green, blue; balloons are similarly sized and at similar altitudes.",
+      "eval_focus": ["exactly 5 balloons", "colors left to right: red orange yellow green blue", "similar size and altitude", "green countryside below", "blue sky"],
+      "vqa_questions": ["Are there exactly five hot air balloons?", "Are they different colors?", "Are they over a green countryside?", "Are they at similar altitudes?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-079",
+      "category": "counting_numerical",
+      "prompt": "A page from an open notebook showing the handwritten equation '17 + 25 = 42' in blue ballpoint pen, written cleanly with each digit clearly legible, top-down view, soft afternoon light.",
+      "eval_focus": ["equation reads exactly 17 + 25 = 42", "handwritten blue ballpoint", "open notebook page", "top-down view", "soft afternoon light"],
+      "vqa_questions": ["Is there a handwritten equation?", "Does the equation read '17 + 25 = 42'?", "Is it written in blue ink?", "Is the view top-down on an open notebook?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-080",
+      "category": "counting_numerical",
+      "prompt": "An aquarium tank with exactly six identical orange goldfish swimming, no other fish in the tank, light gravel bottom and a single green plastic plant on the right side, soft front lighting.",
+      "eval_focus": ["exactly 6 goldfish", "orange color", "no other fish species", "gravel bottom", "single green plastic plant right"],
+      "vqa_questions": ["Are there exactly six fish?", "Are they orange goldfish?", "Are they the only fish in the tank?", "Is there a green plant on the right?"],
+      "has_text_to_render": false
+    },
+
+    {
+      "id": "T2I-081",
+      "category": "negative_space",
+      "prompt": "A single thin black horizontal line in the lower third of a pure white square canvas, the rest of the canvas is completely empty white, minimal composition, no other elements.",
+      "eval_focus": ["single thin black horizontal line", "line in lower third", "rest pure white", "no other elements", "square canvas"],
+      "vqa_questions": ["Is there a single black horizontal line?", "Is the line in the lower third?", "Is the rest of the canvas pure white?", "Are there any other elements?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-082",
+      "category": "negative_space",
+      "prompt": "A small black silhouette of a flying bird in the upper-right quadrant of an otherwise empty pale gray sky, the bird occupies less than 5% of the frame, vast negative space, minimalist photograph.",
+      "eval_focus": ["single small bird silhouette", "upper-right quadrant", "bird occupies <5% of frame", "rest pale gray empty", "no other elements"],
+      "vqa_questions": ["Is there a single small bird silhouette?", "Is the bird in the upper-right area?", "Is the rest of the image empty pale gray?", "Is the bird small relative to the frame?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-083",
+      "category": "negative_space",
+      "prompt": "A single red tulip stem with one bloom centered in the lower-left third of a large pale cream background, vast empty space above and to the right, minimalist, no other elements, no shadows, no watermarks, no signatures.",
+      "eval_focus": ["single red tulip", "lower-left third", "vast empty cream space upper-right", "no shadows no signatures no watermarks"],
+      "vqa_questions": ["Is there a single tulip?", "Is the tulip red?", "Is it in the lower-left of the frame?", "Is the rest of the frame empty cream?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-084",
+      "category": "negative_space",
+      "prompt": "A minimalist desert landscape: a single small Joshua tree silhouetted against a pale sand-yellow sky in the lower-right third, no other elements, vast empty sky above, no clouds, no sun visible.",
+      "eval_focus": ["single Joshua tree silhouette", "lower-right third", "pale yellow sky", "no clouds no sun", "vast empty space above"],
+      "vqa_questions": ["Is there a single Joshua tree?", "Is the rest of the frame empty pale yellow sky?", "Are there any clouds visible?", "Are there any other elements?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-085",
+      "category": "negative_space",
+      "prompt": "A single black dot at the exact mathematical center of an otherwise pure white square canvas, the dot is small (about 2% of the canvas width), no other elements at all.",
+      "eval_focus": ["single small black dot", "exactly centered", "dot ~2% width", "pure white background", "absolutely no other elements"],
+      "vqa_questions": ["Is there a single black dot?", "Is the dot centered?", "Is the dot small?", "Is the rest of the canvas pure white?", "Are there any other elements?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-086",
+      "category": "negative_space",
+      "prompt": "A minimalist photograph of a single white candle (unlit) standing on a pale gray surface, the candle is in the lower-left quadrant, vast empty pale gray space above and to the right, soft even lighting, no shadows visible.",
+      "eval_focus": ["single white candle unlit", "lower-left quadrant", "pale gray background", "no shadows", "vast empty space above and right"],
+      "vqa_questions": ["Is there a single white candle?", "Is the candle unlit?", "Is it in the lower-left?", "Is the rest empty pale gray?", "Are there visible shadows?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-087",
+      "category": "negative_space",
+      "prompt": "A single small wooden boat alone on a vast calm ocean, photographed from a high angle showing 95% water and only the small boat in the lower-center, water is uniform muted blue-gray, no horizon line visible, no other elements.",
+      "eval_focus": ["single small wooden boat", "lower center", "vast 95% water", "muted blue-gray uniform", "no horizon visible"],
+      "vqa_questions": ["Is there a single small boat?", "Is the rest of the image just water?", "Is the water uniform muted blue-gray?", "Is there a horizon line visible?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-088",
+      "category": "negative_space",
+      "prompt": "Minimalist composition: a single thin vertical strand of falling water entering from the top of the frame into the lower-center of the frame, against a pure black background, no splash, no container, just the water strand.",
+      "eval_focus": ["single thin vertical water strand", "entering top going to lower center", "pure black background", "no splash no container", "no other elements"],
+      "vqa_questions": ["Is there a single vertical strand of water?", "Is the background pure black?", "Is there a splash or container visible?", "Are there any other elements?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-089",
+      "category": "negative_space",
+      "prompt": "A single sheet of crumpled white paper in the dead center of an otherwise empty plain white wooden floor, photographed from directly above, soft even lighting, no shadows, no other objects.",
+      "eval_focus": ["single crumpled white paper", "dead center", "white wooden floor", "top-down view", "soft even no shadows", "no other objects"],
+      "vqa_questions": ["Is there a single crumpled paper?", "Is it centered?", "Is the floor plain white wood?", "Is the view from directly above?", "Are there other objects visible?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-090",
+      "category": "negative_space",
+      "prompt": "A single thin silver chain hanging vertically from the top of the frame against a pure deep navy background, the chain ends about two-thirds of the way down the frame, no pendant attached, no other elements, no text, no watermark.",
+      "eval_focus": ["single thin silver chain", "hanging vertically from top", "ends two-thirds down", "no pendant", "pure deep navy background", "no other elements"],
+      "vqa_questions": ["Is there a single hanging silver chain?", "Is the background pure deep navy?", "Is there a pendant attached?", "Are there other elements?"],
+      "has_text_to_render": false
+    },
+
+    {
+      "id": "T2I-091",
+      "category": "edge_case_policy",
+      "prompt": "A generic anonymous superhero in a red and blue costume standing on a city rooftop at sunset, the costume design is original and does not reference any existing trademarked character, masked face, cape blowing in the wind.",
+      "eval_focus": ["original generic superhero design", "no trademarked character resemblance", "red and blue costume", "city rooftop sunset", "mask and cape"],
+      "vqa_questions": ["Is there a superhero figure?", "Is the costume red and blue?", "Is the figure on a rooftop at sunset?", "Is the costume original and not a specific known character?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-092",
+      "category": "edge_case_policy",
+      "prompt": "A medical illustration of an adult human heart anatomy with the four chambers labeled, textbook-style cross-section, clinical neutral color palette, suitable for a biology textbook.",
+      "eval_focus": ["anatomically accurate human heart", "four chambers visible and correctly placed", "labels", "textbook clinical style"],
+      "vqa_questions": ["Is this a medical illustration of a heart?", "Are the four chambers visible?", "Are there labels?", "Does it look like a textbook illustration?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-093",
+      "category": "edge_case_policy",
+      "prompt": "A photograph of a generic plain white t-shirt on a wooden hanger against a neutral background, no logos, no branding, no text, no graphic designs anywhere on the shirt.",
+      "eval_focus": ["plain white t-shirt", "wooden hanger", "neutral background", "no logos no branding no text no graphics"],
+      "vqa_questions": ["Is there a plain white t-shirt?", "Is it on a wooden hanger?", "Are there any logos or text on the shirt?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-094",
+      "category": "edge_case_policy",
+      "prompt": "A bottle of generic cola in a clear glass on a wooden bar, the bottle and glass are unbranded with no logos or labels, bartender's hand visible in the background pouring another drink (out of focus), warm bar lighting.",
+      "eval_focus": ["generic unbranded cola bottle", "clear glass", "wooden bar", "out-of-focus bartender hand background", "warm bar lighting", "no logos"],
+      "vqa_questions": ["Is there a bottle on a bar?", "Is the bottle unbranded with no logos?", "Is there an out-of-focus hand in the background?", "Is the lighting warm bar lighting?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-095",
+      "category": "edge_case_policy",
+      "prompt": "A close-up photograph of an anatomically accurate human hand with five fingers including a clearly visible thumb, palm facing the camera, fingers slightly spread, no jewelry, neutral background, even soft studio lighting.",
+      "eval_focus": ["five fingers exactly", "anatomically accurate", "thumb clearly visible", "palm facing camera", "fingers spread", "neutral background", "no jewelry"],
+      "vqa_questions": ["Is there a human hand?", "Are there exactly five fingers including a thumb?", "Is the palm facing the camera?", "Is the hand anatomically accurate?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-096",
+      "category": "edge_case_policy",
+      "prompt": "A photo of a sleek modern electric car on a coastal cliff road at sunset, the car's brand is generic and not identifiable as any real manufacturer (no logos, no badges, no recognizable grille pattern), the car is matte dark blue.",
+      "eval_focus": ["generic electric car no real brand", "no logos or badges visible", "coastal cliff road sunset", "matte dark blue color"],
+      "vqa_questions": ["Is there a sleek modern car?", "Is the car on a coastal cliff road?", "Is the car matte dark blue?", "Is the car unbranded (no logos visible)?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-097",
+      "category": "edge_case_policy",
+      "prompt": "A fictional currency note design with the text 'BENCHCOIN' in large central typography, denomination value '100' in each corner, abstract geometric patterns on both sides of the central text, mint green and ivory color scheme, clearly fictional and not resembling any real currency.",
+      "eval_focus": ["fictional currency clearly not real", "text=BENCHCOIN center", "denomination=100 in four corners", "mint green and ivory", "abstract geometric pattern"],
+      "vqa_questions": ["Does the bill say 'BENCHCOIN'?", "Does it show '100' in the corners?", "Is the color scheme mint green and ivory?", "Is this clearly fictional currency?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-098",
+      "category": "edge_case_policy",
+      "prompt": "A photograph of a young Black woman with natural Afro hair smiling, professional headshot lighting, neutral background, the hair texture and skin tones rendered accurately and respectfully, photographic skin pores and texture visible.",
+      "eval_focus": ["young Black woman", "natural Afro hair", "skin and hair rendered accurately/respectfully", "professional headshot lighting", "neutral background", "visible skin texture"],
+      "vqa_questions": ["Is the woman young and Black?", "Does she have a natural Afro?", "Is she smiling?", "Is the headshot professionally lit?", "Is the skin texture realistic?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-099",
+      "category": "edge_case_policy",
+      "prompt": "A medical-style illustration of a generic prescription pill bottle (orange translucent plastic, white safety cap) with a blank white label (no text, no logo, no warnings), bottle is tipped over with a few small white round pills spilling out onto a neutral surface.",
+      "eval_focus": ["generic orange prescription bottle", "blank white label no text", "tipped over", "small white round pills spilling", "neutral surface"],
+      "vqa_questions": ["Is there an orange prescription pill bottle?", "Is the label blank?", "Are pills spilling out?", "Are the pills small white and round?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-100",
+      "category": "edge_case_policy",
+      "prompt": "A protest crowd in a public square holding generic, original signs with simple slogans like 'PEACE NOW' and 'LISTEN TO US', no real political party logos, no real flags, no specific real-world conflict identifiable, daytime overcast lighting.",
+      "eval_focus": ["protest crowd public square", "generic original signs", "slogans 'PEACE NOW' and 'LISTEN TO US' legible", "no real political imagery or flags", "no specific identifiable conflict", "overcast daylight"],
+      "vqa_questions": ["Is there a crowd holding signs?", "Do at least some signs say 'PEACE NOW' or 'LISTEN TO US'?", "Are real flags or political party logos visible?", "Is the lighting overcast daylight?"],
+      "has_text_to_render": true
+    },
+
+    {
+      "id": "T2I-101",
+      "category": "multilingual",
+      "prompt": "A small roadside tea stall in Varanasi, India at dawn, with a hand-painted wooden sign above the counter that reads 'चाय गरम' (chai garam) in clean Devanagari script, steaming brass kettles on a coal stove, a vendor in a white kurta pouring tea into clay cups, soft morning light, photorealistic.",
+      "eval_focus": ["text on sign exactly 'चाय गरम' in Devanagari", "clean readable Devanagari script (not garbled)", "Varanasi tea stall context", "brass kettles steaming", "white kurta vendor", "clay cups", "dawn light"],
+      "vqa_questions": ["Is there a sign with Devanagari (Hindi) script?", "Is the script clean and legible (not jumbled)?", "Is there a tea stall with brass kettles?", "Is steam visible?", "Is the vendor pouring tea into clay cups?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-102",
+      "category": "multilingual",
+      "prompt": "A bustling Hong Kong night market food stall with a large red neon sign overhead reading '歡迎光臨' (welcome) in traditional Chinese characters, several smaller hanging price boards in Chinese, vendors stir-frying noodles in woks with visible flame, customers waiting, photorealistic night photography.",
+      "eval_focus": ["neon sign reads exactly '歡迎光臨' in traditional Chinese", "characters rendered correctly (not garbled)", "red neon", "Hong Kong night market context", "wok flame visible", "customers waiting"],
+      "vqa_questions": ["Is there a red neon sign with Chinese characters?", "Are the characters clean and recognizable as traditional Chinese?", "Is it a night market scene?", "Are vendors stir-frying with visible flame?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-103",
+      "category": "multilingual",
+      "prompt": "An Egyptian souk market entrance with a hand-painted wooden archway, the Arabic text 'أهلاً وسهلاً' (welcome) painted in elegant gold calligraphy above the arch (right-to-left script), brass lanterns hanging on either side, two figures in traditional galabeya passing through, late afternoon warm light, photorealistic.",
+      "eval_focus": ["Arabic text 'أهلاً وسهلاً' rendered correctly right-to-left", "gold calligraphy on wooden arch", "Arabic letters properly connected (not isolated forms)", "brass lanterns both sides", "galabeya-clad figures", "warm afternoon light"],
+      "vqa_questions": ["Is there Arabic script on an archway?", "Is the script gold-colored?", "Are the Arabic letters properly connected (cursive)?", "Are there brass lanterns?", "Are there figures in traditional dress?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-104",
+      "category": "multilingual",
+      "prompt": "Tokyo subway platform with a station name sign mounted on the wall reading '東京駅' in large kanji on the top line and 'とうきょうえき' in smaller hiragana below it, plus 'Tokyo Station' in romanized text on the bottom line, fluorescent platform lighting, photorealistic, no people in frame.",
+      "eval_focus": ["kanji line reads exactly '東京駅'", "hiragana line reads 'とうきょうえき'", "romanized line reads 'Tokyo Station'", "three-line vertical layout", "subway platform context", "fluorescent lighting"],
+      "vqa_questions": ["Is there a station name sign?", "Does it have Japanese kanji?", "Does it also have hiragana?", "Does it have romanized Tokyo Station text?", "Is the kanji '東京駅' (Tokyo Station)?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-105",
+      "category": "multilingual",
+      "prompt": "A Moscow metro entrance sign at dusk: the iconic red 'М' logo on top, and beneath it 'Площадь Революции' in white Cyrillic letters on a dark blue panel, snow lightly falling, the brutalist station building visible behind, photorealistic.",
+      "eval_focus": ["red 'М' metro logo", "Cyrillic text exactly 'Площадь Революции'", "Cyrillic letters not garbled", "white on dark blue panel", "snow falling lightly", "dusk light"],
+      "vqa_questions": ["Is there a red 'М' metro logo?", "Is there Cyrillic text below?", "Is the Cyrillic clean and recognizable?", "Is snow falling?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-106",
+      "category": "multilingual",
+      "prompt": "A shopfront in the Insadong district of Seoul, South Korea, with a wooden carved sign over the door reading '환영합니다' (welcome) in Korean Hangul characters, traditional hanji paper lanterns flanking the door, a celadon pottery display in the window, late afternoon sun, photorealistic.",
+      "eval_focus": ["Hangul text reads exactly '환영합니다'", "Hangul blocks rendered correctly", "wooden carved sign", "hanji paper lanterns", "celadon pottery window display", "afternoon sun"],
+      "vqa_questions": ["Is there Korean Hangul script on the sign?", "Is the Hangul properly block-structured (not garbled)?", "Are there paper lanterns?", "Is there celadon pottery in the window?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-107",
+      "category": "multilingual",
+      "prompt": "A traditional Greek taverna entrance in Plaka, Athens, with a hand-lettered wooden sign above the door reading 'ΚΑΛΩΣ ΗΛΘΑΤΕ' (welcome) in all-caps Greek letters painted in deep blue, white-painted stone walls, bougainvillea cascading from the rooftop, two wooden chairs and a small marble table outside, early evening Mediterranean light.",
+      "eval_focus": ["Greek text exactly 'ΚΑΛΩΣ ΗΛΘΑΤΕ' in deep blue", "all-caps Greek letters, no Latin confusion", "white stone walls", "bougainvillea overhead", "wooden chairs marble table", "early evening light"],
+      "vqa_questions": ["Is there Greek text on the sign?", "Is the text in all-caps Greek (not Latin alphabet)?", "Is the text deep blue?", "Are there bougainvillea flowers?", "Is there a marble table outside?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-108",
+      "category": "multilingual",
+      "prompt": "A Tel Aviv café A-frame chalkboard standing on a sunlit sidewalk, the top line in Hebrew reading 'ברוכים הבאים' (welcome, right-to-left) in white chalk, a smaller line below in English reading 'open for breakfast', a small chalk illustration of a coffee cup in the corner, photorealistic, slight wear on the chalkboard edges.",
+      "eval_focus": ["Hebrew text exactly 'ברוכים הבאים' rendered right-to-left", "English text 'open for breakfast' on second line", "two-line layout, Hebrew on top", "chalkboard A-frame", "coffee cup chalk doodle", "sunlit sidewalk"],
+      "vqa_questions": ["Is there Hebrew script on the chalkboard?", "Is the Hebrew rendered cleanly (not garbled)?", "Is there also English text below it?", "Is there a chalk drawing of a coffee cup?", "Is it an A-frame chalkboard?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-109",
+      "category": "multilingual",
+      "prompt": "A Bangkok street food cart at golden hour, with a hand-painted Thai sign on the side reading 'ส้มตำ' (som tam, papaya salad) in vivid yellow paint on a dark green panel, a vendor pounding ingredients in a clay mortar, papaya, chilies, and limes visible on the prep surface, motorbikes blurred in the background.",
+      "eval_focus": ["Thai script exactly 'ส้มตำ'", "Thai characters cleanly rendered (not garbled)", "yellow text on dark green panel", "vendor pounding mortar", "papaya, chilies, limes visible", "motorbike blur background", "golden hour"],
+      "vqa_questions": ["Is there Thai script on the cart?", "Is the Thai script clean and recognizable?", "Is the text yellow on dark green?", "Is the vendor pounding something in a mortar?", "Are papaya and chilies visible?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-110",
+      "category": "multilingual",
+      "prompt": "A Mexican mercado entrance in Coyoacán, Mexico City, with a large hand-painted wooden sign over the gate reading 'Bienvenidos al Mercado de Coyoacán' (with the correct acute accents on 'í' and 'á'), traditional papel picado banners in cyan and magenta strung across the entry, two stone planters with marigolds flanking the gate, midday clear sky, photorealistic.",
+      "eval_focus": ["Spanish text exactly 'Bienvenidos al Mercado de Coyoacán'", "acute accent on 'á' in Coyoacán correctly rendered", "Latin script, no confusion with other scripts", "papel picado in cyan and magenta", "stone planters with marigolds", "midday clear sky"],
+      "vqa_questions": ["Does the sign read 'Bienvenidos al Mercado de Coyoacán'?", "Is the accent over the 'a' in 'Coyoacán' rendered correctly?", "Are there papel picado banners?", "Are they cyan and magenta?", "Are there marigolds in stone planters?"],
+      "has_text_to_render": true
+    },
+
+    {
+      "id": "T2I-111",
+      "category": "hyper_complex",
+      "prompt": "An isometric top-down illustration of one full city block at noon containing exactly: (1) a corner café 'Aurora Café' on the lower-left with three outdoor tables, one occupied by a woman in a yellow dress reading a paperback, another by two men in business suits drinking espresso, the third empty with a fallen chair; (2) a bookstore 'Bramble & Vine Books' adjacent to the café with a black cat on the windowsill and a brass rolling ladder visible inside; (3) a dentist's office above the bookstore with a small white-on-blue plaque reading 'Dr. M. Ruiz, DDS'; (4) a public library on the upper-right with six stone steps and two banners hanging beside the entrance one reading 'SUMMER READING' the other 'OPEN UNTIL 8 PM'; (5) a street running across the middle with one yellow taxi mid-block, one red electric bicycle ridden by a courier carrying a flat pizza box, and one black dog walking on a leash held by a person whose face is not visible; (6) exactly four pedestrians on the sidewalk in various poses, none repeating the same coat color; (7) a public square in the center with a single bronze statue of a writer on a granite plinth, three pigeons on the plinth, and a single discarded coffee cup nearby; (8) noon shadows pointing roughly toward the upper-right of the frame for every object. Detailed, illustrative, not photographic.",
+      "eval_focus": ["isometric top-down", "Aurora Café lower-left with 3 outdoor tables (occupied/occupied/empty-fallen-chair)", "woman in yellow reading", "two men in suits drinking espresso", "Bramble & Vine Books adjacent with cat and ladder", "Dr. M. Ruiz DDS plaque", "public library upper-right with 6 steps and two banners", "banners 'SUMMER READING' and 'OPEN UNTIL 8 PM'", "yellow taxi", "red electric bicycle with pizza-box courier", "black dog on leash", "exactly 4 pedestrians, distinct coats", "bronze writer statue with 3 pigeons", "noon shadows pointing upper-right"],
+      "vqa_questions": ["Is this an isometric top-down view?", "Is there a café in the lower-left?", "Does a sign say 'Aurora Café'?", "Is there a bookstore?", "Does a sign say 'Bramble & Vine Books'?", "Is there a black cat in the bookstore window?", "Is there a yellow taxi on the street?", "Is there a red electric bicycle?", "Is there a courier carrying a pizza box?", "Are there exactly four pedestrians?", "Is there a bronze statue with pigeons?", "Are there two library banners visible?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-112",
+      "category": "hyper_complex",
+      "prompt": "A 1960s NASA mission control room photographed from a balcony at the back, six rows of consoles facing a large central rear-projection screen, each console occupied by a controller wearing a white short-sleeve shirt and skinny dark tie. Exactly six specific stations from front to back: (1) flight director at the front-right with a coffee cup and a binder open to a checklist; (2) capcom adjacent on his left holding a microphone; (3) flight dynamics second row showing an orbital trace on a small CRT; (4) guidance & nav second-row right with a slide rule visible on the desk; (5) life systems third row with a vintage chart recorder; (6) public affairs at the very back-left with a typewriter. The central rear-projection screen shows a large world map with a curving orbital track and a small lit dot over the Pacific. Two American flags on stands flank the screen. Period-accurate horn-rim glasses, crew cuts, smoking ashtrays at a few consoles, fluorescent overhead lighting, photorealistic, mid-zoom angle showing all six rows.",
+      "eval_focus": ["1960s NASA mission control", "six rows of consoles facing rear-projection screen", "all controllers in white short-sleeve shirts with dark ties", "specific stations identified (flight, capcom, dynamics, guidance/nav, life, PAO)", "binder open to checklist at flight director", "capcom with microphone", "orbital trace on small CRT at flight dynamics", "slide rule at guidance", "chart recorder at life systems", "typewriter at PAO", "rear-projection world map with orbital track and dot over Pacific", "two American flags flanking screen", "period horn-rim glasses, crew cuts", "fluorescent overhead lighting"],
+      "vqa_questions": ["Is this a 1960s mission control room?", "Are there multiple rows of consoles?", "Are controllers in white shirts and dark ties?", "Is there a large screen at the front?", "Does the screen show a world map?", "Is there a curving orbital track on the map?", "Are there American flags flanking the screen?", "Is there a microphone visible?", "Is there a typewriter?", "Is there a slide rule?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-113",
+      "category": "hyper_complex",
+      "prompt": "A cluttered antique clockmaker's workshop at dusk, photographed from eye-level, containing: (a) a long wooden workbench across the middle with exactly seven mechanical clocks in various states of repair arranged left-to-right by size, the leftmost a small pocket watch fully disassembled with its parts laid out on a velvet tray, the rightmost a tall grandfather-clock mechanism standing upright; (b) the clockmaker himself, an elderly Black man with white hair, sitting at the bench wearing a brown apron and a magnifying loupe over his right eye, adjusting a small gear with tweezers in his right hand and steadying a brass plate with his left; (c) the back wall covered with at least 12 wall clocks all showing different times, the highest-up clock showing exactly 6:17; (d) a small cast-iron stove in the corner with a kettle on top emitting a curl of steam; (e) a black cat asleep on a stack of leather-bound books at the right edge of the bench; (f) a single bare incandescent bulb hanging from a brass fixture above the bench casting a warm pool of light on the work area while the corners of the workshop fall into deep shadow; (g) one chalkboard on the side wall with the handwritten note 'pick up Wed' in white chalk; photorealistic, low light photography, visible motes of dust in the bulb's light cone.",
+      "eval_focus": ["clockmaker's workshop", "long wooden bench with 7 clocks left-to-right by size", "leftmost disassembled pocket watch with parts on velvet", "rightmost upright grandfather-clock mechanism", "elderly Black clockmaker in brown apron with loupe and tweezers", "12+ wall clocks behind, highest showing 6:17", "cast-iron stove with kettle and steam", "black cat asleep on books at right edge of bench", "single hanging incandescent bulb with light cone", "chalkboard note 'pick up Wed' in white chalk", "visible dust motes"],
+      "vqa_questions": ["Is this a clockmaker's workshop?", "Are there many clocks on the back wall?", "Is there an elderly clockmaker at a bench?", "Is he wearing a magnifying loupe?", "Are there clocks of different sizes on the bench?", "Is there a kettle on a stove?", "Is there a cat on the bench?", "Is there a chalkboard with handwritten text?", "Does the chalkboard say 'pick up Wed'?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-114",
+      "category": "hyper_complex",
+      "prompt": "A scientific cutaway illustration of a 12-room Antarctic research station shown as if the roof has been transparently lifted, top-down isometric, snow surrounding the building. The rooms are arranged in a 3-by-4 grid and contain, reading left-to-right then top-to-bottom: (1) bunkroom with four bunks, one person sleeping; (2) communal kitchen with a chef chopping vegetables and a long table set for ten; (3) communications room with three desks and large radio antennae visible through a porthole; (4) hydroponic greenhouse with rows of leafy greens under purple grow lights; (5) lab with a researcher peering into a microscope and a centrifuge spinning; (6) corridor with two researchers passing each other carrying clipboards; (7) generator room with two diesel generators and pipes in the ceiling; (8) shower/sauna with a tiled floor; (9) main entry airlock with red-hooded parkas hanging on hooks; (10) lounge with a chess board mid-game, two armchairs, a fireplace; (11) medical bay with an examination table and a wall chart; (12) storage room with metal shelves stacked with crates labeled 'FOOD WK 1', 'FOOD WK 2', 'TOOLS', 'SPARES'. Outside the building: a snowmobile parked by the entry, an antenna mast, a single penguin walking past. Daytime, low Antarctic sun casting long shadows pointing northwest. Cream-and-blue color scheme, technical-illustration style, no photorealism.",
+      "eval_focus": ["12-room cutaway top-down isometric", "3x4 grid of rooms with specific functions in specific positions", "bunkroom, kitchen, comms, hydroponic greenhouse, lab, corridor, generator, shower/sauna, airlock, lounge, medical, storage in correct order", "specific occupants in specific rooms", "purple grow lights in greenhouse", "centrifuge and microscope in lab", "labeled crates in storage", "snowmobile, antenna mast, single penguin outside", "long shadows northwest", "cream-blue palette, illustration not photo"],
+      "vqa_questions": ["Is this a cutaway illustration?", "Is it top-down isometric?", "Are there multiple distinct rooms visible?", "Is one room a kitchen?", "Is one room a greenhouse with purple lighting?", "Is there a lab room?", "Are there crates with text labels?", "Is there a penguin outside?", "Is there a snowmobile outside?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-115",
+      "category": "hyper_complex",
+      "prompt": "A wide cinematic frame of a 1920s speakeasy at midnight, viewed from the back of the room looking toward the bar. The scene contains exactly: (a) a long brass-railed bar across the back with a bartender in a vest and bow tie shaking a cocktail in a silver shaker; (b) two patrons seated at the bar — on the left an older woman in a beaded silver flapper dress and a long cigarette holder, on the right a young man in a navy three-piece suit with his hat on the bar; (c) a four-piece jazz band on a small raised stage to the left of the bar — a Black male trumpet player standing center, a white female pianist seated at an upright, a Black male upright bassist, a white male drummer on a small kit; (d) three round tables in the foreground — leftmost with two women laughing one in a green dress one in burgundy, middle table empty but with two cocktail glasses and an ashtray with a still-smoking cigarette, rightmost with a dapper couple mid-conversation a small bouquet of red carnations between them; (e) a heavy red velvet curtain draped along the wall to the right; (f) a small chalkboard near the entrance behind the viewer's shoulder partially visible reading 'TONIGHT: THE ASTORIA FOUR'; (g) low warm amber lighting from wall sconces, smoke haze in the air; (h) art deco geometric brass details on the bar and ceiling moldings. Photorealistic period-accurate cinematography.",
+      "eval_focus": ["1920s speakeasy cinematic wide", "specific bar layout with bartender shaking cocktail", "two specific bar patrons (silver flapper / navy 3-piece)", "four-piece jazz band with specific roles and races/genders in specific positions", "three foreground tables with specific occupants and props", "still-smoking cigarette on middle table", "red velvet curtain right wall", "chalkboard reads 'TONIGHT: THE ASTORIA FOUR'", "warm amber wall sconces", "art deco brass details", "period accuracy"],
+      "vqa_questions": ["Is this a 1920s speakeasy?", "Is there a long bar with a bartender?", "Is there a jazz band on a small stage?", "Are there four band members?", "Are there round tables in the foreground?", "Is one woman wearing a silver flapper dress?", "Is there a red velvet curtain?", "Does any visible chalkboard mention 'THE ASTORIA FOUR'?", "Is the lighting warm and amber?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-116",
+      "category": "hyper_complex",
+      "prompt": "A high-angle photograph of a fully-staffed surgical operating theater mid-procedure containing exactly the following team in specific positions around the patient (who is fully draped except for the abdominal surgical field): (1) lead surgeon on the patient's right, masked, gowned in royal blue, holding a hemostat in her right hand, gloved hands in the surgical field; (2) assistant surgeon directly across from her on the patient's left, masked, holding a retractor; (3) scrub nurse to the lead surgeon's right at a Mayo stand of instruments laid out neatly; (4) circulating nurse standing back near the door in a different gown color (light teal) holding a clipboard; (5) anesthesiologist at the head of the patient seated, monitoring three vital-sign monitors mounted on a boom — one showing a clear ECG trace, one showing pulse-ox 98, one showing BP 118/72; (6) a resident observer in the corner with arms crossed, scrub cap visible. Sterile field with blue drapes, overhead surgical lights pointing inward, suction lines and electrosurgical cables visible. A clock high on the wall reading 09:42. Photorealistic, slight blur on the lead surgeon's hand to convey motion.",
+      "eval_focus": ["surgical theater mid-procedure", "lead surgeon (female) in royal blue with hemostat on patient's right", "assistant surgeon across with retractor", "scrub nurse at Mayo stand to surgeon's right", "circulating nurse in light teal with clipboard near door", "anesthesiologist seated at head with three monitors (ECG / SpO2=98 / BP=118/72)", "resident observer in corner with arms crossed", "sterile blue drapes", "wall clock reads 09:42", "motion blur on lead surgeon's hand"],
+      "vqa_questions": ["Is this a surgical operating theater?", "Are there multiple gowned team members?", "Is there an anesthesiologist at the head of the patient?", "Are there vital-sign monitors visible?", "Do the monitors show numerical readouts?", "Is one team member in a different gown color (teal vs blue)?", "Is the wall clock showing approximately 9:42?", "Are there sterile blue drapes?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-117",
+      "category": "hyper_complex",
+      "prompt": "A bird's-eye top-down photograph of a chef's prep counter in a fine-dining kitchen exactly 90 seconds before service. The counter must contain exactly: (a) twelve identical small white bowls arranged in a 3-by-4 grid, each containing a separate mise-en-place ingredient — top row left-to-right: minced shallot, micro basil, lemon zest, sea salt flakes; middle row: blanched green beans, halved cherry tomatoes, capers, finely chopped chives; bottom row: brunoise of carrot, brunoise of red bell pepper, kalamata olive halves, toasted pine nuts; (b) two long stainless squeeze bottles on the right side, one labeled 'BEURRE BLANC' the other labeled 'CHERVIL OIL'; (c) a 20-cm chef's knife laid diagonally across the upper-right corner of the counter, blade pointing away; (d) a folded clean white side towel on the lower-left corner; (e) a paper printed dupe in the upper-left corner reading 'TABLE 14 — 2 SCALLOP' in large block type; (f) a small handheld digital timer on the upper-center reading 1:30. Even soft overhead daylight, no shadows under the bowls, photorealistic flat-lay.",
+      "eval_focus": ["top-down view chef prep counter", "exactly 12 small white bowls in 3x4 grid", "specific ingredients in specific bowls in specific positions", "two labeled squeeze bottles (BEURRE BLANC / CHERVIL OIL) on right", "20cm chef's knife diagonal upper-right blade pointing away", "folded white towel lower-left", "printed dupe upper-left reads 'TABLE 14 — 2 SCALLOP'", "digital timer upper-center reads 1:30", "even daylight, no shadows"],
+      "vqa_questions": ["Is this a top-down flat-lay?", "Are there exactly twelve small bowls in a 3 by 4 grid?", "Are there two squeeze bottles?", "Is one bottle labeled with French sauce text?", "Is there a chef's knife diagonally placed?", "Is there a printed dupe with 'TABLE 14' visible?", "Is there a small timer reading approximately 1:30?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-118",
+      "category": "hyper_complex",
+      "prompt": "A panoramic wide-format painting in detailed traditional Indian miniature style (Mughal court tradition) depicting a marketplace at sunset with at least sixteen named participants: (1) a fruit seller on the left under a striped red-and-cream awning weighing pomegranates on a balance scale; (2) a young customer in a saffron kurta pointing at the pomegranates; (3) a snake charmer center-left playing a been before a swaying cobra in a wicker basket, three children watching from a respectful distance; (4) a brassware vendor center with a pyramid of stacked pots; (5) a sadhu in orange robes seated cross-legged on a small woven mat near the brassware vendor, eyes closed in meditation; (6) two musicians right-of-center, one playing a tabla one playing a sitar, on a small raised platform; (7) a noblewoman on a richly caparisoned white elephant in the upper-right background being fanned by an attendant with a peacock-feather fan; (8) a stray dog drinking from a water bowl near the lower-right corner; (9) a small boy on the lower-left flying a red kite, with the kite string visible reaching up out of the frame; (10) the city's fort wall and minarets visible in the distant background. Vivid jewel tones — gold leaf accents, deep crimson, peacock blue, emerald green. Highly detailed faces, hand-painted feel, fine line work, no photorealism.",
+      "eval_focus": ["Indian Mughal-miniature style panoramic", "16+ named participants in named positions", "fruit seller with balance scale on left under striped awning", "snake charmer with been and cobra basket, three children watching", "brassware vendor with pyramid of pots", "sadhu in orange robes seated cross-legged", "tabla + sitar duo on platform", "noblewoman on caparisoned white elephant being fanned with peacock-feather fan upper-right", "stray dog drinking lower-right", "boy flying red kite lower-left", "fort wall and minarets distant background", "jewel-tone palette with gold leaf accents"],
+      "vqa_questions": ["Does this look like a traditional Indian miniature painting?", "Are there many figures in the scene?", "Is there a fruit seller with a balance scale?", "Is there a snake charmer with a cobra?", "Is there a noblewoman on a white elephant?", "Is there a small boy flying a kite?", "Is the color palette rich with gold accents?", "Does it have a hand-painted, non-photographic feel?"],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-119",
+      "category": "hyper_complex",
+      "prompt": "A medical-textbook-style fully-labeled cross-sectional anatomical illustration of the human respiratory system, drawn in clinical neutral colors over a faintly tinted cream background, with each major structure annotated with a thin leader line and a sans-serif label. Required labels in their correct anatomical positions: 'Nasal cavity', 'Oral cavity', 'Pharynx', 'Larynx', 'Trachea', 'Right primary bronchus', 'Left primary bronchus', 'Secondary bronchi', 'Bronchioles', 'Alveoli (inset detail)', 'Right lung (3 lobes)', 'Left lung (2 lobes)', 'Diaphragm', 'Pleural cavity'. The 'Alveoli (inset detail)' label must point to a circular zoomed-in inset on the right showing a small cluster of alveoli with two capillaries crossing one alveolus. The right lung must clearly show three distinct lobes; the left lung must clearly show two distinct lobes plus the cardiac notch. A horizontal title across the top reading 'Human Respiratory System — Anterior View'. Subtle anatomical accuracy — bronchial branching plausibly correct, diaphragm dome-shape correct. No watermarks, no signatures.",
+      "eval_focus": ["anatomical cross-section respiratory system, textbook clinical style", "all required labels in correct positions: nasal/oral cavity, pharynx, larynx, trachea, R+L primary bronchi, secondary bronchi, bronchioles, alveoli inset, R lung 3 lobes, L lung 2 lobes, diaphragm, pleural cavity", "inset detail for alveoli with capillaries crossing", "right lung shows 3 lobes", "left lung shows 2 lobes plus cardiac notch", "title across top 'Human Respiratory System — Anterior View'", "no signature/watermark"],
+      "vqa_questions": ["Is this an anatomical illustration of the respiratory system?", "Are there labels with leader lines?", "Is the title 'Human Respiratory System — Anterior View' visible?", "Does the right lung show three lobes?", "Does the left lung show two lobes?", "Is there an inset zoom for alveoli?", "Is the diaphragm shown beneath the lungs?", "Is the style clinical/textbook (not photographic)?"],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-120",
+      "category": "hyper_complex",
+      "prompt": "A photo-realistic wide-angle high-resolution photograph of a five-couple wedding-reception dinner scene in a glass-walled garden venue at twilight. Required elements: (a) a long banquet table seating exactly ten people across, with the bride (centered, white off-shoulder gown) and groom (centered, charcoal three-piece suit with a forest-green tie) at the head facing the camera; the eight other guests in named positions — the bride's mother (early 50s, deep emerald dress) immediately to her right, the groom's father (early 60s, navy suit) immediately to his left, four other guests further out; (b) place settings: each plate holds a different-stage entrée (some untouched, some half-eaten, two cleared with crumpled napkins), three different wine glasses per setting (water, white, red), gold flatware, a folded place card at every setting (none readable individually but all present); (c) a multi-tier wedding cake on a separate small round table to the left of the main table — exactly four tiers, white with cascading fresh peonies in cream and peach; (d) a string quartet in the background-right corner on a small platform playing visible instruments (2 violins, viola, cello); (e) overhead — a ceiling of suspended bistro lights and a few hanging glass orbs with tiny candles inside, all glowing warm; (f) outside the glass walls — a manicured garden with magnolia trees and one heron walking through the lawn; (g) lighting is the magic-hour warm-blue gradient where indoor warm tungsten meets outdoor blue-hour sky. Photo-real, slight bokeh on the background quartet, sharp focus on the bride and groom.",
+      "eval_focus": ["wedding reception in glass-walled garden venue twilight", "long banquet table with exactly 10 seated", "bride in white off-shoulder gown centered", "groom in charcoal 3-piece with forest-green tie centered", "bride's mother in emerald to bride's right", "groom's father in navy to groom's left", "varied entrée states per plate (untouched/half-eaten/cleared)", "three wine glasses per setting + gold flatware + folded place card", "four-tier wedding cake on separate left table with peach/cream peonies", "string quartet (2 violins, viola, cello) background-right on platform", "bistro lights and hanging candle orbs overhead", "magnolia trees outside, heron walking on lawn", "magic-hour warm-blue gradient lighting", "bokeh on quartet, sharp focus on bride and groom"],
+      "vqa_questions": ["Is this a wedding reception scene?", "Is there a long banquet table with about ten people seated?", "Is the bride centered in a white gown?", "Is the groom in a dark suit with a green tie?", "Is there a multi-tier wedding cake on a separate table?", "Are there string quartet musicians in the background?", "Is the venue glass-walled with garden visible outside?", "Is there a heron walking on the lawn outside?", "Is the lighting warm-tungsten transitioning to blue-hour outside?"],
+      "has_text_to_render": false
+    }
+  ]
+}

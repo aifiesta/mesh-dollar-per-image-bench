@@ -1,0 +1,290 @@
+{
+  "_schema": {
+    "id": "string, format EDIT-NNN",
+    "category": "one of: object_inout, style_edit, region_inpaint",
+    "source_image_prompt": "the T2I prompt used to generate the base image (so the bench is fully self-contained — no external image dependencies)",
+    "source_size": "dimensions of the base image",
+    "edit_instruction": "the instruction passed to the editing endpoint",
+    "eval_focus": "list of attributes the judge should verify",
+    "vqa_questions": "list of yes/no questions for VQAScore"
+  },
+  "_metadata": {
+    "version": 1,
+    "authored": "2026-05-20",
+    "notes": "30 prompts across 3 sub-buckets, 10 each. Used ONLY if discover.py confirms Mesh exposes /v1/images/edits or an equivalent. Each item's source image is generated in-bench from source_image_prompt to keep the benchmark self-contained."
+  },
+  "items": [
+    {
+      "id": "EDIT-001",
+      "category": "object_inout",
+      "source_image_prompt": "A wooden picnic table on a grassy lawn under an oak tree at midday, no objects on the table, photographic.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Add a red checkered picnic blanket spread across the center of the table, with a wicker basket on the left side and a glass pitcher of lemonade on the right side.",
+      "eval_focus": ["red checkered blanket added on table", "wicker basket on left", "glass pitcher on right", "preserve table, lawn, tree, midday light"],
+      "vqa_questions": ["Is there a red checkered blanket on the table?", "Is there a wicker basket?", "Is there a glass pitcher?", "Are the basket and pitcher on opposite sides?", "Is the table and surrounding lawn preserved?"]
+    },
+    {
+      "id": "EDIT-002",
+      "category": "object_inout",
+      "source_image_prompt": "A modern kitchen counter with a granite top, empty, soft window light from the right.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Place a steaming white ceramic coffee mug at the center of the counter and a folded morning newspaper to the left of the mug.",
+      "eval_focus": ["white steaming coffee mug centered", "folded newspaper to the left of mug", "preserve counter and lighting"],
+      "vqa_questions": ["Is there a white coffee mug on the counter?", "Is steam visible from the mug?", "Is there a folded newspaper to its left?", "Is the granite counter preserved?"]
+    },
+    {
+      "id": "EDIT-003",
+      "category": "object_inout",
+      "source_image_prompt": "A bedroom nightstand with an analog alarm clock, a lamp, and a stack of three books, photographic.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Remove the stack of three books from the nightstand. Leave the alarm clock and lamp exactly where they were.",
+      "eval_focus": ["books removed cleanly", "alarm clock preserved in position", "lamp preserved in position", "no ghosting where books were"],
+      "vqa_questions": ["Are there books on the nightstand?", "Is the alarm clock still present?", "Is the lamp still present?"]
+    },
+    {
+      "id": "EDIT-004",
+      "category": "object_inout",
+      "source_image_prompt": "A young woman in a yellow raincoat standing in front of a brick wall, holding nothing, photographic.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Give the woman a closed black umbrella to hold in her right hand. Keep the rest of the image identical.",
+      "eval_focus": ["closed black umbrella added in right hand", "raincoat preserved", "brick wall preserved", "no other changes"],
+      "vqa_questions": ["Is the woman holding a closed black umbrella?", "Is it in her right hand?", "Is she still wearing the yellow raincoat?", "Is the brick wall preserved?"]
+    },
+    {
+      "id": "EDIT-005",
+      "category": "object_inout",
+      "source_image_prompt": "An empty living room with a gray sofa, hardwood floor, a small coffee table, and a tall lamp in the corner, photographic.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Add a sleeping orange tabby cat curled up at one end of the gray sofa.",
+      "eval_focus": ["orange tabby cat curled at end of sofa", "cat is sleeping", "rest of room unchanged"],
+      "vqa_questions": ["Is there an orange cat on the sofa?", "Is the cat curled up?", "Does the cat appear to be sleeping?", "Is the gray sofa preserved?"]
+    },
+    {
+      "id": "EDIT-006",
+      "category": "object_inout",
+      "source_image_prompt": "A wide outdoor street scene at midday with a parked blue sedan in the foreground, brick buildings behind, no other vehicles or people visible.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Remove the blue sedan from the scene. The street should appear empty where the car was, matching the road texture and shadows of the surroundings.",
+      "eval_focus": ["blue sedan removed cleanly", "road surface coherent where car was", "shadows match surroundings", "brick buildings preserved"],
+      "vqa_questions": ["Is there a blue sedan in the scene?", "Is there any other car?", "Is the road continuous and natural-looking?"]
+    },
+    {
+      "id": "EDIT-007",
+      "category": "object_inout",
+      "source_image_prompt": "A wooden desk with a closed laptop and a single small green plant, plain white wall behind, photographic.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Add a pair of round tortoiseshell glasses placed neatly on top of the closed laptop.",
+      "eval_focus": ["tortoiseshell glasses on top of laptop", "neatly placed (not floating)", "rest of desk unchanged"],
+      "vqa_questions": ["Are there glasses on top of the laptop?", "Are they tortoiseshell (brown patterned)?", "Are they placed flat and naturally?"]
+    },
+    {
+      "id": "EDIT-008",
+      "category": "object_inout",
+      "source_image_prompt": "A glass aquarium tank with light gravel and a small green plastic plant on the right, no fish visible.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Add exactly three identical orange goldfish swimming in the tank.",
+      "eval_focus": ["exactly 3 orange goldfish", "swimming", "aquarium and plant preserved"],
+      "vqa_questions": ["Are there fish in the tank?", "Are there exactly three?", "Are they orange?", "Is the plant on the right preserved?"]
+    },
+    {
+      "id": "EDIT-009",
+      "category": "object_inout",
+      "source_image_prompt": "A baker's display case with a row of identical croissants, no other pastries, soft pastry shop lighting.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Replace the rightmost croissant with a single chocolate eclair, keeping the rest of the row intact.",
+      "eval_focus": ["rightmost item is now a chocolate eclair", "all other croissants unchanged", "no spacing weirdness"],
+      "vqa_questions": ["Is the rightmost pastry a chocolate eclair?", "Are the rest croissants?", "Is the row otherwise intact?"]
+    },
+    {
+      "id": "EDIT-010",
+      "category": "object_inout",
+      "source_image_prompt": "A snowy mountain landscape with no people, no animals, no trails — just untouched snow and a clear blue sky.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Add a single small skier in a red jacket carving turns in the middle distance, leaving visible tracks behind them.",
+      "eval_focus": ["small skier in red jacket middle distance", "visible ski tracks behind", "preserve mountain, snow, sky"],
+      "vqa_questions": ["Is there a skier in the scene?", "Is the skier wearing red?", "Are there ski tracks visible behind them?", "Is the mountain preserved?"]
+    },
+
+    {
+      "id": "EDIT-011",
+      "category": "style_edit",
+      "source_image_prompt": "A photographic portrait of an elderly man with a white beard, neutral expression, even studio lighting, gray background.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Convert the portrait into an oil painting in the style of Rembrandt — visible brushstrokes, dramatic chiaroscuro lighting, dark moody background — while preserving the subject's identity and pose.",
+      "eval_focus": ["oil painting style", "Rembrandt chiaroscuro", "visible brushstrokes", "preserve identity and pose"],
+      "vqa_questions": ["Does this look like an oil painting?", "Is the lighting dramatic chiaroscuro?", "Is it the same man?", "Are visible brushstrokes present?"]
+    },
+    {
+      "id": "EDIT-012",
+      "category": "style_edit",
+      "source_image_prompt": "A photographic landscape of a wide open prairie with tall grass and a single distant farmhouse, midday clear sky.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Convert this image into a watercolor painting with loose brushwork and visible paper grain. Preserve the prairie, grass, farmhouse, and sky composition.",
+      "eval_focus": ["watercolor aesthetic", "loose brushwork", "paper grain visible", "preserved composition"],
+      "vqa_questions": ["Does this look like a watercolor?", "Is paper grain visible?", "Is the prairie and farmhouse composition preserved?"]
+    },
+    {
+      "id": "EDIT-013",
+      "category": "style_edit",
+      "source_image_prompt": "A photographic image of a modern downtown city street at noon with cars and pedestrians.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Convert this image into 1990s anime style with cell-shading and thick black lineart, preserving every car, pedestrian, and building in the original.",
+      "eval_focus": ["anime cell-shaded style", "thick black lineart", "preserved cars/pedestrians/buildings"],
+      "vqa_questions": ["Does this look like 90s anime?", "Is there visible thick black lineart?", "Are cars and pedestrians still in roughly the same positions?"]
+    },
+    {
+      "id": "EDIT-014",
+      "category": "style_edit",
+      "source_image_prompt": "A photograph of a fruit bowl on a kitchen counter with apples, bananas, and oranges.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Convert the photograph to a pencil sketch with visible graphite shading, no color at all, and a slightly textured paper background.",
+      "eval_focus": ["pencil sketch black and white only", "visible graphite shading", "textured paper background", "preserved fruit composition"],
+      "vqa_questions": ["Is this a pencil sketch?", "Is the image black and white only?", "Is the fruit composition preserved?", "Is the paper texture visible?"]
+    },
+    {
+      "id": "EDIT-015",
+      "category": "style_edit",
+      "source_image_prompt": "A modern color photograph of a young couple smiling in front of a cherry blossom tree at noon.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Convert this image into a 1950s-style sepia-toned photograph with film grain, slight vignetting, and a small white border around the edges.",
+      "eval_focus": ["sepia tone monochrome", "film grain", "vignetting", "white border around image", "subjects preserved"],
+      "vqa_questions": ["Is this a sepia-toned photograph?", "Is there film grain?", "Is there a white border?", "Are the couple still recognizable?"]
+    },
+    {
+      "id": "EDIT-016",
+      "category": "style_edit",
+      "source_image_prompt": "A photograph of a Victorian-style house exterior with a wraparound porch, midday clear sky.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Convert this image into an architectural blueprint with white lines on a deep blue background, technical line-drawing style, no color other than blue and white.",
+      "eval_focus": ["blueprint style white-on-blue", "technical line drawing", "no other colors", "house silhouette and porch preserved"],
+      "vqa_questions": ["Does this look like an architectural blueprint?", "Is it white lines on deep blue?", "Is the house shape preserved?"]
+    },
+    {
+      "id": "EDIT-017",
+      "category": "style_edit",
+      "source_image_prompt": "A photograph of a busy seafood market with vendors, ice-topped fish displays, and customers.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Convert this image into the style of a Hokusai ukiyo-e woodblock print: flat color planes, no shading, characteristic blue and beige palette, while preserving the layout of vendors, displays, and customers.",
+      "eval_focus": ["ukiyo-e woodblock style", "flat color no shading", "blue and beige palette", "layout preserved"],
+      "vqa_questions": ["Does this look like a Japanese woodblock print?", "Are the colors flat with no shading?", "Are vendors and displays still recognizable?"]
+    },
+    {
+      "id": "EDIT-018",
+      "category": "style_edit",
+      "source_image_prompt": "A photograph of a teenager working on a desktop computer in a bedroom, posters on the wall behind.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Convert this image into pixel art in the style of an early-90s adventure game, with chunky pixels, a limited 32-bit palette, and the bedroom layout fully preserved.",
+      "eval_focus": ["pixel art SNES era style", "32-bit palette", "chunky visible pixels", "layout preserved"],
+      "vqa_questions": ["Is this pixel art?", "Are the pixels chunky and visible?", "Is the teenager at the computer preserved?", "Are posters on the wall preserved?"]
+    },
+    {
+      "id": "EDIT-019",
+      "category": "style_edit",
+      "source_image_prompt": "A photograph of a serene Japanese garden with a koi pond, a small wooden bridge, and a stone lantern.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Convert this image into a black-and-white ink wash painting (sumi-e) with minimal detail, expressive brushstrokes, and large areas of negative space.",
+      "eval_focus": ["sumi-e ink wash style", "black and white only", "expressive brushstrokes", "negative space"],
+      "vqa_questions": ["Does this look like ink wash painting?", "Is it black and white only?", "Are there large areas of negative space?", "Is the garden recognizable?"]
+    },
+    {
+      "id": "EDIT-020",
+      "category": "style_edit",
+      "source_image_prompt": "A photograph of a futuristic city skyline at sunset with skyscrapers and visible flying cars in the distance.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Convert this image into a 1980s synthwave illustration: neon pink and cyan gradients, sun with horizontal scan lines, grid floor, retrofuturistic aesthetic, preserving the skyline silhouette and flying cars.",
+      "eval_focus": ["1980s synthwave aesthetic", "neon pink and cyan", "sun with scan lines", "grid floor", "skyline silhouette preserved"],
+      "vqa_questions": ["Does this look like 1980s synthwave?", "Are the colors neon pink and cyan?", "Is there a sun with horizontal lines?", "Is the skyline still visible?"]
+    },
+
+    {
+      "id": "EDIT-021",
+      "category": "region_inpaint",
+      "source_image_prompt": "A photographic portrait of a young woman against a brick wall, wearing a plain white t-shirt with no text or graphics.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Change only the t-shirt color to bright forest green. Do not change anything else about the woman or the background.",
+      "eval_focus": ["t-shirt is now forest green", "no change to woman's face/hair/skin", "no change to brick wall"],
+      "vqa_questions": ["Is the t-shirt forest green?", "Is the woman's face and hair unchanged?", "Is the brick wall unchanged?"]
+    },
+    {
+      "id": "EDIT-022",
+      "category": "region_inpaint",
+      "source_image_prompt": "A photograph of a clear blue sky with a single white fluffy cloud in the upper-left and another single small cloud in the upper-right.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Replace the upper-right cloud with a hot air balloon. Keep the upper-left cloud and the blue sky exactly the same.",
+      "eval_focus": ["upper-right is now a hot air balloon", "upper-left cloud preserved", "sky color preserved"],
+      "vqa_questions": ["Is there a hot air balloon in the upper-right?", "Is the upper-left cloud still visible?", "Is the sky still blue?"]
+    },
+    {
+      "id": "EDIT-023",
+      "category": "region_inpaint",
+      "source_image_prompt": "An empty wall in a hallway with a single wall sconce on the upper-right.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Add a framed black-and-white portrait photograph centered on the wall, approximately A4 size, with a simple black frame.",
+      "eval_focus": ["framed B&W portrait centered", "simple black frame", "A4-ish size", "preserve wall and sconce"],
+      "vqa_questions": ["Is there a framed photograph on the wall?", "Is the photo black and white?", "Is the frame black?", "Is the sconce on the upper-right preserved?"]
+    },
+    {
+      "id": "EDIT-024",
+      "category": "region_inpaint",
+      "source_image_prompt": "A photograph of a dining table with four place settings, white plates and clear water glasses, no food on plates.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Place a slice of chocolate cake on each of the four plates. Plates, glasses, and table arrangement should remain unchanged.",
+      "eval_focus": ["chocolate cake on all four plates", "plates/glasses/table preserved"],
+      "vqa_questions": ["Is there chocolate cake on the plates?", "Are there four cake slices?", "Are the plates and glasses preserved?"]
+    },
+    {
+      "id": "EDIT-025",
+      "category": "region_inpaint",
+      "source_image_prompt": "A photograph of a city storefront with a generic blank rectangular sign above the door.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Fill the blank sign with the text 'BRAMBLE & VINE BOOKS' in clean serif lettering, white text on the existing sign background.",
+      "eval_focus": ["text reads 'BRAMBLE & VINE BOOKS'", "serif lettering", "white text", "sign frame preserved"],
+      "vqa_questions": ["Does the sign say 'BRAMBLE & VINE BOOKS'?", "Is the text white?", "Is it serif?", "Is the storefront preserved?"]
+    },
+    {
+      "id": "EDIT-026",
+      "category": "region_inpaint",
+      "source_image_prompt": "A photograph of a person's hand holding a smartphone, the smartphone screen is blank dark off.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Turn the smartphone screen on and display a simple weather app showing '72° Sunny' with a sun icon, white text on a light-blue background.",
+      "eval_focus": ["screen now on", "shows '72° Sunny'", "sun icon", "light blue background", "hand and phone shape preserved"],
+      "vqa_questions": ["Is the phone screen on?", "Does it display '72° Sunny'?", "Is there a sun icon?", "Is the hand still holding the phone?"]
+    },
+    {
+      "id": "EDIT-027",
+      "category": "region_inpaint",
+      "source_image_prompt": "A photograph of a kitchen counter with an empty round white dinner plate.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Replace the empty plate with a serving of pasta with red marinara sauce and a sprig of basil on top, photorealistic.",
+      "eval_focus": ["plate now has pasta with marinara", "basil sprig on top", "photorealistic", "plate position preserved"],
+      "vqa_questions": ["Is the plate filled with pasta?", "Is there red marinara sauce?", "Is there basil on top?", "Is the plate in the same position?"]
+    },
+    {
+      "id": "EDIT-028",
+      "category": "region_inpaint",
+      "source_image_prompt": "A photograph of a country road with a wooden directional signpost on the right; the signpost arrow board is blank.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Add the text 'LAKE VIEW 3 MILES' on the signpost arrow board, painted in dark green block letters.",
+      "eval_focus": ["arrow board now reads 'LAKE VIEW 3 MILES'", "dark green block letters", "preserve road and signpost"],
+      "vqa_questions": ["Does the signpost say 'LAKE VIEW 3 MILES'?", "Are the letters dark green block letters?", "Is the country road preserved?"]
+    },
+    {
+      "id": "EDIT-029",
+      "category": "region_inpaint",
+      "source_image_prompt": "A photograph of a swimming pool from above with calm clear water, no swimmers visible.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Add a single swimmer doing freestyle stroke in the upper-left third of the pool, leaving a small wake. Keep the rest of the pool calm.",
+      "eval_focus": ["single swimmer upper-left", "doing freestyle", "small wake visible", "rest of pool calm"],
+      "vqa_questions": ["Is there a swimmer in the pool?", "Is the swimmer in the upper-left area?", "Is there a wake behind the swimmer?", "Is the rest of the pool still calm?"]
+    },
+    {
+      "id": "EDIT-030",
+      "category": "region_inpaint",
+      "source_image_prompt": "A photograph of a bedroom wall with a blank rectangular dark-stained wood photo frame hanging on it.",
+      "source_size": "1024x1024",
+      "edit_instruction": "Fill the photo frame with a landscape photograph of a snowy mountain at sunset with pink-orange alpenglow on the peak.",
+      "eval_focus": ["frame now contains snowy mountain landscape", "sunset alpenglow pink-orange peak", "frame border preserved"],
+      "vqa_questions": ["Is there a landscape photo in the frame?", "Does it show a snowy mountain?", "Is there sunset alpenglow on the peak?", "Is the dark wood frame preserved?"]
+    }
+  ]
+}

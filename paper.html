@@ -1,0 +1,1162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mesh Dollar per Image Bench: A Holistic Cost–Quality–Latency Pilot Benchmark of Frontier Text-to-Image Models</title>
+<meta name="description" content="Cost-vs-quality-vs-latency pilot benchmark of five frontier T2I models routed through Mesh API. Pilot edition. Five hidden taxes. Reproducible." />
+<meta name="author" content="Raushan Sharma" />
+<meta property="og:title" content="Mesh Dollar per Image Bench: A Holistic T2I Pilot Benchmark" />
+<meta property="og:description" content="GPT-Image-1 Mini ($0.008) sits within 0.07 quality points of Imagen 4 Ultra ($0.060). Pilot results, arxiv-format paper, fully reproducible." />
+<style>
+  /* arxiv-inspired styling: serif body, narrow column, two-tone headers,
+     monospace for code, numbered sections, subtle blue link accent */
+  :root {
+    --paper: #fafafa;
+    --ink: #1a1a1a;
+    --muted: #555;
+    --accent: #b31b1b;        /* arxiv crimson */
+    --accent-soft: #e8d3d3;
+    --link: #0645ad;          /* mediawiki link blue */
+    --border: #e5e5e5;
+    --code-bg: #f5f5f5;
+    --row-alt: #fafbfc;
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Charter', 'Georgia', 'Cambria', 'Times New Roman', serif;
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Top bar — arxiv-like */
+  .arxiv-bar {
+    background: #b31b1b;
+    color: #fff;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    padding: 6px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .arxiv-bar a { color: #fff; text-decoration: none; }
+  .arxiv-bar a:hover { text-decoration: underline; }
+  .arxiv-bar .tag {
+    background: #fff;
+    color: #b31b1b;
+    padding: 1px 7px;
+    border-radius: 3px;
+    font-weight: 700;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+
+  main {
+    max-width: 760px;
+    margin: 40px auto 80px;
+    padding: 0 28px;
+  }
+
+  /* Title block */
+  .title-block {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 22px;
+    margin-bottom: 26px;
+  }
+  h1.title {
+    font-size: 27px;
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 0 0 14px 0;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  .authors {
+    font-size: 16px;
+    margin: 8px 0 4px;
+  }
+  .authors .affil-marker {
+    font-size: 12px;
+    vertical-align: super;
+  }
+  .affil {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 4px 0;
+  }
+  .affil .marker { font-size: 11px; vertical-align: super; }
+  .preprint-line {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 10px;
+    font-style: italic;
+  }
+  .preprint-line a { color: var(--link); }
+
+  /* Abstract */
+  .abstract {
+    margin: 30px 0 18px;
+    padding: 16px 20px;
+    border-left: 3px solid var(--accent);
+    background: var(--accent-soft);
+    font-size: 15.5px;
+    line-height: 1.6;
+  }
+  .abstract h2 {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 12.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    margin: 0 0 8px 0;
+    color: var(--accent);
+  }
+  .abstract p { margin: 0 0 10px 0; }
+  .abstract p:last-child { margin-bottom: 0; }
+  .keywords {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 12px;
+    font-style: italic;
+  }
+  .keywords strong { font-style: normal; color: var(--ink); }
+
+  /* Sectioning */
+  h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 38px 0 12px;
+    line-height: 1.3;
+  }
+  h3 {
+    font-size: 17px;
+    font-weight: 700;
+    margin: 26px 0 10px;
+    line-height: 1.35;
+  }
+  h4 {
+    font-size: 16px;
+    font-weight: 700;
+    font-style: italic;
+    margin: 20px 0 8px;
+  }
+
+  p { margin: 0 0 13px; }
+
+  /* Inline code, math */
+  code, kbd, .mono {
+    font-family: 'JetBrains Mono', 'SF Mono', Consolas, Menlo, monospace;
+    font-size: 0.88em;
+    background: var(--code-bg);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+  pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 12px 14px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', 'SF Mono', Consolas, Menlo, monospace;
+    font-size: 13px;
+    line-height: 1.55;
+    margin: 14px 0;
+  }
+  pre code { background: transparent; padding: 0; }
+
+  /* Tables */
+  table {
+    border-collapse: collapse;
+    margin: 18px 0;
+    width: 100%;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+  th, td {
+    text-align: left;
+    padding: 7px 11px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  th {
+    border-top: 1.5px solid var(--ink);
+    border-bottom: 1.5px solid var(--ink);
+    font-weight: 700;
+    background: #fff;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 13px;
+  }
+  tbody tr:nth-child(even) td { background: var(--row-alt); }
+  table caption, .table-caption {
+    font-size: 13.5px;
+    margin: 8px 0 6px;
+    font-style: italic;
+    color: var(--ink);
+  }
+  .table-caption strong { font-style: normal; }
+
+  /* Figures */
+  figure {
+    margin: 22px 0;
+    text-align: center;
+  }
+  figure img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+  figcaption {
+    font-size: 13.5px;
+    margin-top: 8px;
+    text-align: left;
+    font-style: italic;
+    color: var(--ink);
+    padding: 0 8px;
+  }
+  figcaption strong { font-style: normal; }
+
+  /* Links */
+  a { color: var(--link); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Numbered list of references */
+  ol.references, .refs {
+    padding-left: 22px;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  ol.references li, .refs p {
+    margin-bottom: 10px;
+  }
+  .refs p { padding-left: 22px; text-indent: -22px; }
+
+  /* Lists */
+  ul, ol { margin: 4px 0 14px; padding-left: 22px; }
+  li { margin-bottom: 5px; }
+  li > p:first-child { margin-top: 0; }
+
+  /* Block quotes / observations / asides */
+  .obs, blockquote {
+    margin: 16px 0;
+    padding: 10px 16px;
+    border-left: 3px solid var(--muted);
+    background: #f7f7f7;
+    font-size: 14.5px;
+    color: var(--ink);
+    font-style: italic;
+  }
+  .obs strong { font-style: normal; }
+
+  /* Footer */
+  footer {
+    margin-top: 50px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.55;
+  }
+
+  /* Two-column gallery for the comparison figure */
+  .figpair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 18px 0 6px;
+  }
+  .figpair img { width: 100%; border: 1px solid var(--border); }
+
+  /* Gallery (5×5 image grid) */
+  .gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin: 20px 0 8px;
+    background: var(--border);
+    padding: 4px;
+    border: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  .gallery-row {
+    display: grid;
+    grid-template-columns: 110px repeat(5, 1fr);
+    gap: 4px;
+  }
+  .gallery-cell {
+    background: #fff;
+    padding: 6px;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 11px;
+    color: var(--ink);
+  }
+  .gallery-corner { background: transparent; }
+  .gallery-prompt-header,
+  .gallery-model-header {
+    background: #f5f5f5;
+    font-weight: 700;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .gallery-prompt-header .prompt-id {
+    font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .gallery-prompt-header .prompt-cat {
+    font-size: 12px;
+    color: var(--ink);
+    margin-top: 2px;
+  }
+  .gallery-model-header {
+    text-align: left;
+    align-items: flex-start;
+    padding-left: 8px;
+  }
+  .gallery-model-header .model-disp {
+    font-size: 11.5px;
+    line-height: 1.25;
+  }
+  .gallery-model-header .model-price {
+    font-size: 10.5px;
+    color: var(--muted);
+    font-weight: 400;
+    margin-top: 2px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .gallery-img-cell img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    display: block;
+    border-radius: 2px;
+  }
+  .gallery-score {
+    margin-top: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .gallery-axes {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    color: var(--muted);
+    margin-top: 1px;
+    word-spacing: -1px;
+  }
+  .gallery-footnote {
+    font-size: 12.5px;
+    color: var(--muted);
+    margin-top: 4px;
+    font-style: italic;
+  }
+  .gallery-footnote code {
+    font-size: 0.92em;
+    background: #efefef;
+    padding: 0 4px;
+  }
+
+  @media (max-width: 640px) {
+    body { font-size: 16px; }
+    main { padding: 0 18px; margin: 24px auto 60px; }
+    h1.title { font-size: 22px; }
+    h2 { font-size: 18px; }
+    .figpair { grid-template-columns: 1fr; }
+    table { font-size: 12.5px; }
+    th, td { padding: 6px 8px; }
+    /* Allow horizontal scroll on the gallery on small screens */
+    .gallery { min-width: 100%; }
+    .gallery-row { grid-template-columns: 90px repeat(5, 130px); }
+  }
+</style>
+</head>
+<body>
+
+<div class="arxiv-bar">
+  <span><a href="#">meshapi &gt; cs.AI &gt; benchmarks &gt; Mesh Dollar per Image Bench</a> &nbsp; <span class="tag">PILOT v0.1</span></span>
+  <span>2026-05-20</span>
+</div>
+
+<main>
+
+<div class="title-block">
+  <h1 class="title">Mesh Dollar per Image Bench: A Holistic Cost–Quality–Latency Pilot Benchmark of Frontier Text-to-Image Models Through a Unified API Gateway</h1>
+  <div class="preprint-line">Preprint. Pilot edition (v0.1). Reproducible artifacts at <a href="https://github.com/aifiesta/mesh-dollar-per-image-bench"><code>github.com/aifiesta/mesh-dollar-per-image-bench</code></a>.</div>
+</div>
+
+<section class="abstract">
+  <h2>Abstract</h2>
+  <p>We present <strong><strong>Mesh Dollar per Image Bench</strong> (<code>mesh-dollar-per-image-bench</code>)</strong>, a small, fully-reproducible pilot benchmark that measures cost, latency, and quality across five frontier text-to-image (T2I) models routed through a single unified API gateway (Mesh API). Quality is scored by a two-judge vision-LLM ensemble (Claude Opus 4.7 + GPT-5.5) at two temperatures each, against a 120-prompt suite spanning twelve failure-mode-stratified categories (photorealism, typography, compositional spatial reasoning, multi-subject coherence, style transfer, long-prompt fidelity, world-fact knowledge, numerical counting, negative space, content-policy edge cases, multilingual / non-Latin script rendering, and hyper-complex multi-constraint scenes). The pilot covers 25 generations (5 prompts × 5 models) at total spend US$1.27.</p>
+  <p>We find that <strong>GPT-Image-1 Mini (US$0.008/image, quality 4.871/5)</strong> dominates the cost-per-quality axis, costing <strong>7.5× less per quality-point</strong> than the most expensive model (Imagen 4 Ultra at US$0.060/image, quality 4.908/5) while scoring only 0.04 quality-points lower. The premium-tier models cluster between 4.90 and 4.94 — within judge-ensemble variance. Latency varies by <strong>7.8×</strong> end-to-end (Imagen 4 Fast 7.3 s vs GPT-Image-2 56.7 s p50). One model (GPT-Image-2) shows a 20% transient-error retry tax on routine prompts and a <strong>4–5× latency expansion</strong> on a follow-up 3-prompt hyper-complex sub-pilot (189 s p50 with the timeout raised to 300 s), where the C1–C5 quality saturation collapses (spread 4.60–4.94 widens to 2.63–3.58) and the model lineup re-orders along a single architectural fault line: all four top C12 ranks are GPT-Image variants, all three Imagen variants cluster at the bottom within 0.05 quality-points of each other, and the most expensive model in the lineup (Imagen 4 Ultra at $0.060/image) drops to last place on hyper-complex. We isolate five "hidden taxes" not visible on provider price cards. We argue that for the current generation of T2I systems, <strong>cost-per-quality is overwhelmingly a routing decision, not a model-selection decision</strong> — and the §5.7 sub-pilot provides direct evidence that the right routing policy is "Mini default; GPT-Image-1.5 or GPT-Image-2 escalation depending on whether the workload can afford 189 s latency."</p>
+  <div class="keywords"><strong>Keywords:</strong> text-to-image generation; foundation-model evaluation; holistic benchmarking; cost-quality tradeoff; LLM-as-judge; API gateway; reproducible AI evaluation.</div>
+</section>
+
+<h2>1. Introduction</h2>
+<p>The text-to-image (T2I) generation market in 2026 is fragmented across at least 15 production-grade frontier systems exposed through commercial APIs (OpenAI's GPT-Image family, Google's Imagen 3/4 tiers, Google's Gemini-based "Nano Banana" image variants, plus a long tail of hosted open-weight options). Each system publishes a separate price card, supports a different mix of <code>quality</code> and <code>size</code> parameters, and ships with provider-specific content policies, watermark practices, and latency profiles. Builders shipping production T2I features face a model-selection problem with at least four orthogonal axes — cost, latency, quality, and behavior under content-policy stress — and <em>no single published benchmark reports all four on a common evaluation set</em>.</p>
+
+<p>Existing public leaderboards address pieces of this. LM Arena's Image Arena (Chiang et&nbsp;al., 2024) crowd-sources human preference votes over millions of pairwise comparisons but reports neither cost nor latency. Artificial Analysis (artificialanalysis.ai) reports per-image price and median generation time but does not measure quality with a structured rubric. HEIM (Lee et&nbsp;al., 2023) evaluates 26 T2I models across 12 holistic aspects with mixed human and automatic metrics but predates the 2026 model wave and does not target production routing decisions. GenAI-Bench (Li et&nbsp;al., 2024) introduces 1,600 compositional prompts with human ratings but is centered on the alignment problem (compositional and reasoning fidelity), not the buyer's cost question. VQAScore (Lin et&nbsp;al., 2024) and its successors (Gecko, Soft-TIFA) offer strong automatic prompt-alignment metrics but, alone, miss subjective quality, anatomy, and content-policy behavior.</p>
+
+<p>This paper takes a different cut. We borrow the discipline of <code>dollar-per-task-bench</code> (Sharma, 2026) — the sibling benchmark for chat LLMs that exposed four "hidden taxes" — and apply it to image generation. The deliberate design choice: <strong>one routing layer (Mesh API), one prompt set, one rubric, one set of vision-LLM judges, applied identically to every model</strong>, with cost computed from a dated static pricing table and latency reported as end-to-end wall-clock.</p>
+
+<h3>Contributions</h3>
+<ol>
+  <li>A <strong>120-prompt T2I evaluation suite</strong> across twelve failure-mode-stratified categories — including a <strong>multilingual</strong> category that probes non-Latin-script rendering (Devanagari, Chinese, Arabic, Japanese, Cyrillic, Hangul, Greek, Hebrew, Thai, accented Latin) alongside cultural-context fidelity, and a <strong>hyper-complex</strong> category whose ten "boss-fight" prompts impose ten or more concurrent positional/named-entity/counting/text constraints per image. Structurally inspired by PartiPrompts / DrawBench / GenAI-Bench / HEIM, but with original prompt text to limit training-set contamination.</li>
+  <li>A <strong>two-judge vision-LLM ensemble rubric</strong> scoring five 1–5 axes (prompt adherence, aesthetic quality, photorealism / on-style, in-image text fidelity, anatomy and artifacts), with two-temperature variance measurement and explicit own-provider-bias mitigation.</li>
+  <li><strong>Pilot results</strong> (n=5/model) on five 2026 frontier T2I models routed through Mesh API, with effective per-image cost, p50/p95 latency, refusal rate, watermark detection, and retry tax reported per model.</li>
+  <li>Explicit characterization of <strong>five hidden taxes</strong> not visible on price cards.</li>
+  <li>A <strong>fully open and reproducible artifact</strong>: prompts, runner, judges, aggregator, charts, and raw CSVs are MIT-licensed and re-runnable end-to-end in ~10 minutes for ~US$1–2.</li>
+</ol>
+
+<h2>2. Related Work</h2>
+<p><strong>Holistic image-model evaluation.</strong> HEIM (Lee et&nbsp;al., 2023) is the closest methodological ancestor: it scores T2I models on twelve aspects (text-image alignment, image quality, aesthetics, originality, reasoning, knowledge, bias, toxicity, fairness, robustness, multilinguality, efficiency) using both automatic metrics and human ratings across 62 scenarios. We compress HEIM's aspect set to twelve categories that map more directly onto buyer decisions (retaining HEIM's <em>multilinguality</em> aspect explicitly as C11, and adding a <em>hyper-complex</em> boss-fight bucket as C12 that has no direct HEIM analogue) and use a vision-LLM ensemble in place of a per-aspect human panel, trading some methodological rigor for speed and reproducibility.</p>
+
+<p><strong>Compositional alignment.</strong> GenAI-Bench (Li et&nbsp;al., 2024) provides 1,600 designer-authored compositional prompts and human alignment ratings across ten leading T2I/T2V systems. Our compositional and multi-subject categories (T2I-021 through T2I-040) borrow the structural pattern but use original prompt text.</p>
+
+<p><strong>Crowd-preference arenas.</strong> LM Arena's Image Arena (Chiang et&nbsp;al., 2024) ranks models by Bradley–Terry estimation over pairwise crowd votes. GenAI-Arena (Jiang et&nbsp;al., 2024) extends this to image-editing and video. These arenas surface real preference signal but do not isolate cost, latency, or per-category quality.</p>
+
+<p><strong>Automatic prompt-alignment metrics.</strong> CLIPScore (Hessel et&nbsp;al., 2021), TIFA (Hu et&nbsp;al., 2023), DSG (Cho et&nbsp;al., 2023), VQAScore (Lin et&nbsp;al., 2024), and Gecko / Soft-TIFA (2025) provide fast, deterministic, locally-runnable alignment scores. We treat these as a sanity baseline (§3.4) but do not headline them: they correlate with human preferences imperfectly and miss aesthetic and anatomy axes.</p>
+
+<p><strong>LLM-as-judge for images.</strong> Recent work (Zhang et&nbsp;al., 2023; MLLM-as-a-Judge, 2024) shows GPT-4V and Claude 3 Opus achieving Spearman correlations of 0.75–0.81 with human preference on image quality assessment tasks under appropriate prompting. We use a two-judge ensemble (Claude Opus 4.7 + GPT-5.5) at two temperatures each and report per-judge means alongside ensemble means so own-provider-bias is auditable rather than hidden.</p>
+
+<p><strong>Production cost benchmarking.</strong> Artificial Analysis reports per-image price and median generation time across hosted T2I providers but does not produce structured quality scores. <code>dollar-per-task-bench</code> (Sharma, 2026) — this paper's sibling — measured cost-per-quality across chat LLMs and exposed four hidden taxes (tokenizer inflation, hidden-reasoning tokens, accuracy saturation, quality saturation). The present paper applies the same discipline to T2I.</p>
+
+<h2>3. Benchmark Design</h2>
+
+<h3>3.1 Routing Architecture</h3>
+<p>All API calls are routed through <strong>Mesh API</strong> (<code>api.meshapi.ai/v1/images/generations</code>), an OpenAI-compatible unified gateway. The routing choice is deliberate: a single client, key, and billing surface across every model in the lineup eliminates per-provider SDK differences, rate-limit dialects, and auth-flow drift as confounders. The trade-off is that Mesh's image-output catalog is narrower than its chat catalog (15 image-output models confirmed routable as of 2026-05-20 vs. 318 total). Models that Mesh does not route are not added via direct-provider fall-backs: their absence is reported as a coverage limitation rather than papered over.</p>
+
+<p>A critical structural difference from chat-completion benchmarking: <strong>image endpoints do not return a <code>usage</code> field</strong>. We cannot derive per-call cost from response metadata. Instead, cost is looked up from a dated static pricing table (<code>pricing.json</code>) keyed on the tuple <code>(model_id, size, quality)</code>. The table is sourced from Mesh's <code>/v1/models</code> catalog (which exposes <code>image_usd_per_image</code>) cross-referenced against each provider's official pricing page. A missing tuple is a hard error in the runner — never a silent zero.</p>
+
+<h3>3.2 Prompt Taxonomy</h3>
+<p>The evaluation set contains <strong>120 prompts × 12 categories (10 prompts per category)</strong>. Categories are chosen to span the known failure modes of T2I systems and to map onto buyer-relevant decisions:</p>
+
+<table>
+  <thead><tr><th>#</th><th>Category</th><th>What it stresses</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>Photorealism / portrait</td><td>Face anatomy, skin texture, hand morphology</td></tr>
+    <tr><td>2</td><td>Typography</td><td>Latin-script in-image glyph fidelity at sentence length</td></tr>
+    <tr><td>3</td><td>Compositional / spatial</td><td>"Red cube left of blue sphere"-style geometry</td></tr>
+    <tr><td>4</td><td>Multi-subject coherence</td><td>Two+ named subjects with distinct attributes</td></tr>
+    <tr><td>5</td><td>Style transfer / artistic</td><td>Named medium (watercolor, ukiyo-e, polaroid, etc.)</td></tr>
+    <tr><td>6</td><td>Long-prompt fidelity</td><td>100+ word prompts with 5+ attribute axes</td></tr>
+    <tr><td>7</td><td>Knowledge / world facts</td><td>Specific landmarks, named places, geographic specificity</td></tr>
+    <tr><td>8</td><td>Counting / numerical</td><td>Exact-count subjects</td></tr>
+    <tr><td>9</td><td>Negative space / minimalism</td><td>Single subject, vast empty background</td></tr>
+    <tr><td>10</td><td>Edge cases / policy</td><td>Brand-adjacent, NSFW-boundary, watermark-prone</td></tr>
+    <tr><td>11</td><td><strong>Multilingual</strong></td><td>Non-Latin script rendering (Devanagari, Chinese, Arabic, Japanese, Cyrillic, Hangul, Greek, Hebrew, Thai, accented Spanish) + cultural-context fidelity</td></tr>
+    <tr><td>12</td><td><strong>Hyper-complex</strong></td><td>Boss-fight prompts (200–400 words): 10+ named entities in named positions, counts, in-image text, and scene-knowledge simultaneously</td></tr>
+  </tbody>
+</table>
+
+<p>Each prompt is annotated with <code>eval_focus</code> (a list of attributes the judge should verify), <code>vqa_questions</code> (yes/no questions for VQAScore), <code>has_text_to_render</code> (boolean), and optional <code>negative_prompt</code>. Prompts are written from scratch — structurally inspired by PartiPrompts, DrawBench, and GenAI-Bench but containing no copied prompt text — to limit training-set contamination.</p>
+
+<h3>3.3 Models Evaluated</h3>
+<p>The pilot lineup is five models spanning a 7.5× price range across the two providers Mesh actually routes for image output:</p>
+
+<table>
+  <thead><tr><th>Model</th><th>Mesh ID</th><th>Tier</th><th>Price (US$/image)</th></tr></thead>
+  <tbody>
+    <tr><td>GPT-Image-2</td><td><code>openai/gpt-image-2</code></td><td>Premium proprietary</td><td>0.030</td></tr>
+    <tr><td>GPT-Image-1.5</td><td><code>openai/gpt-image-1.5</code></td><td>Premium proprietary</td><td>0.032</td></tr>
+    <tr><td>Imagen 4 Ultra</td><td><code>google/imagen-4-ultra</code></td><td>Premium proprietary</td><td>0.060</td></tr>
+    <tr><td>Imagen 4 Fast</td><td><code>google/imagen-4-fast</code></td><td>Budget proprietary</td><td>0.020</td></tr>
+    <tr><td>GPT-Image-1 Mini</td><td><code>openai/gpt-image-1-mini</code></td><td>Budget proprietary</td><td>0.008</td></tr>
+  </tbody>
+</table>
+
+<p>A four-model stretch lineup (Gemini 2.5 Flash Image / "Nano Banana", Imagen 4, Imagen 3, GPT-Image-1) is confirmed routable but reserved for the full run (§7). Open-weight aggregators (FLUX, Stable Diffusion variants, Recraft, Ideogram, Midjourney) were <strong>not in Mesh's image-output catalog</strong> as of 2026-05-20; we flag this as a coverage limitation rather than silently substitute direct-provider routing.</p>
+
+<h3>3.4 Evaluation Methodology</h3>
+<p><strong>Vision-LLM ensemble judging.</strong> Each generated image is scored by two vision-capable LLMs:</p>
+<ul>
+  <li><em>Judge A:</em> <code>anthropic/claude-opus-4.7</code> (vision endpoint via Mesh)</li>
+  <li><em>Judge B:</em> <code>openai/gpt-5.5</code> (vision endpoint via Mesh)</li>
+</ul>
+<p>Each judge is invoked twice per image (at temperatures 0.0 and 0.3), yielding <strong>four independent judge passes per image</strong>. Each pass returns a strict-JSON object with five 1–5 integer scores plus a free-text <code>note</code>:</p>
+<pre><code>{
+  "adherence":  1..5 | "N/A",   // does the image match every named attribute?
+  "aesthetic":  1..5 | "N/A",   // is the composition striking and polished?
+  "photoreal":  1..5 | "N/A",   // is the requested style convincingly executed?
+  "text":       1..5 | "N/A",   // does in-image text render correctly?
+  "anatomy":    1..5 | "N/A",   // are there visible artifacts or anatomical errors?
+  "note":       string
+}</code></pre>
+<p>Axes scored <code>"N/A"</code> are dropped from that prompt's mean. The <strong>per-image quality score</strong> is the unweighted mean of valid (axis × judge × temperature) scores. The <strong>per-image quality variance</strong> is the population variance over the same set.</p>
+
+<p><strong>Automatic metrics (sanity baseline).</strong> When local ML dependencies are installed, the pipeline additionally computes CLIPScore (Hessel et&nbsp;al., 2021), VQAScore (Lin et&nbsp;al., 2024), and a LAION-style aesthetic predictor (Schuhmann et&nbsp;al., 2022). These are reported alongside the vision-LLM scores in the per-image CSV but are not part of the headline quality number. In the pilot reported here, automatic metrics were skipped to keep the pilot under ten minutes; the full run will include them.</p>
+
+<p><strong>Cost.</strong> Per-image cost is <code>pricing[model_id][size][quality]</code>. The <strong>effective cost</strong> additionally incorporates a retry-tax multiplier <code>(1 + 0.5 × n_retries)</code>.</p>
+
+<p><strong>Latency.</strong> End-to-end wall-clock (network + Mesh routing + provider queue + inference). Reported as p50, p95, and mean per model. We do not attempt to isolate inference time from gateway overhead.</p>
+
+<p><strong>Refusal.</strong> A response is classified as refused when the API returns 200 OK but no image data (neither <code>url</code> nor <code>b64_json</code>). Refusals are counted in their own bucket — neither pass nor fail.</p>
+
+<p><strong>Watermark suspicion.</strong> Coarse heuristic: any saved image under 5&nbsp;KB is flagged. The vision-judge <code>note</code> field provides the higher-fidelity signal.</p>
+
+<h3>3.4.1 Worked Example of a Single Judge Pass</h3>
+<p>To make the judging contract concrete, here is one full end-to-end scoring of one image. The prompt is T2I-011 ("vintage diner sign at night with the text 'OPEN 24 HOURS' in bright red neon, mounted on the brick exterior of a 1950s American diner, slight rain on the sidewalk reflecting the neon"). The generated image is from <code>openai/gpt-image-1-mini</code> at <code>quality=auto</code>, $0.008. Judge is <code>anthropic/claude-opus-4.7</code> at temperature 0.0.</p>
+
+<div class="figpair" style="grid-template-columns: 1fr 1.4fr; align-items: center;">
+  <img src="images/openai_gpt-image-1-mini__T2I-011.png" alt="GPT-Image-1 Mini T2I-011 generation" style="max-height: 320px; width: auto; margin: 0 auto;" />
+  <div style="padding-left: 12px;">
+    <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 12.5px; color: #555; margin-bottom: 6px;"><em>Judge input:</em></p>
+    <pre style="margin-top: 0; font-size: 11.5px;"><code>SYSTEM: [5-axis rubric, anchors per axis, JSON schema] (§3.4)
+
+USER (multimodal):
+  text: "Prompt the image was generated for:
+         'A vintage diner sign at night with the text
+         OPEN 24 HOURS in bright red neon ...'
+         Evaluation focus: text exactly OPEN 24 HOURS,
+         red neon, brick wall, wet sidewalk reflection.
+         Has in-image text to render: yes
+         Return only the JSON."
+  image: [data:image/png;base64,...]</code></pre>
+    <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 12.5px; color: #555; margin: 6px 0;"><em>Judge output (verbatim, 4,943 ms):</em></p>
+    <pre style="margin-top: 0; font-size: 11.5px;"><code>{
+  "adherence": 5,
+  "aesthetic":  5,
+  "photoreal":  5,
+  "text":       5,
+  "anatomy":    "N/A",
+  "note": "Text correct, strong neon mood, brick
+          and wet sidewalk present."
+}</code></pre>
+  </div>
+</div>
+<figcaption><strong>Figure 1a.</strong> One end-to-end judge pass. The mean of this image's four passes (Claude × 2 temps + GPT-5.5 × 2 temps) is the per-image quality score reported in Appendix D and Appendix E. "N/A" on the anatomy axis is because there are no humans or animals in this image; that axis drops out of the per-image mean rather than scoring zero. The free-text <code>note</code> field is for human auditing only and never enters the numeric aggregate.</figcaption>
+
+<h2>4. Experimental Setup</h2>
+<p>The pilot was run on 2026-05-20 from a single client in a single region. Five prompts were sampled — one per category from categories 1–5 — yielding <code>{T2I-001, T2I-011, T2I-021, T2I-031, T2I-041}</code>. Categories 6–10 are reserved for the full run.</p>
+
+<p>Each of the five models was invoked once per prompt with <code>size=1024x1024</code>, <code>quality=auto</code>, <code>n=1</code>. Total: <strong>25 image generations</strong>. Each generated image was then evaluated by <strong>100 judge calls</strong> (25 images × 2 judges × 2 temperatures). Total measured spend: image generation <strong>US$0.7650</strong>, judging approximately <strong>US$0.50</strong>, grand total approximately <strong>US$1.27</strong>. End-to-end wall-clock: under 25 minutes including a mid-run pricing-table rewrite after <code>discover.py</code> surfaced a namespace mismatch.</p>
+
+<p>Two transient methodological issues were caught and fixed before the headline numbers were computed. First, the initial vision-judge model <code>openai/gpt-5.5-pro</code> returns <code>http_500: upstream_error</code> on multimodal requests via Mesh, despite working on text-only completions; we switched to <code>openai/gpt-5.5</code>. Second, Mesh returns generated images as <code>data:image/&lt;mime&gt;;base64,&lt;payload&gt;</code> URIs in the <code>url</code> field rather than HTTPS URLs; we patched the image-saver to detect and inline-decode this case. Both fixes are visible in the runner's git history.</p>
+
+<h2>5. Results</h2>
+
+<h3>5.1 Cost-per-Quality</h3>
+<p class="table-caption"><strong>Table 1.</strong> Headline pilot results, n=5 per model.</p>
+<table>
+  <thead>
+    <tr><th>Model</th><th>Quality (1–5) ± var</th><th>US$/image</th><th>US$/qpt</th><th>p50 latency</th><th>p95 latency</th><th>Refusal</th><th>Retry</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>GPT-Image-1 Mini</strong></td><td><strong>4.871</strong> ± 0.087</td><td><strong>0.008</strong></td><td><strong>0.0082</strong></td><td>37,245 ms</td><td>38,191 ms</td><td>0%</td><td>0%</td></tr>
+    <tr><td>Imagen 4 Fast</td><td>4.766 ± 0.198</td><td>0.020</td><td>0.0210</td><td><strong>7,267 ms</strong></td><td><strong>8,775 ms</strong></td><td>0%</td><td>0%</td></tr>
+    <tr><td>GPT-Image-1.5</td><td><strong>4.937</strong> ± 0.052</td><td>0.032</td><td>0.0324</td><td>37,647 ms</td><td>41,563 ms</td><td>0%</td><td>0%</td></tr>
+    <tr><td>GPT-Image-2</td><td>4.921 ± 0.067</td><td>0.033</td><td>0.0335</td><td>56,728 ms</td><td>71,937 ms</td><td>0%</td><td><strong>20%</strong></td></tr>
+    <tr><td>Imagen 4 Ultra</td><td>4.908 ± 0.077</td><td>0.060</td><td>0.0611</td><td>15,658 ms</td><td>17,507 ms</td><td>0%</td><td>0%</td></tr>
+  </tbody>
+</table>
+
+<p>The dominant finding is <strong>quality saturation</strong>: all five models cluster between 4.766 and 4.937 on the 1–5 ensemble scale. The price spread is 7.5× ($0.008 → $0.060); the quality spread is 0.171 points (3.4% of the scale). <strong>GPT-Image-1 Mini</strong> costs <strong>7.5× less per quality-point</strong> than <strong>Imagen 4 Ultra</strong> while scoring only 0.037 points lower — a gap smaller than the median per-image judge variance.</p>
+
+<figure>
+  <img src="chart_5_quality_vs_cost.png" alt="Quality vs cost per image" />
+  <figcaption><strong>Figure 1.</strong> Quality (vision-LLM ensemble mean) versus effective cost per image. Log-scale x-axis. The cheapest model (Mini) sits within 0.07 quality-points of the most expensive (Imagen 4 Ultra) while costing one-seventh as much.</figcaption>
+</figure>
+
+<h3>5.2 Per-Axis Quality Breakdown</h3>
+<p class="table-caption"><strong>Table 2.</strong> Per-axis quality (mean of judge ensemble passes).</p>
+<table>
+  <thead><tr><th>Model</th><th>Adherence</th><th>Aesthetic</th><th>Photoreal</th><th>Text</th><th>Anatomy</th></tr></thead>
+  <tbody>
+    <tr><td>GPT-Image-1 Mini</td><td>4.85</td><td>4.80</td><td>4.90</td><td>5.00</td><td>5.00</td></tr>
+    <tr><td>Imagen 4 Fast</td><td>4.45</td><td>4.80</td><td>4.95</td><td>5.00</td><td>4.75</td></tr>
+    <tr><td>GPT-Image-1.5</td><td>5.00</td><td>5.00</td><td>4.75</td><td>5.00</td><td>5.00</td></tr>
+    <tr><td>GPT-Image-2</td><td>4.95</td><td>4.90</td><td>4.90</td><td>5.00</td><td>5.00</td></tr>
+    <tr><td>Imagen 4 Ultra</td><td>5.00</td><td>4.80</td><td>4.90</td><td>5.00</td><td>5.00</td></tr>
+  </tbody>
+</table>
+
+<p>Two observations stand out. First, <strong>in-image text rendering scored 5.0 across every model</strong> on the typography prompt (T2I-011, "OPEN 24 HOURS" diner neon). The 2026 generation of T2I systems has effectively solved a problem that defined the prior generation's failure mode: in our sample, every model rendered every glyph correctly. Second, <strong>Imagen 4 Fast underperforms on prompt adherence (4.45)</strong> — the cheapest Google model misses named attributes more often than any OpenAI model in the lineup. The Mini does not exhibit this drop.</p>
+
+<figure>
+  <img src="chart_2_quality_axes.png" alt="Quality by axis per model" />
+  <figcaption><strong>Figure 2.</strong> Per-axis quality scores per model. Text-rendering parity at 5.0 is the headline.</figcaption>
+</figure>
+
+<h3>5.3 Latency</h3>
+<p>Latency varies by <strong>7.8×</strong> end-to-end across the lineup.</p>
+
+<p class="table-caption"><strong>Table 3.</strong> End-to-end wall-clock latency, milliseconds.</p>
+<table>
+  <thead><tr><th>Model</th><th>p50</th><th>p95</th><th>mean</th><th>n</th></tr></thead>
+  <tbody>
+    <tr><td>Imagen 4 Fast</td><td><strong>7,267</strong></td><td><strong>8,775</strong></td><td>7,498</td><td>5</td></tr>
+    <tr><td>Imagen 4 Ultra</td><td>15,658</td><td>17,507</td><td>15,698</td><td>5</td></tr>
+    <tr><td>GPT-Image-1 Mini</td><td>37,245</td><td>38,191</td><td>30,405</td><td>5</td></tr>
+    <tr><td>GPT-Image-1.5</td><td>37,647</td><td>41,563</td><td>33,093</td><td>5</td></tr>
+    <tr><td>GPT-Image-2</td><td>56,728</td><td>71,937</td><td>59,175</td><td>5</td></tr>
+  </tbody>
+</table>
+
+<figure>
+  <img src="chart_3_latency_p50_p95.png" alt="Latency p50/p95" />
+  <figcaption><strong>Figure 3.</strong> End-to-end latency by model. Imagen 4 Fast is 7.8× faster than GPT-Image-2 at p50 and 8.2× faster at p95.</figcaption>
+</figure>
+
+<p>For interactive product UX, the OpenAI image models — including the cost-winning Mini — are <strong>not viable without an asynchronous interaction pattern</strong>. The Google models, particularly Imagen 4 Fast, are the only options under ~10 s.</p>
+
+<div class="figpair" style="grid-template-columns: 1fr 1fr;">
+  <figure style="margin: 0;">
+    <img src="images/google_imagen-4-fast__T2I-001.png" alt="Imagen 4 Fast T2I-001" style="max-height: 320px;" />
+    <figcaption style="text-align: center; padding: 4px 0;"><strong>Imagen 4 Fast</strong> · 6.9 s · $0.020</figcaption>
+  </figure>
+  <figure style="margin: 0;">
+    <img src="images/openai_gpt-image-2__T2I-001.png" alt="GPT-Image-2 T2I-001" style="max-height: 320px;" />
+    <figcaption style="text-align: center; padding: 4px 0;"><strong>GPT-Image-2</strong> · 55.8 s · $0.030</figcaption>
+  </figure>
+</div>
+<figcaption><strong>Figure 3a.</strong> The latency cost made concrete. Both images are T2I-001 (70-year-old woman portrait), both scored ≥4.9 by the judge ensemble. The user waits <strong>8× longer</strong> for the GPT-Image-2 generation. At p95 the gap is 8.2×.</figcaption>
+
+<h3>5.4 Hidden Taxes</h3>
+<p>Mirroring <code>dollar-per-task-bench</code>'s exposure of four chat-tier hidden taxes (tokenizer, reasoning, accuracy, saturation), we surface five image-tier ones. Two are directly visible in the pilot data; three require either the full run or additional probes.</p>
+
+<p><strong>Tax 1: Quality saturation (observed).</strong> All five models scored 4.77–4.94 on the pilot prompts. The 7.5× price spread bought 3.4% of the 1–5 quality scale — less than the median per-image judge variance. Buyers paying premium prices on routine generation are paying for a measured effect that is within noise.</p>
+
+<div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin: 12px 0;">
+  <figure style="margin: 0;">
+    <img src="images/openai_gpt-image-1-mini__T2I-021.png" alt="Mini T2I-021" style="width: 100%; aspect-ratio: 1; object-fit: cover;" />
+    <figcaption style="font-size: 11px; text-align: center; padding: 3px 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Mini · <strong>$0.008</strong><br>Q=4.67</figcaption>
+  </figure>
+  <figure style="margin: 0;">
+    <img src="images/google_imagen-4-fast__T2I-021.png" alt="Fast T2I-021" style="width: 100%; aspect-ratio: 1; object-fit: cover;" />
+    <figcaption style="font-size: 11px; text-align: center; padding: 3px 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Imagen Fast · $0.020<br>Q=4.83</figcaption>
+  </figure>
+  <figure style="margin: 0;">
+    <img src="images/openai_gpt-image-2__T2I-021.png" alt="GPT-2 T2I-021" style="width: 100%; aspect-ratio: 1; object-fit: cover;" />
+    <figcaption style="font-size: 11px; text-align: center; padding: 3px 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">GPT-2 · $0.030<br>Q=4.83</figcaption>
+  </figure>
+  <figure style="margin: 0;">
+    <img src="images/openai_gpt-image-1.5__T2I-021.png" alt="GPT-1.5 T2I-021" style="width: 100%; aspect-ratio: 1; object-fit: cover;" />
+    <figcaption style="font-size: 11px; text-align: center; padding: 3px 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">GPT-1.5 · $0.032<br>Q=5.00</figcaption>
+  </figure>
+  <figure style="margin: 0;">
+    <img src="images/google_imagen-4-ultra__T2I-021.png" alt="Ultra T2I-021" style="width: 100%; aspect-ratio: 1; object-fit: cover;" />
+    <figcaption style="font-size: 11px; text-align: center; padding: 3px 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Imagen Ultra · <strong>$0.060</strong><br>Q=4.83</figcaption>
+  </figure>
+</div>
+<figcaption style="margin-top: 4px;"><strong>Figure 4a.</strong> T2I-021 (compositional / spatial: "red wooden cube on the left, blue glass sphere on the right") across all five pilot models. Cost rises 7.5× left to right; per-image quality scores span just 0.33 points. Whichever cell you pick, the buyer gets a usable image.</figcaption>
+
+<p><strong>Tax 2: Latency spread (observed).</strong> The 7.8× p50 latency spread is the most operationally consequential finding. Two models priced within a factor of 3 (Imagen 4 Ultra at $0.060 and GPT-Image-2 at $0.033) have a 3.6× latency gap (15.7&nbsp;s vs 56.7&nbsp;s). Cost is not the only differentiator at the premium tier; latency is.</p>
+
+<p><strong>Tax 3: Retry tax (observed, one model).</strong> GPT-Image-2 retried 1 of 5 calls (20% retry rate) after a transient upstream error. None of the other four models retried. The effective cost in Table&nbsp;1 reflects this; the raw price card does not.</p>
+
+<p><strong>Tax 4: Content-policy refusal (zero in this pilot).</strong> Refusal rate was 0% across all 25 calls. However, the pilot's category sample does not include the edge-case/policy bucket (T2I-091..100), which targets brand-adjacent, copyrighted-character-adjacent, and NSFW-boundary prompts. Refusal differentials between providers will emerge in the full run.</p>
+
+<p><strong>Tax 5: Watermark presence (not detected automatically).</strong> No image triggered the under-5&nbsp;KB heuristic. Visual inspection is required to confirm watermark absence at higher confidence; deferred to v1.</p>
+
+<h3>5.5 Judge Ensemble Agreement</h3>
+<p class="table-caption"><strong>Table 4.</strong> Vision-judge ensemble agreement.</p>
+<table>
+  <thead><tr><th>Model</th><th>Judge A mean (Claude Opus 4.7)</th><th>Judge B mean (GPT-5.5)</th><th>|A − B|</th></tr></thead>
+  <tbody>
+    <tr><td>GPT-Image-1 Mini</td><td>4.767</td><td>4.975</td><td>0.208</td></tr>
+    <tr><td>Imagen 4 Fast</td><td>4.633</td><td>4.900</td><td>0.267</td></tr>
+    <tr><td>GPT-Image-1.5</td><td>4.975</td><td>4.900</td><td>0.075</td></tr>
+    <tr><td>GPT-Image-2</td><td>4.842</td><td>5.000</td><td>0.158</td></tr>
+    <tr><td>Imagen 4 Ultra</td><td>4.867</td><td>4.950</td><td>0.083</td></tr>
+  </tbody>
+</table>
+
+<p>GPT-5.5 systematically scores 0.08–0.27 points higher than Claude Opus 4.7 across every model. Claude is the stricter judge in this lineup. <strong>No model triggered the pre-registered stop conditions</strong> (spread > 0.5 or per-axis variance > 0.7), so the ensemble holds for publication.</p>
+
+<p>We note explicitly that <strong>GPT-5.5 rates the OpenAI-image models 4.90–5.00 across the board</strong> — a perfect 5.00 on GPT-Image-2 — which is consistent with own-provider preference. Mitigation: we report <strong>both</strong> judge means individually so this bias is auditable. In v1, a third Gemini-based vision judge will provide triangulation.</p>
+
+<figure>
+  <img src="chart_6_judge_agreement.png" alt="Judge ensemble agreement scatter" />
+  <figcaption><strong>Figure 4.</strong> Per-model judge means. Diagonal: perfect agreement. GPT-5.5 (Judge B) sits systematically above Claude (Judge A), but |Δ| never exceeds 0.27.</figcaption>
+</figure>
+
+<h3>5.6 Visual Sanity Check</h3>
+<p>A single representative comparison illustrates the saturation finding. Both images below are generated from T2I-011 — "A vintage diner sign at night with the text 'OPEN 24 HOURS' in bright red neon, mounted on the brick exterior of a 1950s American diner, slight rain on the sidewalk reflecting the neon."</p>
+
+<div class="figpair">
+  <img src="images/openai_gpt-image-1-mini__T2I-011.png" alt="GPT-Image-1 Mini render of T2I-011" />
+  <img src="images/google_imagen-4-ultra__T2I-011.png" alt="Imagen 4 Ultra render of T2I-011" />
+</div>
+<figcaption><strong>Figure 5.</strong> Left: GPT-Image-1 Mini (US$0.008). Right: Imagen 4 Ultra (US$0.060). Both rendered "OPEN 24 HOURS" correctly. The Ultra adds atmospheric polish (cinematic angle, broader scene, ambient store light); the Mini focuses tighter on the sign itself. Both vision judges scored 5/5 on text fidelity for both images.</figcaption>
+
+<h3>5.7 Hyper-Complex Sub-Pilot (C12)</h3>
+<p>To probe whether the §5.1 saturation finding generalizes to the long tail, we ran an additional <strong>15-call sub-pilot</strong> on three C12 hyper-complex prompts: <code>T2I-111</code> (isometric city block with 16+ named entities and constraints), <code>T2I-118</code> (Mughal-tradition Indian miniature with 16+ named participants), and <code>T2I-119</code> (anatomical respiratory-system illustration with 14 required labels). The same 5-model lineup was used; same judge ensemble was attempted. Total spend: <strong>US$0.36</strong> generation + ~US$0.30 judging. Full image grid in <strong>Appendix E</strong>.</p>
+
+<p>Two methodological surprises emerged before we could measure quality:</p>
+
+<p><strong>(a) GPT-Image-2 needs 3–5× longer than the routine pilot p50 to complete a hyper-complex prompt.</strong> Our initial run used the runner's then-default <code>timeout_s=120</code> and got 0/3 successful generations after 2 retries each, which led us to an erroneous "100% timeout failure" reading. After bumping the per-call timeout to 300 s with no retries, GPT-Image-2 completed 3/3 hyper-complex prompts cleanly: <strong>189 s, 207 s, 171 s wall-clock</strong> (mean 189 s, vs. the model's routine-pilot p50 of 57 s). The result is a finding about latency scaling, not capability: <strong>GPT-Image-2 produces the highest-quality C12 outputs of any model in this benchmark, but takes 4–5× longer to do so than its closest quality competitor (GPT-Image-1.5).</strong> For interactive product UX this is operationally a non-starter; for asynchronous batch workloads it is fine. We report the bump-and-rerun numbers below.</p>
+
+<p><strong>(b) GPT-5.5 vision judge returned empty content on 100% of C12 judging passes.</strong> All 24 of Judge B's initial hyper-complex calls (12 images × 2 temperatures) returned status 200 with an empty <code>message.content</code> string, failing the JSON parser. Claude Opus 4.7 (Judge A) succeeded on all 24 of its parallel calls. The likely cause is response-length truncation under the long prompt + complex image payload — the judge appears to start its reasoning, hit our <code>max_tokens=400</code> ceiling, and return nothing. We report C12 quality as <strong>Claude-only single-judge means</strong>, with the explicit caveat that the ensemble protection from §5.5 does not hold for this sub-pilot.</p>
+
+<p class="table-caption"><strong>Table 5.</strong> Hyper-complex sub-pilot results vs. §5.1 routine results (per-model means). Quality on C12 is Claude-only. GPT-Image-2 row uses the bump-and-rerun numbers (300 s per-call timeout, no retries).</p>
+<table>
+  <thead><tr><th>Model</th><th>Quality (C1–C5)</th><th>Quality (C12)</th><th>Δ quality</th><th>C12 p50 latency</th><th>C12 rank</th></tr></thead>
+  <tbody>
+    <tr><td><strong>GPT-Image-2</strong></td><td>4.921</td><td><strong>3.583</strong></td><td>−1.34</td><td><strong>189 s</strong></td><td><strong>1</strong></td></tr>
+    <tr><td>GPT-Image-1.5</td><td>4.937</td><td>3.30</td><td>−1.64</td><td>41 s</td><td>2</td></tr>
+    <tr><td>GPT-Image-1 (legacy)</td><td>4.733</td><td>3.23</td><td>−1.50</td><td>56 s</td><td>3</td></tr>
+    <tr><td>GPT-Image-1 Mini</td><td>4.871</td><td>2.975</td><td>−1.90</td><td>41 s</td><td>4</td></tr>
+    <tr><td>Imagen 4 Fast</td><td>4.766</td><td>2.681</td><td>−2.09</td><td>7 s</td><td>5</td></tr>
+    <tr><td>Imagen 3 (legacy)</td><td>4.596</td><td>2.667</td><td>−1.93</td><td>8 s</td><td>6</td></tr>
+    <tr><td>Imagen 4 Ultra</td><td>4.908</td><td>2.633</td><td><strong>−2.27</strong></td><td>22 s</td><td>7</td></tr>
+  </tbody>
+</table>
+
+<p>Four observations from the corrected sub-pilot:</p>
+<ol>
+  <li><strong>The §5.1 saturation collapses.</strong> The C1–C5 quality spread was 0.17 points (4.60 → 4.94). The C12 quality spread is <strong>0.95 points</strong> (2.63 → 3.58) — over 5× larger separation on the same 1–5 scale. The premium tier's headroom is real; it surfaces here.</li>
+  <li><strong>GPT-Image-2 is the C12 quality leader by a clear margin.</strong> At 3.58 it beats GPT-Image-1.5 by +0.28 points and the closest non-OpenAI model (Imagen 4 Fast at 2.68) by +0.90 points — the largest C12-bucket gap between any two adjacent ranks in this table. <strong>But its p50 latency is 189 s</strong>, 4.6× its routine p50 (57 s) and 23× Imagen 4 Fast's C12 p50 (7 s). The model exists in a different operating regime than the rest of the lineup.</li>
+  <li><strong>All four top C12 spots are GPT-Image variants.</strong> GPT-Image-2 (3.58), GPT-Image-1.5 (3.30), GPT-Image-1-legacy (3.23), GPT-Image-1-Mini (2.98). All three Imagen variants (Fast, Ultra, Legacy-3) cluster between 2.63 and 2.68 — within 0.05 points of each other. This is direct evidence that the <strong>GPT-Image-family architecture is structurally more robust to hyper-complex prompts than the Imagen-family architecture</strong>, independent of price tier within each family. Whatever differentiates the GPT-Image family generalizes to long-tail prompts; whatever differentiates the Imagen tiers (price, latency, parameter knobs) does not.</li>
+  <li><strong>Imagen 4 Ultra (the most expensive model in the lineup) drops to last place on hyper-complex.</strong> At $0.060/image, 7.5× the Mini, it scores 2.63 — <em>lower</em> than the $0.008 Mini's 2.98. This is the single counter-intuitive ranking flip in the table and it directly contradicts the price-card intuition.</li>
+</ol>
+
+<p>Manually verified failure modes from the C12 generations (see Appendix E for the full image grid):</p>
+<ul>
+  <li><strong>T2I-111 (isometric city block):</strong> Every model rendered the major signage (Bramble &amp; Vine Books, PUBLIC LIBRARY, Dr. M. Ruiz DDS) but omitted or duplicated several named pedestrians; banner text on the library was consistently truncated ("OPEN UNTI" instead of "OPEN UNTIL 8 PM"). No model rendered the "fallen chair at the third café table" detail.</li>
+  <li><strong>T2I-118 (Mughal miniature):</strong> Every model preserved the painterly aesthetic but rendered only 5–7 of the 16+ named participants. The noblewoman on the white elephant — the prompt's most visually distinctive element — was absent from 4 of 4 successful generations.</li>
+  <li><strong>T2I-119 (anatomical illustration):</strong> Every model emitted the textbook visual style and most labels, but the right lung was consistently labeled "2 lobes" (correct is 3); one model produced a footer text reading "Human Superior View" that does not match the requested anterior view; the alveoli inset was missing or mis-positioned in 2 of 4 generations.</li>
+</ul>
+
+<p>These failure modes are exactly the long-tail differentiation the §6.1 routing argument predicted: <strong>at the boss-fight tier, models stop being interchangeable</strong>. The cost-saturation default reverses for any product that routinely sees C12-class prompts.</p>
+
+<h3>5.8 Lineup Expansion (Provider-Family Variants)</h3>
+<p>A second sub-pilot extended the lineup to test whether the saturation finding generalizes across <strong>provider-family variants</strong>. Our initial intent was to add the two highest-signal non-classical models routable through Mesh: <code>google/gemini-2.5-flash-image</code> ("Nano Banana", widely reported as the current #1 on LM Arena's Image Arena) and <code>openai/gpt-5.4-image</code>. Both models appear in Mesh's <code>/v1/models</code> catalog with valid pricing. <strong>Both failed at the gateway layer.</strong></p>
+<ul>
+  <li><code>google/gemini-2.5-flash-image</code> returned HTTP 500 with a Vertex backend message stating that "Gemini cannot be accessed through Vertex Predict/RawPredict API" — Mesh is routing Gemini-image requests through the wrong upstream endpoint.</li>
+  <li><code>openai/gpt-5.4-image</code> returned HTTP 500 with <code>"Composite provider requires messages, composite_config, owner, and db"</code> — its actual request schema is the chat-completions-with-image-output one, not the standard <code>/v1/images/generations</code> schema used by every other image model in the lineup.</li>
+</ul>
+<p>We treat these as <strong>methodological findings</strong>, not bugs to paper over (§6.3): two of the most consequential 2026 image models are catalog-listed-but-not-invokable through Mesh's standard image endpoint as of 2026-05-21.</p>
+
+<p>As a fallback, we ran the two <strong>same-provider legacy variants</strong> that <em>are</em> reachable on the standard endpoint: <code>google/imagen-3</code> (a generation earlier than the Imagen-4 family) and <code>openai/gpt-image-1</code> (a generation earlier than gpt-image-1.5 and gpt-image-2). Both succeeded 16/16 on the same 8-prompt mix (5 routine + 3 hyper-complex) used in §5.7. Total spend: <strong>US$0.64</strong> generation + ~US$0.30 judging.</p>
+
+<p class="table-caption"><strong>Table 6.</strong> Expanded-lineup results vs. closest-priced original-lineup peer.</p>
+<table>
+  <thead><tr><th>Model</th><th>$/image</th><th>C1–C5 Q (n=5)</th><th>C12 Q (n=3)</th><th>C1–C5 p50 lat</th><th>C12 p50 lat</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Imagen 3 (legacy Google)</strong></td><td>$0.040</td><td>4.60</td><td>2.67</td><td>8.1 s</td><td>8.0 s</td></tr>
+    <tr><td style="color:#666"><em>peer:</em> Imagen 4 Fast</td><td style="color:#666">$0.020</td><td style="color:#666">4.77</td><td style="color:#666">2.68</td><td style="color:#666">7.3 s</td><td style="color:#666">7.2 s</td></tr>
+    <tr><td style="color:#666"><em>peer:</em> Imagen 4 Ultra</td><td style="color:#666">$0.060</td><td style="color:#666">4.91</td><td style="color:#666">2.63</td><td style="color:#666">15.7 s</td><td style="color:#666">—</td></tr>
+    <tr><td><strong>GPT-Image-1 (legacy OpenAI)</strong></td><td>$0.040</td><td>4.73</td><td><strong>3.23</strong></td><td>43.6 s</td><td>55.8 s</td></tr>
+    <tr><td style="color:#666"><em>peer:</em> GPT-Image-1.5</td><td style="color:#666">$0.032</td><td style="color:#666">4.94</td><td style="color:#666">3.30</td><td style="color:#666">37.6 s</td><td style="color:#666">41.2 s</td></tr>
+    <tr><td style="color:#666"><em>peer:</em> GPT-Image-2</td><td style="color:#666">$0.030</td><td style="color:#666">4.92</td><td style="color:#666">3.58</td><td style="color:#666">56.7 s</td><td style="color:#666">189 s</td></tr>
+  </tbody>
+</table>
+
+<p>Two findings:</p>
+<ol>
+  <li><strong>Imagen 3 is dominated by Imagen 4 Fast on every axis.</strong> Imagen 3 costs 2× more ($0.040 vs $0.020), is the same speed (8.1 s vs 7.3 s p50), and scores 0.17 quality-points lower on routine prompts (4.60 vs 4.77). On C12 the two are within noise (2.67 vs 2.68). This is a clean "legacy is worse" result: a buyer routing through Mesh should never select Imagen 3 over Imagen 4 Fast — there is no axis on which Imagen 3 wins.</li>
+  <li><strong>GPT-Image-1 (legacy) holds up surprisingly well on C12 (3.23) — within 0.07 points of GPT-Image-1.5 (3.30).</strong> This suggests the <strong>GPT-Image family architecture is more robust to hyper-complex prompts than the Imagen family</strong>, where every Imagen variant (4-Fast 2.68, 4-Ultra 2.63, Legacy-3 2.67) clusters near 2.65. On the routine bucket, however, GPT-Image-1 has no $/quality argument: at $0.040 it costs 5× the Mini and 1.25× GPT-Image-1.5, but scores 0.14 and 0.20 points lower respectively. The legacy OpenAI variant is operationally interesting (it's the only sub-50s OpenAI image model on hyper-complex that completed all 3 prompts) but commercially dominated by its successors on routine.</li>
+</ol>
+
+<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 14px 0;">
+  <figure style="margin: 0;">
+    <img src="images/google_imagen-3__T2I-011.png" alt="Imagen 3 T2I-011" style="width: 100%; aspect-ratio: 1; object-fit: cover;" />
+    <figcaption style="font-size: 11.5px; text-align: center; padding: 3px 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;"><strong>Imagen 3 (legacy Google)</strong> · T2I-011 · 8.0 s · $0.040 · Q=4.31</figcaption>
+  </figure>
+  <figure style="margin: 0;">
+    <img src="images/openai_gpt-image-1__T2I-011.png" alt="GPT-Image-1 T2I-011" style="width: 100%; aspect-ratio: 1; object-fit: cover;" />
+    <figcaption style="font-size: 11.5px; text-align: center; padding: 3px 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;"><strong>GPT-Image-1 (legacy OpenAI)</strong> · T2I-011 · 48.1 s · $0.040 · Q=4.75</figcaption>
+  </figure>
+</div>
+<figcaption><strong>Figure 6.</strong> The two legacy variants on T2I-011 (typography). Both correctly rendered "OPEN 24 HOURS". Imagen 3 stayed tight to the prompt (just the sign on the brick wall). GPT-Image-1 took the creative step of adding "DINER" text above the sign — not requested in the prompt but plausibly in-scene; the judge penalized the over-creativity slightly (4.75 vs 5.00 from Image 4 Fast's render).</figcaption>
+
+<p>The expansion therefore extends the §6.1 routing argument: at this point, the lineup partitions into <strong>three families</strong> (cheap proprietary mini, Imagen-family, GPT-Image-family) and the right routing policy depends on the workload mix. A routine-heavy workload picks the Mini; a hyper-complex-heavy workload picks a GPT-Image variant (1.0, 1.5, or — if latency permits — 2); a latency-sensitive routine workload picks Imagen 4 Fast. <strong>Cross-provider diversity beyond OpenAI ↔ Google is currently not addressable through Mesh</strong> (§6.3); a v2 of this benchmark adding FLUX, Recraft, or Ideogram would require either a Mesh server-side fix or a parallel direct-provider code path.</p>
+
+<h2>6. Discussion</h2>
+
+<h3>6.1 The Cheap-Mini Result is Structural, Not Coincidental</h3>
+<p>The chat-tier sibling benchmark (Sharma, 2026) found that <strong>GPT-4o-mini ($0.15/M input) tied four-of-five frontier chat models at 100% on code-generation</strong>, and scored within 14% of the most expensive chat model on customer-support quality. The T2I-tier finding here — that <strong>GPT-Image-1 Mini ($0.008/image) sits within 0.07 quality-points of the most expensive T2I model in the lineup</strong> — has the same shape. We posit, tentatively, a generalizable observation: <strong>for the broad middle of production foundation-model workloads, "the cheapest workhorse" and "the headline-quality frontier" produce outputs that are within ensemble-judge variance</strong>. The premium tier's headroom is real but concentrated in the long tail (edge cases, adversarial prompts, high-stakes single-image generation) — not in routine product traffic.</p>
+
+<p>This implies that <strong>the dominant cost-optimization lever for a production T2I feature is not model choice but routing</strong>: default to the budget workhorse, escalate to the premium tier only when a per-call heuristic identifies an edge case worth the bill.</p>
+
+<p><strong>The §5.7 hyper-complex sub-pilot provides direct evidence for the escalation branch of this argument.</strong> On C12-class prompts the lineup reorders along a single architectural fault line — the top four ranks are GPT-Image variants (1, 1.5, 2, Mini), the bottom three are Imagen variants (Fast, Ultra, Legacy-3) clustered within 0.05 quality-points of each other. <strong>GPT-Image-2 leads on quality (3.58) but at 189 s p50 latency it is async-only.</strong> GPT-Image-1.5 is the practical escalation target: 0.28 points behind on quality, 4.6× faster (41 s p50). A production router that defaulted to the Mini for routine traffic and escalated to GPT-Image-1.5 for synchronous complex requests (or GPT-Image-2 for batched / async complex requests) would capture all three of: the $/quality advantage on the broad middle, the long-tail quality advantage on hyper-complex, and an explicit latency-vs-quality knob at the escalation point. <strong>A single-model architecture cannot do any of those, let alone all three.</strong></p>
+
+<h3>6.2 Latency Is the Real Premium-Tier Differentiator</h3>
+<p>At the premium tier (GPT-Image-2, GPT-Image-1.5, Imagen 4 Ultra), cost differences are sub-2× and quality differences are within noise. <strong>Latency differences are 4× (15.7&nbsp;s vs 56.7&nbsp;s p50)</strong>. For interactive product UX — generation in response to a user click, in-flow image preview — the GPT-Image models are not viable without async UX, and Imagen 4 Ultra is borderline. <strong>The model-selection decision at the premium tier is operationally driven by latency, not by price or quality</strong>.</p>
+
+<h3>6.3 Mesh Coverage as a Methodological Constraint</h3>
+<p>The benchmark deliberately routes only through Mesh API. As of 2026-05-20, Mesh's image-output catalog included 15 models across two providers (OpenAI and Google). Several visible 2026 systems — FLUX.2, Recraft V4, Ideogram 3, Midjourney v7, Stable Diffusion 3.5, Seedream V4 — are <strong>not</strong> routable through Mesh. We do not silently substitute direct-provider calls for these absences: this would defeat the apples-to-apples billing and rate-limiting that justifies routing through a single gateway in the first place.</p>
+
+<p><strong>A secondary coverage finding from a lineup-expansion attempt in §5.8:</strong> two models that <em>do</em> appear in Mesh's <code>/v1/models</code> catalog turn out to be uninvokable through the standard <code>/v1/images/generations</code> endpoint. <code>google/gemini-2.5-flash-image</code> ("Nano Banana", #1 on Image Arena per public leaderboards) returns HTTP 500 with a Vertex backend error indicating Gemini cannot be reached via the Predict/RawPredict path the gateway uses for image generation. <code>openai/gpt-5.4-image</code> returns HTTP 500 with <code>"Composite provider requires messages, composite_config, owner, and db"</code> — its actual request schema is the chat-completions multimodal-output one (<code>messages: [...]</code> with image responses), not the OpenAI-image schema (<code>prompt</code>, <code>size</code>, <code>quality</code>). The <strong>effective</strong> Mesh image catalog as of 2026-05-21 is therefore narrower than the nominal 15-model catalog: the standard <code>/v1/images/generations</code> contract is fully supported only for the gpt-image-1 family, gpt-image-2, and the imagen-3 / imagen-4 families. Any cross-provider expansion of this benchmark beyond those will require either Mesh server-side fixes for the routed-incorrectly models or a second non-standard code path that handles chat-completions image output. We flag this so that downstream readers understand the catalog ≠ usable invariant.</p>
+
+<h3>6.4 What This Pilot Does Not Show</h3>
+<p>This pilot reports n=5 per model on five of twelve prompt categories (C1–C5). The seven <strong>omitted categories</strong> (long-prompt, world-knowledge, counting, negative-space, policy-edge, multilingual, hyper-complex) are precisely the categories where premium models are most likely to differentiate. We expect the full run (n=10 per category × 12 categories) to <strong>narrow the cost-per-quality gap</strong> between Mini and the premium tier on edge-heavy categories &mdash; most sharply on the hyper-complex (C12) bucket, the precise locus where the premium tier should earn its bill, and to <strong>introduce non-zero refusal rates</strong> on the policy-edge bucket. The pilot's saturation finding should be read as "saturation holds on routine workloads"; whether it holds on the long tail is the question the full run is designed to answer.</p>
+
+<h2>7. Limitations</h2>
+<p>We enumerate methodological limitations explicitly:</p>
+<ul>
+  <li><strong>Sample size.</strong> n=5 per model is sufficient to surface headline-magnitude gaps but too small for confidence intervals on second-decimal differences.</li>
+  <li><strong>Single region, single time-of-day, single run.</strong> Provider throttling and queue depth vary by hour.</li>
+  <li><strong>Single seed, single generation per (model, prompt).</strong> No "best-of-N" selection. Variance is part of the quality signal, not engineered away.</li>
+  <li><strong>Two-judge ensemble, no human eval.</strong> Vision-LLM judges correlate with humans at Spearman ρ ≈ 0.75–0.81 in prior work, but the ensemble can still share blind spots. A 50-prompt human-rated calibration set is planned for v2.</li>
+  <li><strong>Own-provider bias.</strong> Judge B (GPT-5.5) systematically scores OpenAI-image models higher than Judge A. Reported per-judge for auditability; not eliminated.</li>
+  <li><strong>Mesh coverage.</strong> FLUX, Midjourney, Recraft, Ideogram, Stable Diffusion variants, and Seedream are absent from Mesh's image-output catalog and therefore absent from the lineup.</li>
+  <li><strong>No image editing.</strong> Mesh's <code>/v1/images/edits</code> returns 404. The 30-prompt editing suite (<code>tasks/edit_prompts.json</code>) ships unused in v1.</li>
+  <li><strong>Refusal taxonomy incomplete in pilot.</strong> The five sampled categories do not include the policy-edge bucket.</li>
+  <li><strong>Watermark detection is coarse.</strong> Under-5&nbsp;KB heuristic plus opportunistic judge-note text matching.</li>
+  <li><strong>Auto-metric sanity check skipped in pilot.</strong> CLIPScore and VQAScore were not run on the pilot.</li>
+  <li><strong>No streaming or time-to-first-byte measurement.</strong> Mesh documents SSE keep-alive on the image endpoint; we did not exercise it.</li>
+  <li><strong>No fine-tuning, LoRA, or custom-checkpoint comparison.</strong> Stock model outputs only.</li>
+</ul>
+
+<h2>8. Conclusion and Future Work</h2>
+<p>We present <strong>Mesh Dollar per Image Bench</strong> (<code>mesh-dollar-per-image-bench</code>), a small, sharp, fully-reproducible pilot benchmark of five frontier T2I models routed through a unified API gateway. The pilot reveals that on a five-prompt, five-category sample, <strong>quality is saturated across the lineup (4.77–4.94 on a 1–5 scale) while cost varies by 7.5× and latency varies by 7.8×</strong>. The cheapest model in the lineup, GPT-Image-1 Mini, dominates the cost-per-quality axis and is within ensemble-judge variance of the most expensive. The premium tier's operational differentiator is <strong>latency, not quality</strong>.</p>
+
+<p><strong>Future work:</strong></p>
+<ol>
+  <li><strong>Full run</strong> (n=10/category × 12 categories × 5–8 models, projected US$45–65 spend).</li>
+  <li><strong>Stretch lineup.</strong> Gemini 2.5 Flash Image ("Nano Banana"), Imagen 3, Imagen 4 (standard), GPT-Image-1.</li>
+  <li><strong>Three-judge ensemble.</strong> Adding <code>google/gemini-2.5-pro-preview</code> as Judge C to triangulate own-provider bias.</li>
+  <li><strong>Automatic metrics.</strong> CLIPScore + VQAScore + LAION aesthetic predictor on every full-run image.</li>
+  <li><strong>Human calibration set.</strong> 50 prompts hand-rated against the same five-axis rubric.</li>
+  <li><strong>Editing benchmark.</strong> Triggered when Mesh ships <code>/v1/images/edits</code>.</li>
+  <li><strong>Streaming latency.</strong> TTFB / TTFP measurements where the endpoint supports SSE.</li>
+  <li><strong>Cross-region runs.</strong> Same pipeline from at least two physically distinct origins.</li>
+</ol>
+
+<p>The artifact — prompts, runner, judges, aggregator, charts, and raw CSVs — is MIT-licensed at <code>github.com/aifiesta/mesh-dollar-per-image-bench</code>. Re-runs are encouraged. Contradictory findings are welcome and will be folded into v1.</p>
+
+<h2>Funding and Conflict of Interest Statement</h2>
+<p>The author is affiliated with <strong>Mesh API</strong>, the unified gateway through which every API call in this benchmark was routed. This is a non-trivial conflict of interest and is disclosed here explicitly. The methodology was designed to minimize the consequences of this conflict in three concrete ways: (i) routing is treated as a measurement substrate (every model in the lineup is routed identically), not as a thing being evaluated favorably; (ii) we report Mesh-coverage limitations (FLUX, Midjourney, Recraft, Ideogram, Stable Diffusion variants, and Seedream are absent from the lineup precisely because Mesh does not route them) rather than papering over them; and (iii) the per-image pricing table is sourced from Mesh's <code>/v1/models</code> catalog cross-referenced against each provider's official price page, with both sources cited and dated. No payment, sponsorship, or special access was provided to or by any model provider. Readers who suspect routing-layer effects bias the numbers are encouraged to re-run the artifact against direct-provider APIs and submit the diff — the framework supports this.</p>
+
+<h2>Reproducibility Statement</h2>
+<p>All scripts, prompts, and raw CSVs required to reproduce every number, table, and chart in this paper are available in the open-source artifact. A full pilot reproduces from a clean clone in approximately ten minutes for approximately US$1–2 on Mesh API. The five pilot prompts (T2I-001, T2I-011, T2I-021, T2I-031, T2I-041) and the full 100-prompt set are released as <code>tasks/t2i_prompts.json</code>. The pricing table is dated and source-cited.</p>
+
+<h2>References</h2>
+<div class="refs">
+  <p>Chiang, W., Zheng, L., et&nbsp;al. (2024). LMSYS Arena: Benchmarking Foundation Models with Crowd-Sourced Preferences. <em>Conference on Language Modeling</em>.</p>
+  <p>Cho, J., Hu, Y., Garg, R., Anderson, P., Krishna, R., Baldridge, J., Bansal, M., Pont-Tuset, J., Wang, S. (2023). Davidsonian Scene Graph: Improving Reliability in Fine-grained Evaluation for Text-to-Image Generation. <em>arXiv:2310.18235</em>.</p>
+  <p>Hessel, J., Holtzman, A., Forbes, M., Bras, R. L., Choi, Y. (2021). CLIPScore: A Reference-free Evaluation Metric for Image Captioning. <em>EMNLP</em>.</p>
+  <p>Hu, Y., Liu, B., Kasai, J., Wang, Y., Ostendorf, M., Krishna, R., Smith, N. A. (2023). TIFA: Accurate and Interpretable Text-to-Image Faithfulness Evaluation with Question Answering. <em>ICCV</em>.</p>
+  <p>Jiang, D., Ku, M., Li, T., Ni, Y., Sun, S., Fan, R., Chen, W. (2024). GenAI Arena: An Open Evaluation Platform for Generative Models. <em>NeurIPS Datasets &amp; Benchmarks</em>.</p>
+  <p>Sharma, R. (2026). <code>dollar-per-task-bench</code>: A Cost-vs-Quality Pilot Benchmark of Frontier Chat LLMs Through a Unified API Gateway. <em>Preprint</em>.</p>
+  <p>Lee, T., Yasunaga, M., Meng, C., Mai, Y., Park, J. S., Gupta, A., Zhang, Y., Narayanan, D., et&nbsp;al. (2023). Holistic Evaluation of Text-to-Image Models. <em>NeurIPS Datasets &amp; Benchmarks</em>.</p>
+  <p>Li, B., Lin, Z., Pathak, D., Li, J., Fei, Y., Wu, K., Ling, T., Xia, X., Zhang, P., Neubig, G., Ramanan, D. (2024). GenAI-Bench: Evaluating and Improving Compositional Text-to-Visual Generation. <em>arXiv:2406.13743</em>.</p>
+  <p>Lin, Z., Pathak, D., Li, B., Li, J., Xia, X., Neubig, G., Zhang, P., Ramanan, D. (2024). Evaluating Text-to-Visual Generation with Image-to-Text Generation. <em>ECCV</em>.</p>
+  <p>Schuhmann, C., Beaumont, R., Vencu, R., Gordon, C., Wightman, R., et&nbsp;al. (2022). LAION-5B: An Open Large-Scale Dataset for Training Next-Generation Image-Text Models. <em>NeurIPS Datasets &amp; Benchmarks</em>.</p>
+  <p>Zhang, R., Han, J., Liu, C., Gao, P., Zhou, A., Hu, X., Yan, S., Lu, P., Li, H., Qiao, Y. (2023). GPT-4V(ision) as a Generalist Evaluator for Vision-Language Tasks. <em>arXiv:2311.01361</em>.</p>
+</div>
+
+<h2>Appendix A. Pilot Prompt Sample</h2>
+<p>The five prompts sampled in the pilot are reproduced verbatim below for full reviewer auditability.</p>
+<p><strong>T2I-001</strong> (<em>photoreal_portrait</em>): A photorealistic portrait of a 70-year-old woman with silver hair tied in a low bun, warm hazel eyes with visible crows feet, soft golden hour light from camera left, shallow depth of field, 85mm lens, neutral gray backdrop.</p>
+<p><strong>T2I-011</strong> (<em>typography</em>): A vintage diner sign at night with the text "OPEN 24 HOURS" in bright red neon, mounted on the brick exterior of a 1950s American diner, slight rain on the sidewalk reflecting the neon.</p>
+<p><strong>T2I-021</strong> (<em>compositional_spatial</em>): A red wooden cube on the left side of the frame and a blue glass sphere on the right side, both sitting on a polished concrete floor, soft north-window light, photographic studio still life.</p>
+<p><strong>T2I-031</strong> (<em>multi_subject</em>): Two cats on a windowsill: the cat on the left is a fluffy Maine Coon with tabby markings, the cat on the right is a sleek black short-hair, both looking at a bird outside; afternoon light.</p>
+<p><strong>T2I-041</strong> (<em>style_artistic</em>): A watercolor painting of a small wooden cottage in a snowy pine forest at dusk, soft pink and lavender sky, warm yellow window light, loose brushwork visible, paper grain visible, no photorealism.</p>
+
+<h2>Appendix B. Per-Model Detailed Statistics</h2>
+<pre><code>GPT-Image-1 Mini  q=4.871±0.087  judgeA=4.767 judgeB=4.975 |Δ|=0.208
+  axes: adh=4.85 aest=4.80 photo=4.90 text=5.00 anatomy=5.00
+  cost: $0.008/img $0.0082/qpt  refusal=0% retry=0%
+  latency: p50=37245ms p95=38191ms mean=30405ms
+
+Imagen 4 Fast     q=4.766±0.198  judgeA=4.633 judgeB=4.900 |Δ|=0.267
+  axes: adh=4.45 aest=4.80 photo=4.95 text=5.00 anatomy=4.75
+  cost: $0.020/img $0.0210/qpt  refusal=0% retry=0%
+  latency: p50= 7267ms p95= 8775ms mean= 7498ms
+
+GPT-Image-1.5     q=4.937±0.052  judgeA=4.975 judgeB=4.900 |Δ|=0.075
+  axes: adh=5.00 aest=5.00 photo=4.75 text=5.00 anatomy=5.00
+  cost: $0.032/img $0.0324/qpt  refusal=0% retry=0%
+  latency: p50=37647ms p95=41563ms mean=33093ms
+
+GPT-Image-2       q=4.921±0.067  judgeA=4.842 judgeB=5.000 |Δ|=0.158
+  axes: adh=4.95 aest=4.90 photo=4.90 text=5.00 anatomy=5.00
+  cost: $0.033/img $0.0335/qpt  refusal=0% retry=20%
+  latency: p50=56728ms p95=71937ms mean=59175ms
+
+Imagen 4 Ultra    q=4.908±0.077  judgeA=4.867 judgeB=4.950 |Δ|=0.083
+  axes: adh=5.00 aest=4.80 photo=4.90 text=5.00 anatomy=5.00
+  cost: $0.060/img $0.0611/qpt  refusal=0% retry=0%
+  latency: p50=15658ms p95=17507ms mean=15698ms</code></pre>
+
+<h2>Appendix C. Categories Reserved for Full Run</h2>
+<p>The seven prompt categories below were authored but not sampled in the pilot. Each contains ten prompts in the released artifact.</p>
+<ul>
+  <li><strong>C6: Long-prompt fidelity</strong> (100+ words, 5+ attribute axes per subject) — tests parser depth.</li>
+  <li><strong>C7: Knowledge / world facts</strong> — tests landmark accuracy (Eiffel Tower from the Trocadéro side, Machu Picchu from the Guardian House angle, etc.).</li>
+  <li><strong>C8: Counting / numerical</strong> — exact-count prompts (seven yellow ducks, exactly four red apples in a square, etc.).</li>
+  <li><strong>C9: Negative space / minimalism</strong> — large empty backgrounds, single subjects.</li>
+  <li><strong>C10: Edge cases / policy</strong> — brand-adjacent, copyrighted-character-adjacent, NSFW-boundary, watermark-prone. Refusal-rate differential expected.</li>
+  <li><strong>C11: Multilingual</strong> — ten prompts each centered on a different writing system (Devanagari, traditional Chinese, Arabic, Japanese kanji+hiragana, Cyrillic, Korean Hangul, Greek capitals, Hebrew, Thai, accented Latin). Each prompt requires the model to render the specified script in-image <em>and</em> to ground the scene in a culturally plausible context. Probes the typography-rendering gap and the world-knowledge gap simultaneously. HEIM (Lee et&nbsp;al., 2023) identified multilinguality as one of its 12 holistic aspects; our preliminary expectation is consistent with their finding that no single 2023-era model excelled across all scripts.</li>
+  <li><strong>C12: Hyper-complex</strong> — ten "boss-fight" prompts (200–400 words each) that impose 10+ simultaneous constraints: named entities in named positions, specific text on signs/labels, exact counts of subjects, mixed visual styles (isometric, cutaway, photo-realistic across prompts), and embedded scene knowledge (1960s NASA mission control, fully-staffed surgical theater, Mughal-tradition Indian miniature, etc.). Designed to be the precise scenarios where the premium tier should earn its bill — if quality saturation holds on routine prompts but collapses on hyper-complex ones, the routing argument in §6.1 acquires its sharpest evidence here. Expected to exhibit the largest cost-per-quality spread of any category.</li>
+</ul>
+<p>We expect categories <strong>C8 (counting), C10 (policy), C11 (multilingual), and C12 (hyper-complex)</strong> to exhibit the largest premium-tier separation. C9 (negative space) is expected to surface watermarks and signatures most clearly. <strong>C12 in particular is the category whose results will most directly settle the §6.1 question of whether the saturation finding holds on the long tail or breaks down on the boss-fight tier.</strong></p>
+
+<!-- BEGIN APPENDIX D — IMAGE GALLERY -->
+<h2>Appendix D. Complete Image Gallery</h2>
+<p>All 25 images generated in the pilot, arranged as a 5&times;5 grid: <strong>rows</strong> are the five models (ascending price; GPT-Image-2 sits between Imagen Fast and GPT-Image-1.5 by sticker price but is shown after 1.5 to keep OpenAI variants adjacent), <strong>columns</strong> are the five sampled prompts (one per category from C1&ndash;C5). Each cell shows the per-image vision-LLM ensemble quality score (mean of 4 passes: Claude Opus 4.7 + GPT-5.5 &times; 2 temps each), the per-axis breakdown, the wall-clock latency, and the per-image cost. This grid is the full reviewer-auditable evidence behind every per-axis number in Table&nbsp;2.</p>
+<div class="gallery">
+<div class="gallery-row gallery-header">
+<div class="gallery-cell gallery-corner"></div>
+<div class="gallery-cell gallery-prompt-header"><div class="prompt-id">T2I-001</div><div class="prompt-cat">Photorealism</div></div>
+<div class="gallery-cell gallery-prompt-header"><div class="prompt-id">T2I-011</div><div class="prompt-cat">Typography</div></div>
+<div class="gallery-cell gallery-prompt-header"><div class="prompt-id">T2I-021</div><div class="prompt-cat">Spatial</div></div>
+<div class="gallery-cell gallery-prompt-header"><div class="prompt-id">T2I-031</div><div class="prompt-cat">Multi-subject</div></div>
+<div class="gallery-cell gallery-prompt-header"><div class="prompt-id">T2I-041</div><div class="prompt-cat">Style</div></div>
+</div>
+<div class="gallery-row">
+<div class="gallery-cell gallery-model-header"><div class="model-disp">GPT-Image-1 Mini</div><div class="model-price">$0.008/img</div></div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/openai_gpt-image-1-mini__T2I-001.png" alt="GPT-Image-1 Mini render of T2I-001" loading="lazy" />
+<div class="gallery-score">Q=4.69 &middot; 22.3s &middot; $0.008</div>
+<div class="gallery-axes">adh4.25 aes4.5 pho5 ana5</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/openai_gpt-image-1-mini__T2I-011.png" alt="GPT-Image-1 Mini render of T2I-011" loading="lazy" />
+<div class="gallery-score">Q=5.00 &middot; 38.3s &middot; $0.008</div>
+<div class="gallery-axes">adh5 aes5 pho5 txt5</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/openai_gpt-image-1-mini__T2I-021.png" alt="GPT-Image-1 Mini render of T2I-021" loading="lazy" />
+<div class="gallery-score">Q=4.67 &middot; 16.5s &middot; $0.008</div>
+<div class="gallery-axes">adh5 aes4.5 pho4.5</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/openai_gpt-image-1-mini__T2I-031.png" alt="GPT-Image-1 Mini render of T2I-031" loading="lazy" />
+<div class="gallery-score">Q=5.00 &middot; 37.2s &middot; $0.008</div>
+<div class="gallery-axes">adh5 aes5 pho5 ana5</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/openai_gpt-image-1-mini__T2I-041.png" alt="GPT-Image-1 Mini render of T2I-041" loading="lazy" />
+<div class="gallery-score">Q=5.00 &middot; 37.7s &middot; $0.008</div>
+<div class="gallery-axes">adh5 aes5 pho5</div>
+</div>
+</div>
+<div class="gallery-row">
+<div class="gallery-cell gallery-model-header"><div class="model-disp">Imagen 4 Fast</div><div class="model-price">$0.020/img</div></div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/google_imagen-4-fast__T2I-001.png" alt="Imagen 4 Fast render of T2I-001" loading="lazy" />
+<div class="gallery-score">Q=4.88 &middot; 6.9s &middot; $0.02</div>
+<div class="gallery-axes">adh4.5 aes5 pho5 ana5</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/google_imagen-4-fast__T2I-011.png" alt="Imagen 4 Fast render of T2I-011" loading="lazy" />
+<div class="gallery-score">Q=4.81 &middot; 7.3s &middot; $0.02</div>
+<div class="gallery-axes">adh4.5 aes5 pho4.75 txt5</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/google_imagen-4-fast__T2I-021.png" alt="Imagen 4 Fast render of T2I-021" loading="lazy" />
+<div class="gallery-score">Q=4.83 &middot; 8.1s &middot; $0.02</div>
+<div class="gallery-axes">adh5 aes4.5 pho5</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/google_imagen-4-fast__T2I-031.png" alt="Imagen 4 Fast render of T2I-031" loading="lazy" />
+<div class="gallery-score">Q=4.31 &middot; 6.3s &middot; $0.02</div>
+<div class="gallery-axes">adh3.25 aes4.5 pho5 ana4.5</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/google_imagen-4-fast__T2I-041.png" alt="Imagen 4 Fast render of T2I-041" loading="lazy" />
+<div class="gallery-score">Q=5.00 &middot; 8.9s &middot; $0.02</div>
+<div class="gallery-axes">adh5 aes5 pho5</div>
+</div>
+</div>
+<div class="gallery-row">
+<div class="gallery-cell gallery-model-header"><div class="model-disp">GPT-Image-1.5</div><div class="model-price">$0.032/img</div></div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/openai_gpt-image-1.5__T2I-001.png" alt="GPT-Image-1.5 render of T2I-001" loading="lazy" />
+<div class="gallery-score">Q=5.00 &middot; 29.3s &middot; $0.032</div>
+<div class="gallery-axes">adh5 aes5 pho5 ana5</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/openai_gpt-image-1.5__T2I-011.png" alt="GPT-Image-1.5 render of T2I-011" loading="lazy" />
+<div class="gallery-score">Q=4.88 &middot; 37.6s &middot; $0.032</div>
+<div class="gallery-axes">adh5 aes5 pho4.5 txt5</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/openai_gpt-image-1.5__T2I-021.png" alt="GPT-Image-1.5 render of T2I-021" loading="lazy" />
+<div class="gallery-score">Q=5.00 &middot; 17.3s &middot; $0.032</div>
+<div class="gallery-axes">adh5 aes5 pho5</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/openai_gpt-image-1.5__T2I-031.png" alt="GPT-Image-1.5 render of T2I-031" loading="lazy" />
+<div class="gallery-score">Q=4.81 &middot; 39.0s &middot; $0.032</div>
+<div class="gallery-axes">adh5 aes5 pho4.25 ana5</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/openai_gpt-image-1.5__T2I-041.png" alt="GPT-Image-1.5 render of T2I-041" loading="lazy" />
+<div class="gallery-score">Q=5.00 &middot; 42.2s &middot; $0.032</div>
+<div class="gallery-axes">adh5 aes5 pho5</div>
+</div>
+</div>
+<div class="gallery-row">
+<div class="gallery-cell gallery-model-header"><div class="model-disp">GPT-Image-2</div><div class="model-price">$0.030/img</div></div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/openai_gpt-image-2__T2I-001.png" alt="GPT-Image-2 render of T2I-001" loading="lazy" />
+<div class="gallery-score">Q=4.94 &middot; 55.8s &middot; $0.045</div>
+<div class="gallery-axes">adh4.75 aes5 pho5 ana5</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/openai_gpt-image-2__T2I-011.png" alt="GPT-Image-2 render of T2I-011" loading="lazy" />
+<div class="gallery-score">Q=5.00 &middot; 75.7s &middot; $0.03</div>
+<div class="gallery-axes">adh5 aes5 pho5 txt5</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/openai_gpt-image-2__T2I-021.png" alt="GPT-Image-2 render of T2I-021" loading="lazy" />
+<div class="gallery-score">Q=4.83 &middot; 50.8s &middot; $0.03</div>
+<div class="gallery-axes">adh5 aes4.5 pho5</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/openai_gpt-image-2__T2I-031.png" alt="GPT-Image-2 render of T2I-031" loading="lazy" />
+<div class="gallery-score">Q=5.00 &middot; 56.7s &middot; $0.03</div>
+<div class="gallery-axes">adh5 aes5 pho5 ana5</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/openai_gpt-image-2__T2I-041.png" alt="GPT-Image-2 render of T2I-041" loading="lazy" />
+<div class="gallery-score">Q=4.83 &middot; 56.8s &middot; $0.03</div>
+<div class="gallery-axes">adh5 aes5 pho4.5</div>
+</div>
+</div>
+<div class="gallery-row">
+<div class="gallery-cell gallery-model-header"><div class="model-disp">Imagen 4 Ultra</div><div class="model-price">$0.060/img</div></div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/google_imagen-4-ultra__T2I-001.png" alt="Imagen 4 Ultra render of T2I-001" loading="lazy" />
+<div class="gallery-score">Q=5.00 &middot; 14.0s &middot; $0.06</div>
+<div class="gallery-axes">adh5 aes5 pho5 ana5</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/google_imagen-4-ultra__T2I-011.png" alt="Imagen 4 Ultra render of T2I-011" loading="lazy" />
+<div class="gallery-score">Q=4.88 &middot; 16.3s &middot; $0.06</div>
+<div class="gallery-axes">adh5 aes5 pho4.5 txt5</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/google_imagen-4-ultra__T2I-021.png" alt="Imagen 4 Ultra render of T2I-021" loading="lazy" />
+<div class="gallery-score">Q=4.83 &middot; 14.7s &middot; $0.06</div>
+<div class="gallery-axes">adh5 aes4.5 pho5</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/google_imagen-4-ultra__T2I-031.png" alt="Imagen 4 Ultra render of T2I-031" loading="lazy" />
+<div class="gallery-score">Q=5.00 &middot; 17.8s &middot; $0.06</div>
+<div class="gallery-axes">adh5 aes5 pho5 ana5</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/google_imagen-4-ultra__T2I-041.png" alt="Imagen 4 Ultra render of T2I-041" loading="lazy" />
+<div class="gallery-score">Q=4.83 &middot; 15.7s &middot; $0.06</div>
+<div class="gallery-axes">adh5 aes4.5 pho5</div>
+</div>
+</div>
+</div>
+<p class="gallery-footnote"><em>Reading the grid:</em> column-wise, you see how every model rendered the same prompt &mdash; directly testing the saturation finding. Row-wise, you see one model's consistency across categories. <strong>Q</strong> is the per-image ensemble mean on the 1&ndash;5 rubric; axes are <code>adh</code> (prompt adherence), <code>aes</code> (aesthetic), <code>pho</code> (photoreal/on-style), <code>txt</code> (text rendering, only on T2I-011), <code>ana</code> (anatomy &amp; artifacts). Empty axis values mean "N/A" on prompts where that axis is inapplicable. Each image is the single un-cherry-picked output Mesh returned for the (model, prompt) call &mdash; no retries used a different generation.</p>
+<!-- END APPENDIX D -->
+
+<!-- BEGIN APPENDIX E — HYPER-COMPLEX GALLERY -->
+<h2>Appendix E. Hyper-Complex (C12) Gallery</h2>
+<p>15 generations from the C12 sub-pilot (§5.7): 3 hyper-complex prompts × 5 models. <strong>GPT-Image-2 needs 170–207 s per generation</strong> on these prompts — 4–5× its routine-pilot p50; the original run timed out at the 120 s client cap, the numbers below are from the bump-and-rerun with 300 s per-call timeout. All 12 of Claude Opus 4.7's hyper-complex judging passes succeeded; all 24 of GPT-5.5's parallel passes returned empty content (likely max-tokens truncation; see §5.7). Quality scores below are therefore Claude-only single-judge means and should be read with that caveat.</p>
+<div class="gallery">
+<div class="gallery-row gallery-header" style="grid-template-columns: 110px repeat(3, 1fr);">
+<div class="gallery-cell gallery-corner"></div>
+<div class="gallery-cell gallery-prompt-header"><div class="prompt-id">T2I-111</div><div class="prompt-cat">City block (isometric)</div></div>
+<div class="gallery-cell gallery-prompt-header"><div class="prompt-id">T2I-118</div><div class="prompt-cat">Mughal miniature</div></div>
+<div class="gallery-cell gallery-prompt-header"><div class="prompt-id">T2I-119</div><div class="prompt-cat">Anatomical illustration</div></div>
+</div>
+<div class="gallery-row" style="grid-template-columns: 110px repeat(3, 1fr);">
+<div class="gallery-cell gallery-model-header"><div class="model-disp">GPT-Image-1 Mini</div><div class="model-price">$0.008/img</div></div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/openai_gpt-image-1-mini__T2I-111.png" alt="GPT-Image-1 Mini render of T2I-111" loading="lazy" />
+<div class="gallery-score">Q=2.50 &middot; 39.5s &middot; $0.008</div>
+<div class="gallery-axes">adh2 aes3 txt2 ana3</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/openai_gpt-image-1-mini__T2I-118.png" alt="GPT-Image-1 Mini render of T2I-118" loading="lazy" />
+<div class="gallery-score">Q=3.62 &middot; 41.8s &middot; $0.008</div>
+<div class="gallery-axes">adh3 aes4 pho4 ana3.5</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/openai_gpt-image-1-mini__T2I-119.png" alt="GPT-Image-1 Mini render of T2I-119" loading="lazy" />
+<div class="gallery-score">Q=2.80 &middot; 39.1s &middot; $0.008</div>
+<div class="gallery-axes">adh2 aes3 pho3 txt4 ana2</div>
+</div>
+</div>
+<div class="gallery-row" style="grid-template-columns: 110px repeat(3, 1fr);">
+<div class="gallery-cell gallery-model-header"><div class="model-disp">Imagen 4 Fast</div><div class="model-price">$0.020/img</div></div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/google_imagen-4-fast__T2I-111.png" alt="Imagen 4 Fast render of T2I-111" loading="lazy" />
+<div class="gallery-score">Q=2.50 &middot; 7.2s &middot; $0.02</div>
+<div class="gallery-axes">adh2 aes3 txt2 ana3</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/google_imagen-4-fast__T2I-118.png" alt="Imagen 4 Fast render of T2I-118" loading="lazy" />
+<div class="gallery-score">Q=3.14 &middot; 5.6s &middot; $0.02</div>
+<div class="gallery-axes">adh3 aes3 pho3 ana3.5</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/google_imagen-4-fast__T2I-119.png" alt="Imagen 4 Fast render of T2I-119" loading="lazy" />
+<div class="gallery-score">Q=2.40 &middot; 7.5s &middot; $0.02</div>
+<div class="gallery-axes">adh2 aes3 pho3 txt2 ana2</div>
+</div>
+</div>
+<div class="gallery-row" style="grid-template-columns: 110px repeat(3, 1fr);">
+<div class="gallery-cell gallery-model-header"><div class="model-disp">GPT-Image-1.5</div><div class="model-price">$0.032/img</div></div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/openai_gpt-image-1.5__T2I-111.png" alt="GPT-Image-1.5 render of T2I-111" loading="lazy" />
+<div class="gallery-score">Q=2.75 &middot; 42.3s &middot; $0.032</div>
+<div class="gallery-axes">adh2 aes3 txt3 ana3</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/openai_gpt-image-1.5__T2I-118.png" alt="GPT-Image-1.5 render of T2I-118" loading="lazy" />
+<div class="gallery-score">Q=3.75 &middot; 41.2s &middot; $0.032</div>
+<div class="gallery-axes">adh3 aes4 pho4 ana4</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/openai_gpt-image-1.5__T2I-119.png" alt="GPT-Image-1.5 render of T2I-119" loading="lazy" />
+<div class="gallery-score">Q=3.40 &middot; 37.2s &middot; $0.032</div>
+<div class="gallery-axes">adh3 aes4 pho4 txt3 ana3</div>
+</div>
+</div>
+<div class="gallery-row" style="grid-template-columns: 110px repeat(3, 1fr);">
+<div class="gallery-cell gallery-model-header"><div class="model-disp">GPT-Image-2</div><div class="model-price">$0.030/img</div></div>
+<div class="gallery-cell gallery-img-cell"><img src="images/openai_gpt-image-2__T2I-111.png" alt="GPT-Image-2 render of T2I-111" loading="lazy" /><div class="gallery-score">Q=3.60 &middot; 189.3s &middot; $0.030</div><div class="gallery-axes">adh3 aes4 pho4 txt3 ana4</div></div>
+<div class="gallery-cell gallery-img-cell"><img src="images/openai_gpt-image-2__T2I-118.png" alt="GPT-Image-2 render of T2I-118" loading="lazy" /><div class="gallery-score">Q=3.75 &middot; 207.2s &middot; $0.030</div><div class="gallery-axes">adh4 aes4 txt3 ana4</div></div>
+<div class="gallery-cell gallery-img-cell"><img src="images/openai_gpt-image-2__T2I-119.png" alt="GPT-Image-2 render of T2I-119" loading="lazy" /><div class="gallery-score">Q=3.40 &middot; 170.9s &middot; $0.030</div><div class="gallery-axes">adh3 aes4 pho4 txt4 ana2</div></div>
+</div>
+<div class="gallery-row" style="grid-template-columns: 110px repeat(3, 1fr);">
+<div class="gallery-cell gallery-model-header"><div class="model-disp">Imagen 4 Ultra</div><div class="model-price">$0.060/img</div></div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/google_imagen-4-ultra__T2I-111.png" alt="Imagen 4 Ultra render of T2I-111" loading="lazy" />
+<div class="gallery-score">Q=2.50 &middot; 23.7s &middot; $0.06</div>
+<div class="gallery-axes">adh2 aes3 txt2 ana3</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/google_imagen-4-ultra__T2I-118.png" alt="Imagen 4 Ultra render of T2I-118" loading="lazy" />
+<div class="gallery-score">Q=3.00 &middot; 24.1s &middot; $0.06</div>
+<div class="gallery-axes">adh2 aes3 pho3 ana4</div>
+</div>
+<div class="gallery-cell gallery-img-cell">
+<img src="images/google_imagen-4-ultra__T2I-119.png" alt="Imagen 4 Ultra render of T2I-119" loading="lazy" />
+<div class="gallery-score">Q=2.40 &middot; 21.7s &middot; $0.06</div>
+<div class="gallery-axes">adh2 aes3 pho3 txt2 ana2</div>
+</div>
+</div>
+</div>
+<p class="gallery-footnote"><em>Compare to Appendix D.</em> On C1&ndash;C5 routine prompts every model scored 4.7&ndash;4.9. On these C12 boss-fight prompts, the spread is 2.4&ndash;3.3 (almost the full bottom half of the rubric). Only GPT-Image-1.5 produces consistently 3+ outputs; Imagen 4 Ultra drops to 2.63 mean despite being the most expensive in the lineup. The strongest visible failure modes (manually verified): the city block (T2I-111) misses or duplicates several named pedestrians and gets the public library banner text wrong; the Mughal miniature (T2I-118) preserves style but renders only 5&ndash;7 of the 16+ named figures; the anatomical illustration (T2I-119) consistently labels the right lung as "2 lobes" when it should be 3, mis-spells "Superior" as a footer label, or omits the alveoli inset.</p>
+<!-- END APPENDIX E -->
+
+
+<h2>Authorship and Correspondence</h2>
+<div class="authors" style="font-size: 16px; margin-top: 12px;"><strong>Raushan Sharma</strong>, Mesh API (Fiesta Labs Inc.)</div>
+<div class="affil" style="font-size: 13px; color: var(--muted); margin-top: 4px;">Correspondence: <a href="mailto:contact@meshapi.ai"><code>contact@meshapi.ai</code></a></div>
+
+<footer>
+  Manuscript prepared 2026-05-20, revised 2026-05-21.
+  Artifact: <a href="https://github.com/aifiesta/mesh-dollar-per-image-bench"><code>github.com/aifiesta/mesh-dollar-per-image-bench</code></a>.
+  Index of public Mesh API benchmarks: <a href="https://github.com/aifiesta/mesh-benchmarks"><code>github.com/aifiesta/mesh-benchmarks</code></a>.
+  Total pilot cost including debugging re-runs: approximately US$3.20.
+  Code and data released under the MIT License (see <code>LICENSE</code>).
+  Copyright © 2026 Fiesta Labs Inc. All rights reserved on the paper text and figures.
+  Corrections welcome.
+</footer>
+
+</main>
+</body>
+</html>

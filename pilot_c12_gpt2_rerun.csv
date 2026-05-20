@@ -1,0 +1,4 @@
+run_id,ts_iso,model_id,model_display,tier,prompt_id,category,size,quality,latency_ms,n_retries,http_status,refused,error,local_path,image_width,image_height,image_bytes,raw_cost_usd,effective_cost_usd,watermark_suspected,response_truncated_note
+6c1b8d05-0001,2026-05-20T19:37:14Z,openai/gpt-image-2,GPT-Image-2,premium_high,T2I-111,hyper_complex,1024x1024,auto,189312,0,200,False,,images/openai_gpt-image-2__T2I-111.png,1024,1024,1974961,0.03,0.03,False,
+6c1b8d05-0002,2026-05-20T19:40:41Z,openai/gpt-image-2,GPT-Image-2,premium_high,T2I-118,hyper_complex,1024x1024,auto,207164,0,200,False,,images/openai_gpt-image-2__T2I-118.png,1024,1024,2499709,0.03,0.03,False,
+6c1b8d05-0003,2026-05-20T19:43:32Z,openai/gpt-image-2,GPT-Image-2,premium_high,T2I-119,hyper_complex,1024x1024,auto,170949,0,200,False,,images/openai_gpt-image-2__T2I-119.png,1024,1024,1466742,0.03,0.03,False,

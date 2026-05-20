@@ -1,0 +1,208 @@
+{
+  "_schema": {
+    "id": "string, format T2I-NNN",
+    "category": "one of: photoreal_portrait, typography, compositional_spatial, multi_subject, style_artistic, long_prompt, knowledge_facts, counting_numerical, negative_space, edge_case_policy, multilingual, hyper_complex",
+    "prompt": "the text prompt sent to the model verbatim",
+    "eval_focus": "list of attributes the judge should pay attention to",
+    "vqa_questions": "list of yes/no questions for VQAScore",
+    "negative_prompt": "optional; sent to models that accept it",
+    "has_text_to_render": "bool; true if the prompt asks for in-image text"
+  },
+  "_metadata": {
+    "notes": "Expanded-lineup sub-pilot, 5 routine + 3 hyper-complex"
+  },
+  "items": [
+    {
+      "id": "T2I-001",
+      "category": "photoreal_portrait",
+      "prompt": "A photorealistic portrait of a 70-year-old woman with silver hair tied in a low bun, warm hazel eyes with visible crows feet, soft golden hour light from camera left, shallow depth of field, 85mm lens, neutral gray backdrop.",
+      "eval_focus": [
+        "age=70s",
+        "hair=silver low bun",
+        "eye color=hazel",
+        "lighting=golden hour left",
+        "depth of field=shallow",
+        "background=neutral gray"
+      ],
+      "vqa_questions": [
+        "Is the person elderly?",
+        "Does the person have silver hair?",
+        "Is the hair in a bun?",
+        "Is the lighting warm and directional?",
+        "Is the background a neutral gray?"
+      ],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-011",
+      "category": "typography",
+      "prompt": "A vintage diner sign at night with the text 'OPEN 24 HOURS' in bright red neon, mounted on the brick exterior of a 1950s American diner, slight rain on the sidewalk reflecting the neon.",
+      "eval_focus": [
+        "text reads exactly OPEN 24 HOURS",
+        "red neon",
+        "diner exterior",
+        "brick wall",
+        "wet sidewalk reflection"
+      ],
+      "vqa_questions": [
+        "Does the sign say 'OPEN 24 HOURS'?",
+        "Is the text in red neon?",
+        "Is it a diner exterior?",
+        "Is the sidewalk wet?"
+      ],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-021",
+      "category": "compositional_spatial",
+      "prompt": "A red wooden cube on the left side of the frame and a blue glass sphere on the right side, both sitting on a polished concrete floor, soft north-window light, photographic studio still life.",
+      "eval_focus": [
+        "red wooden cube on left",
+        "blue glass sphere on right",
+        "concrete floor",
+        "north-window light"
+      ],
+      "vqa_questions": [
+        "Is there a red cube on the left?",
+        "Is there a blue sphere on the right?",
+        "Is the cube made of wood?",
+        "Is the sphere made of glass?",
+        "Is the floor concrete?"
+      ],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-031",
+      "category": "multi_subject",
+      "prompt": "Two cats on a windowsill: the cat on the left is a fluffy Maine Coon with tabby markings, the cat on the right is a sleek black short-hair, both looking at a bird outside; afternoon light.",
+      "eval_focus": [
+        "left cat=Maine Coon tabby",
+        "right cat=black short-hair",
+        "both on windowsill",
+        "both looking out",
+        "bird outside the window"
+      ],
+      "vqa_questions": [
+        "Are there two cats?",
+        "Is the left cat fluffy and tabby?",
+        "Is the right cat sleek and black?",
+        "Are they on a windowsill?",
+        "Are they looking outside?"
+      ],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-041",
+      "category": "style_artistic",
+      "prompt": "A watercolor painting of a small wooden cottage in a snowy pine forest at dusk, soft pink and lavender sky, warm yellow window light, loose brushwork visible, paper grain visible, no photorealism.",
+      "eval_focus": [
+        "watercolor style",
+        "loose brushwork",
+        "paper grain",
+        "wooden cottage",
+        "snowy pine forest",
+        "pink and lavender dusk sky",
+        "warm window light"
+      ],
+      "vqa_questions": [
+        "Does this look like a watercolor painting?",
+        "Is there a wooden cottage?",
+        "Is it a snowy pine forest scene?",
+        "Is the sky pink and lavender?",
+        "Are window lights warm yellow?"
+      ],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-111",
+      "category": "hyper_complex",
+      "prompt": "An isometric top-down illustration of one full city block at noon containing exactly: (1) a corner caf\u00e9 'Aurora Caf\u00e9' on the lower-left with three outdoor tables, one occupied by a woman in a yellow dress reading a paperback, another by two men in business suits drinking espresso, the third empty with a fallen chair; (2) a bookstore 'Bramble & Vine Books' adjacent to the caf\u00e9 with a black cat on the windowsill and a brass rolling ladder visible inside; (3) a dentist's office above the bookstore with a small white-on-blue plaque reading 'Dr. M. Ruiz, DDS'; (4) a public library on the upper-right with six stone steps and two banners hanging beside the entrance one reading 'SUMMER READING' the other 'OPEN UNTIL 8 PM'; (5) a street running across the middle with one yellow taxi mid-block, one red electric bicycle ridden by a courier carrying a flat pizza box, and one black dog walking on a leash held by a person whose face is not visible; (6) exactly four pedestrians on the sidewalk in various poses, none repeating the same coat color; (7) a public square in the center with a single bronze statue of a writer on a granite plinth, three pigeons on the plinth, and a single discarded coffee cup nearby; (8) noon shadows pointing roughly toward the upper-right of the frame for every object. Detailed, illustrative, not photographic.",
+      "eval_focus": [
+        "isometric top-down",
+        "Aurora Caf\u00e9 lower-left with 3 outdoor tables (occupied/occupied/empty-fallen-chair)",
+        "woman in yellow reading",
+        "two men in suits drinking espresso",
+        "Bramble & Vine Books adjacent with cat and ladder",
+        "Dr. M. Ruiz DDS plaque",
+        "public library upper-right with 6 steps and two banners",
+        "banners 'SUMMER READING' and 'OPEN UNTIL 8 PM'",
+        "yellow taxi",
+        "red electric bicycle with pizza-box courier",
+        "black dog on leash",
+        "exactly 4 pedestrians, distinct coats",
+        "bronze writer statue with 3 pigeons",
+        "noon shadows pointing upper-right"
+      ],
+      "vqa_questions": [
+        "Is this an isometric top-down view?",
+        "Is there a caf\u00e9 in the lower-left?",
+        "Does a sign say 'Aurora Caf\u00e9'?",
+        "Is there a bookstore?",
+        "Does a sign say 'Bramble & Vine Books'?",
+        "Is there a black cat in the bookstore window?",
+        "Is there a yellow taxi on the street?",
+        "Is there a red electric bicycle?",
+        "Is there a courier carrying a pizza box?",
+        "Are there exactly four pedestrians?",
+        "Is there a bronze statue with pigeons?",
+        "Are there two library banners visible?"
+      ],
+      "has_text_to_render": true
+    },
+    {
+      "id": "T2I-118",
+      "category": "hyper_complex",
+      "prompt": "A panoramic wide-format painting in detailed traditional Indian miniature style (Mughal court tradition) depicting a marketplace at sunset with at least sixteen named participants: (1) a fruit seller on the left under a striped red-and-cream awning weighing pomegranates on a balance scale; (2) a young customer in a saffron kurta pointing at the pomegranates; (3) a snake charmer center-left playing a been before a swaying cobra in a wicker basket, three children watching from a respectful distance; (4) a brassware vendor center with a pyramid of stacked pots; (5) a sadhu in orange robes seated cross-legged on a small woven mat near the brassware vendor, eyes closed in meditation; (6) two musicians right-of-center, one playing a tabla one playing a sitar, on a small raised platform; (7) a noblewoman on a richly caparisoned white elephant in the upper-right background being fanned by an attendant with a peacock-feather fan; (8) a stray dog drinking from a water bowl near the lower-right corner; (9) a small boy on the lower-left flying a red kite, with the kite string visible reaching up out of the frame; (10) the city's fort wall and minarets visible in the distant background. Vivid jewel tones \u2014 gold leaf accents, deep crimson, peacock blue, emerald green. Highly detailed faces, hand-painted feel, fine line work, no photorealism.",
+      "eval_focus": [
+        "Indian Mughal-miniature style panoramic",
+        "16+ named participants in named positions",
+        "fruit seller with balance scale on left under striped awning",
+        "snake charmer with been and cobra basket, three children watching",
+        "brassware vendor with pyramid of pots",
+        "sadhu in orange robes seated cross-legged",
+        "tabla + sitar duo on platform",
+        "noblewoman on caparisoned white elephant being fanned with peacock-feather fan upper-right",
+        "stray dog drinking lower-right",
+        "boy flying red kite lower-left",
+        "fort wall and minarets distant background",
+        "jewel-tone palette with gold leaf accents"
+      ],
+      "vqa_questions": [
+        "Does this look like a traditional Indian miniature painting?",
+        "Are there many figures in the scene?",
+        "Is there a fruit seller with a balance scale?",
+        "Is there a snake charmer with a cobra?",
+        "Is there a noblewoman on a white elephant?",
+        "Is there a small boy flying a kite?",
+        "Is the color palette rich with gold accents?",
+        "Does it have a hand-painted, non-photographic feel?"
+      ],
+      "has_text_to_render": false
+    },
+    {
+      "id": "T2I-119",
+      "category": "hyper_complex",
+      "prompt": "A medical-textbook-style fully-labeled cross-sectional anatomical illustration of the human respiratory system, drawn in clinical neutral colors over a faintly tinted cream background, with each major structure annotated with a thin leader line and a sans-serif label. Required labels in their correct anatomical positions: 'Nasal cavity', 'Oral cavity', 'Pharynx', 'Larynx', 'Trachea', 'Right primary bronchus', 'Left primary bronchus', 'Secondary bronchi', 'Bronchioles', 'Alveoli (inset detail)', 'Right lung (3 lobes)', 'Left lung (2 lobes)', 'Diaphragm', 'Pleural cavity'. The 'Alveoli (inset detail)' label must point to a circular zoomed-in inset on the right showing a small cluster of alveoli with two capillaries crossing one alveolus. The right lung must clearly show three distinct lobes; the left lung must clearly show two distinct lobes plus the cardiac notch. A horizontal title across the top reading 'Human Respiratory System \u2014 Anterior View'. Subtle anatomical accuracy \u2014 bronchial branching plausibly correct, diaphragm dome-shape correct. No watermarks, no signatures.",
+      "eval_focus": [
+        "anatomical cross-section respiratory system, textbook clinical style",
+        "all required labels in correct positions: nasal/oral cavity, pharynx, larynx, trachea, R+L primary bronchi, secondary bronchi, bronchioles, alveoli inset, R lung 3 lobes, L lung 2 lobes, diaphragm, pleural cavity",
+        "inset detail for alveoli with capillaries crossing",
+        "right lung shows 3 lobes",
+        "left lung shows 2 lobes plus cardiac notch",
+        "title across top 'Human Respiratory System \u2014 Anterior View'",
+        "no signature/watermark"
+      ],
+      "vqa_questions": [
+        "Is this an anatomical illustration of the respiratory system?",
+        "Are there labels with leader lines?",
+        "Is the title 'Human Respiratory System \u2014 Anterior View' visible?",
+        "Does the right lung show three lobes?",
+        "Does the left lung show two lobes?",
+        "Is there an inset zoom for alveoli?",
+        "Is the diaphragm shown beneath the lungs?",
+        "Is the style clinical/textbook (not photographic)?"
+      ],
+      "has_text_to_render": true
+    }
+  ]
+}

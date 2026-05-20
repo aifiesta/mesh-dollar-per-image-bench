@@ -1,0 +1,2851 @@
+{
+  "_metadata": {
+    "fetched_url": "https://api.meshapi.ai/v1",
+    "total_models": 318,
+    "image_output_count": 15,
+    "vision_input_count": 54,
+    "edit_endpoint_probe": {
+      "supported": false,
+      "status": 404,
+      "method": "HEAD",
+      "note": "Endpoint returned a non-success status; assume editing is unavailable."
+    }
+  },
+  "image_output_models": [
+    {
+      "id": "google/gemini-2.5-flash-image",
+      "raw": {
+        "id": "google/gemini-2.5-flash-image",
+        "name": "Google: Nano Banana (Gemini 2.5 Flash Image)",
+        "provider": "google",
+        "context_length": 32768,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0003000000",
+          "completion_usd_per_1k": "0.0300000000",
+          "prompt_usd_per_1m": "0.30000000",
+          "completion_usd_per_1m": "30.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "Gemini 2.5 Flash Image, a.k.a. \"Nano Banana,\" is now generally available. It is a state of the art image generation model with contextual understanding. It is capable of image generation, edits, and multi-turn conversations. Aspect ratios can be controlled with the [image_config API Parameter](https://openrouter.ai/docs/features/multimodal/image-generation#image-aspect-ratio-configuration)",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text",
+          "image"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "google/gemini-3.1-flash-image-preview",
+      "raw": {
+        "id": "google/gemini-3.1-flash-image-preview",
+        "name": "Google: Nano Banana 2 (Gemini 3.1 Flash Image Preview)",
+        "provider": "google",
+        "context_length": 65536,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0005000000",
+          "completion_usd_per_1k": "0.0495850000",
+          "prompt_usd_per_1m": "0.50000000",
+          "completion_usd_per_1m": "49.58500000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "Gemini 3.1 Flash Image Preview, a.k.a. \"Nano Banana 2,\" is Google\u2019s latest state of the art image generation and editing model, delivering Pro-level visual quality at Flash speed. It combines advanced contextual understanding with fast, cost-efficient inference, making complex image generation and iterative edits significantly more accessible. Aspect ratios can be controlled with the [image_config API Parameter](https://openrouter.ai/docs/features/multimodal/image-generation#image-aspect-ratio-configuration)",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text",
+          "image"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "google/imagen-3",
+      "raw": {
+        "id": "google/imagen-3",
+        "name": "Imagen 3",
+        "provider": "google",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "None",
+          "completion_usd_per_1k": "None",
+          "prompt_usd_per_1m": null,
+          "completion_usd_per_1m": null,
+          "image_usd_per_image": "0.04000000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": false,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "google/imagen-3-fast",
+      "raw": {
+        "id": "google/imagen-3-fast",
+        "name": "Imagen 3 Fast",
+        "provider": "google",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "None",
+          "completion_usd_per_1k": "None",
+          "prompt_usd_per_1m": null,
+          "completion_usd_per_1m": null,
+          "image_usd_per_image": "0.02000000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": false,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "google/imagen-3-v1",
+      "raw": {
+        "id": "google/imagen-3-v1",
+        "name": "Imagen 3 V1",
+        "provider": "google",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "None",
+          "completion_usd_per_1k": "None",
+          "prompt_usd_per_1m": null,
+          "completion_usd_per_1m": null,
+          "image_usd_per_image": "0.04000000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": false,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "google/imagen-4",
+      "raw": {
+        "id": "google/imagen-4",
+        "name": "Imagen 4",
+        "provider": "google",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "None",
+          "completion_usd_per_1k": "None",
+          "prompt_usd_per_1m": null,
+          "completion_usd_per_1m": null,
+          "image_usd_per_image": "0.04000000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": false,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "image"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "google/imagen-4-fast",
+      "raw": {
+        "id": "google/imagen-4-fast",
+        "name": "Imagen 4 Fast",
+        "provider": "google",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "None",
+          "completion_usd_per_1k": "None",
+          "prompt_usd_per_1m": null,
+          "completion_usd_per_1m": null,
+          "image_usd_per_image": "0.02000000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": false,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "image"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "google/imagen-4-ultra",
+      "raw": {
+        "id": "google/imagen-4-ultra",
+        "name": "Imagen 4 Ultra",
+        "provider": "google",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "None",
+          "completion_usd_per_1k": "None",
+          "prompt_usd_per_1m": null,
+          "completion_usd_per_1m": null,
+          "image_usd_per_image": "0.06000000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": false,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "image"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-5.4-image",
+      "raw": {
+        "id": "openai/gpt-5.4-image",
+        "name": "Gpt 5 4 Image",
+        "provider": "openai",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0080000000",
+          "completion_usd_per_1k": "0.0150000000",
+          "prompt_usd_per_1m": "8.00000000",
+          "completion_usd_per_1m": "15.00000000",
+          "image_usd_per_image": "0.04000000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": "1.25000000",
+          "cached_text_input_usd_per_1m": "1.25000000",
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ],
+        "is_composite": true,
+        "composite_models": [
+          "openai/gpt-5.4",
+          "openai/gpt-image-1"
+        ]
+      }
+    },
+    {
+      "id": "openai/gpt-5.4-image-2",
+      "raw": {
+        "id": "openai/gpt-5.4-image-2",
+        "name": "Gpt 5 4 Image 2",
+        "provider": "openai",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0080000000",
+          "completion_usd_per_1k": "0.0150000000",
+          "prompt_usd_per_1m": "8.00000000",
+          "completion_usd_per_1m": "15.00000000",
+          "image_usd_per_image": "0.03000000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": "2.00000000",
+          "cached_text_input_usd_per_1m": "2.00000000",
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ],
+        "is_composite": true,
+        "composite_models": [
+          "openai/gpt-5.4",
+          "openai/gpt-image-2"
+        ]
+      }
+    },
+    {
+      "id": "openai/gpt-5.4-image-mini",
+      "raw": {
+        "id": "openai/gpt-5.4-image-mini",
+        "name": "Gpt 5 4 Image Mini",
+        "provider": "openai",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0080000000",
+          "completion_usd_per_1k": "0.0150000000",
+          "prompt_usd_per_1m": "8.00000000",
+          "completion_usd_per_1m": "15.00000000",
+          "image_usd_per_image": "0.00800000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": "0.25000000",
+          "cached_text_input_usd_per_1m": "0.25000000",
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ],
+        "is_composite": true,
+        "composite_models": [
+          "openai/gpt-5.4",
+          "openai/gpt-image-1-mini"
+        ]
+      }
+    },
+    {
+      "id": "openai/gpt-image-1",
+      "raw": {
+        "id": "openai/gpt-image-1",
+        "name": "Gpt Image 1",
+        "provider": "openai",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0050000000",
+          "completion_usd_per_1k": "0E-10",
+          "prompt_usd_per_1m": "5.00000000",
+          "completion_usd_per_1m": "0E-8",
+          "image_usd_per_image": "0.04000000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": "2.50000000",
+          "cached_text_input_usd_per_1m": "2.50000000",
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": false,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-image-1.5",
+      "raw": {
+        "id": "openai/gpt-image-1.5",
+        "name": "Gpt Image 1 5",
+        "provider": "openai",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0050000000",
+          "completion_usd_per_1k": "0.0100000000",
+          "prompt_usd_per_1m": "5.00000000",
+          "completion_usd_per_1m": "10.00000000",
+          "image_usd_per_image": "0.03200000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": "2.00000000",
+          "cached_text_input_usd_per_1m": "2.00000000",
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": false,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "text",
+          "image"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-image-1-mini",
+      "raw": {
+        "id": "openai/gpt-image-1-mini",
+        "name": "Gpt Image 1 Mini",
+        "provider": "openai",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0020000000",
+          "completion_usd_per_1k": "0E-10",
+          "prompt_usd_per_1m": "2.00000000",
+          "completion_usd_per_1m": "0E-8",
+          "image_usd_per_image": "0.00800000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": "0.25000000",
+          "cached_text_input_usd_per_1m": "0.25000000",
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": false,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-image-2",
+      "raw": {
+        "id": "openai/gpt-image-2",
+        "name": "Gpt Image 2",
+        "provider": "openai",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0050000000",
+          "completion_usd_per_1k": "0E-10",
+          "prompt_usd_per_1m": "5.00000000",
+          "completion_usd_per_1m": "0E-8",
+          "image_usd_per_image": "0.03000000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": "2.00000000",
+          "cached_text_input_usd_per_1m": "2.00000000",
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": false,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    }
+  ],
+  "vision_input_models": [
+    {
+      "id": "anthropic/claude-haiku-4.5",
+      "raw": {
+        "id": "anthropic/claude-haiku-4.5",
+        "name": "Anthropic: Claude Haiku 4.5",
+        "provider": "anthropic",
+        "context_length": 200000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0008000000",
+          "completion_usd_per_1k": "0.0040000000",
+          "prompt_usd_per_1m": "0.80000000",
+          "completion_usd_per_1m": "4.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "Claude Haiku 4.5 is Anthropic\u2019s fastest and most efficient model, delivering near-frontier intelligence at a fraction of the cost and latency of larger Claude models. Matching Claude Sonnet 4\u2019s performance across reasoning, coding, and computer-use tasks, Haiku 4.5 brings frontier-level capability to real-time and high-volume applications.\n\nIt introduces extended thinking to the Haiku line; enabling controllable reasoning depth, summarized or interleaved thought output, and tool-assisted workflows with full support for coding, bash, web search, and computer-use tools. Scoring >73% on SWE-bench Verified, Haiku 4.5 ranks among the world\u2019s best coding models while maintaining exceptional responsiveness for sub-agents, parallelized execution, and scaled deployment.",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "anthropic/claude-opus-4",
+      "raw": {
+        "id": "anthropic/claude-opus-4",
+        "name": "Anthropic: Claude Opus 4",
+        "provider": "anthropic",
+        "context_length": 200000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0150000000",
+          "completion_usd_per_1k": "0.0750000000",
+          "prompt_usd_per_1m": "15.00000000",
+          "completion_usd_per_1m": "75.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "Claude Opus 4 is benchmarked as the world\u2019s best coding model, at time of release, bringing sustained performance on complex, long-running tasks and agent workflows. It sets new benchmarks in...",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "anthropic/claude-opus-4.1",
+      "raw": {
+        "id": "anthropic/claude-opus-4.1",
+        "name": "Anthropic: Claude Opus 4.1",
+        "provider": "anthropic",
+        "context_length": 200000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0150000000",
+          "completion_usd_per_1k": "0.0750000000",
+          "prompt_usd_per_1m": "15.00000000",
+          "completion_usd_per_1m": "75.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": "15.00",
+          "prompt_usd_per_1k_discounted": "0.01275000",
+          "completion_usd_per_1k_discounted": "0.06375000",
+          "prompt_usd_per_1m_discounted": "12.75000000",
+          "completion_usd_per_1m_discounted": "63.75000000"
+        },
+        "description": "Claude Opus 4.1 is an updated version of Anthropic\u2019s flagship model, offering improved performance in coding, reasoning, and agentic tasks. It achieves 74.5% on SWE-bench Verified and shows notable gains...",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "anthropic/claude-opus-4.5",
+      "raw": {
+        "id": "anthropic/claude-opus-4.5",
+        "name": "Anthropic: Claude Opus 4.5",
+        "provider": "anthropic",
+        "context_length": 200000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0150000000",
+          "completion_usd_per_1k": "0.0750000000",
+          "prompt_usd_per_1m": "15.00000000",
+          "completion_usd_per_1m": "75.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": "15.00",
+          "prompt_usd_per_1k_discounted": "0.01275000",
+          "completion_usd_per_1k_discounted": "0.06375000",
+          "prompt_usd_per_1m_discounted": "12.75000000",
+          "completion_usd_per_1m_discounted": "63.75000000"
+        },
+        "description": "Claude Opus 4.5 is Anthropic\u2019s frontier reasoning model optimized for complex software engineering, agentic workflows, and long-horizon computer use. It offers strong multimodal capabilities, competitive performance across real-world coding and reasoning benchmarks, and improved robustness to prompt injection. The model is designed to operate efficiently across varied effort levels, enabling developers to trade off speed, depth, and token usage depending on task requirements. It comes with a new parameter to control token efficiency, which can be accessed using the OpenRouter Verbosity parameter with low, medium, or high.\n\nOpus 4.5 supports advanced tool use, extended context management, and coordinated multi-agent setups, making it well-suited for autonomous research, debugging, multi-step planning, and spreadsheet/browser manipulation. It delivers substantial gains in structured reasoning, execution reliability, and alignment compared to prior Opus generations, while reducing token overhead and improving performance on long-running tasks.",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "anthropic/claude-opus-4.6",
+      "raw": {
+        "id": "anthropic/claude-opus-4.6",
+        "name": "Anthropic: Claude Opus 4.6",
+        "provider": "anthropic",
+        "context_length": 1000000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0150000000",
+          "completion_usd_per_1k": "0.0750000000",
+          "prompt_usd_per_1m": "15.00000000",
+          "completion_usd_per_1m": "75.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": "15.00",
+          "prompt_usd_per_1k_discounted": "0.01275000",
+          "completion_usd_per_1k_discounted": "0.06375000",
+          "prompt_usd_per_1m_discounted": "12.75000000",
+          "completion_usd_per_1m_discounted": "63.75000000"
+        },
+        "description": "Opus 4.6 is Anthropic\u2019s strongest model for coding and long-running professional tasks. It is built for agents that operate across entire workflows rather than single prompts, making it especially effective for large codebases, complex refactors, and multi-step debugging that unfolds over time. The model shows deeper contextual understanding, stronger problem decomposition, and greater reliability on hard engineering tasks than prior generations.\n\nBeyond coding, Opus 4.6 excels at sustained knowledge work. It produces near-production-ready documents, plans, and analyses in a single pass, and maintains coherence across very long outputs and extended sessions. This makes it a strong default for tasks that require persistence, judgment, and follow-through, such as technical design, migration planning, and end-to-end project execution.\n\nFor users upgrading from earlier Opus versions, see our [official migration guide here](https://openrouter.ai/docs/guides/guides/model-migrations/claude-4-6-opus)\n",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "anthropic/claude-opus-4.7",
+      "raw": {
+        "id": "anthropic/claude-opus-4.7",
+        "name": "Anthropic: Claude Opus 4.7",
+        "provider": "anthropic",
+        "context_length": 1000000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0050000000",
+          "completion_usd_per_1k": "0.0250000000",
+          "prompt_usd_per_1m": "5.00000000",
+          "completion_usd_per_1m": "25.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": "15.00",
+          "prompt_usd_per_1k_discounted": "0.00425000",
+          "completion_usd_per_1k_discounted": "0.02125000",
+          "prompt_usd_per_1m_discounted": "4.25000000",
+          "completion_usd_per_1m_discounted": "21.25000000"
+        },
+        "description": "Anthropic's latest flagship, now live on Mesh API. Opus 4.7 is a big step up on hard coding work, handling long-running agentic tasks with way more rigor and verifying its own outputs before handing them back. Better vision too, it reads high-res images at 3x the fidelity of older Claude models, so computer-use agents and diagram parsing actually work. Improved instruction following, stronger memory across sessions, and a new xhigh effort level for the really gnarly problems.",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "anthropic/claude-sonnet-4",
+      "raw": {
+        "id": "anthropic/claude-sonnet-4",
+        "name": "Claude Sonnet 4",
+        "provider": "anthropic",
+        "context_length": 200000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0030000000",
+          "completion_usd_per_1k": "0.0150000000",
+          "prompt_usd_per_1m": "3.00000000",
+          "completion_usd_per_1m": "15.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "anthropic/claude-sonnet-4.5",
+      "raw": {
+        "id": "anthropic/claude-sonnet-4.5",
+        "name": "Anthropic: Claude Sonnet 4.5",
+        "provider": "anthropic",
+        "context_length": 1000000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0030000000",
+          "completion_usd_per_1k": "0.0150000000",
+          "prompt_usd_per_1m": "3.00000000",
+          "completion_usd_per_1m": "15.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "Claude Sonnet 4.5 is Anthropic\u2019s most advanced Sonnet model to date, optimized for real-world agents and coding workflows. It delivers state-of-the-art performance on coding benchmarks such as SWE-bench Verified, with improvements across system design, code security, and specification adherence. The model is designed for extended autonomous operation, maintaining task continuity across sessions and providing fact-based progress tracking.\n\nSonnet 4.5 also introduces stronger agentic capabilities, including improved tool orchestration, speculative parallel execution, and more efficient context and memory management. With enhanced context tracking and awareness of token usage across tool calls, it is particularly well-suited for multi-context and long-running workflows. Use cases span software engineering, cybersecurity, financial analysis, research agents, and other domains requiring sustained reasoning and tool use.",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "anthropic/claude-sonnet-4.6",
+      "raw": {
+        "id": "anthropic/claude-sonnet-4.6",
+        "name": "Anthropic: Claude Sonnet 4.6",
+        "provider": "anthropic",
+        "context_length": 1000000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0030000000",
+          "completion_usd_per_1k": "0.0150000000",
+          "prompt_usd_per_1m": "3.00000000",
+          "completion_usd_per_1m": "15.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "Sonnet 4.6 is Anthropic's most capable Sonnet-class model yet, with frontier performance across coding, agents, and professional work. It excels at iterative development, complex codebase navigation, end-to-end project management with memory, polished document creation, and confident computer use for web QA and workflow automation.",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "google/gemini-2.0-flash-lite-001",
+      "raw": {
+        "id": "google/gemini-2.0-flash-lite-001",
+        "name": "Google: Gemini 2.0 Flash Lite",
+        "provider": "google",
+        "context_length": 1048576,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0000750000",
+          "completion_usd_per_1k": "0.0003000000",
+          "prompt_usd_per_1m": "0.07500000",
+          "completion_usd_per_1m": "0.30000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "Gemini 2.0 Flash Lite offers a significantly faster time to first token (TTFT) compared to [Gemini Flash 1.5](/google/gemini-flash-1.5), while maintaining quality on par with larger models like [Gemini Pro 1.5](/google/gemini-pro-1.5),...",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "google/gemini-2.5-flash-image",
+      "raw": {
+        "id": "google/gemini-2.5-flash-image",
+        "name": "Google: Nano Banana (Gemini 2.5 Flash Image)",
+        "provider": "google",
+        "context_length": 32768,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0003000000",
+          "completion_usd_per_1k": "0.0300000000",
+          "prompt_usd_per_1m": "0.30000000",
+          "completion_usd_per_1m": "30.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "Gemini 2.5 Flash Image, a.k.a. \"Nano Banana,\" is now generally available. It is a state of the art image generation model with contextual understanding. It is capable of image generation, edits, and multi-turn conversations. Aspect ratios can be controlled with the [image_config API Parameter](https://openrouter.ai/docs/features/multimodal/image-generation#image-aspect-ratio-configuration)",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text",
+          "image"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "google/gemini-2.5-flash-lite-preview-09-2025",
+      "raw": {
+        "id": "google/gemini-2.5-flash-lite-preview-09-2025",
+        "name": "Google: Gemini 2.5 Flash Lite Preview 09-2025",
+        "provider": "google",
+        "context_length": 1048576,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0001000000",
+          "completion_usd_per_1k": "0.0004000000",
+          "prompt_usd_per_1m": "0.10000000",
+          "completion_usd_per_1m": "0.40000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "Gemini 2.5 Flash-Lite is a lightweight reasoning model in the Gemini 2.5 family, optimized for ultra-low latency and cost efficiency. It offers improved throughput, faster token generation, and better performance across common benchmarks compared to earlier Flash models. By default, \"thinking\" (i.e. multi-pass reasoning) is disabled to prioritize speed, but developers can enable it via the [Reasoning API parameter](https://openrouter.ai/docs/use-cases/reasoning-tokens) to selectively trade off cost for intelligence. ",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "google/gemini-2.5-pro-preview",
+      "raw": {
+        "id": "google/gemini-2.5-pro-preview",
+        "name": "Google: Gemini 2.5 Pro Preview 06-05",
+        "provider": "google",
+        "context_length": 1048576,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0012500000",
+          "completion_usd_per_1k": "0.0100000000",
+          "prompt_usd_per_1m": "1.25000000",
+          "completion_usd_per_1m": "10.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "Gemini 2.5 Pro is Google\u2019s state-of-the-art AI model designed for advanced reasoning, coding, mathematics, and scientific tasks. It employs \u201cthinking\u201d capabilities, enabling it to reason through responses with enhanced accuracy...",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "google/gemini-2.5-pro-preview-05-06",
+      "raw": {
+        "id": "google/gemini-2.5-pro-preview-05-06",
+        "name": "Google: Gemini 2.5 Pro Preview 05-06",
+        "provider": "google",
+        "context_length": 1048576,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0012500000",
+          "completion_usd_per_1k": "0.0100000000",
+          "prompt_usd_per_1m": "1.25000000",
+          "completion_usd_per_1m": "10.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "Gemini 2.5 Pro is Google\u2019s state-of-the-art AI model designed for advanced reasoning, coding, mathematics, and scientific tasks. It employs \u201cthinking\u201d capabilities, enabling it to reason through responses with enhanced accuracy...",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "google/gemini-3.1-flash-image-preview",
+      "raw": {
+        "id": "google/gemini-3.1-flash-image-preview",
+        "name": "Google: Nano Banana 2 (Gemini 3.1 Flash Image Preview)",
+        "provider": "google",
+        "context_length": 65536,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0005000000",
+          "completion_usd_per_1k": "0.0495850000",
+          "prompt_usd_per_1m": "0.50000000",
+          "completion_usd_per_1m": "49.58500000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "Gemini 3.1 Flash Image Preview, a.k.a. \"Nano Banana 2,\" is Google\u2019s latest state of the art image generation and editing model, delivering Pro-level visual quality at Flash speed. It combines advanced contextual understanding with fast, cost-efficient inference, making complex image generation and iterative edits significantly more accessible. Aspect ratios can be controlled with the [image_config API Parameter](https://openrouter.ai/docs/features/multimodal/image-generation#image-aspect-ratio-configuration)",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text",
+          "image"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "google/gemini-3.1-flash-lite-preview",
+      "raw": {
+        "id": "google/gemini-3.1-flash-lite-preview",
+        "name": "Gemini 3 1 Flash Lite Preview",
+        "provider": "google",
+        "context_length": 1048576,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0002500000",
+          "completion_usd_per_1k": "0.0015000000",
+          "prompt_usd_per_1m": "0.25000000",
+          "completion_usd_per_1m": "1.50000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "Gemini 3.1 Flash Lite Preview is Google's high-efficiency model optimized for high-volume use cases. It outperforms Gemini 2.5 Flash Lite on overall quality and approaches Gemini 2.5 Flash performance across key capabilities. Improvements span audio input/ASR, RAG snippet ranking, translation, data extraction, and code completion. Supports full thinking levels (minimal, low, medium, high) for fine-grained cost/performance trade-offs. Priced at half the cost of Gemini 3 Flash.",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text",
+          "audio"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "google/gemini-3.1-pro-preview",
+      "raw": {
+        "id": "google/gemini-3.1-pro-preview",
+        "name": "Gemini 3 1 Pro Preview",
+        "provider": "google",
+        "context_length": 1048576,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0020000000",
+          "completion_usd_per_1k": "0.0120000000",
+          "prompt_usd_per_1m": "2.00000000",
+          "completion_usd_per_1m": "12.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "Gemini 3.1 Pro Preview is Google\u2019s frontier reasoning model, delivering enhanced software engineering performance, improved agentic reliability, and more efficient token usage across complex workflows. Building on the multimodal foundation of the Gemini 3 series, it combines high-precision reasoning across text, image, video, audio, and code with a 1M-token context window. Reasoning Details must be preserved when using multi-turn tool calling, see our docs here: https://openrouter.ai/docs/use-cases/reasoning-tokens#preserving-reasoning. The 3.1 update introduces measurable gains in SWE benchmarks and real-world coding environments, along with stronger autonomous task execution in structured domains such as finance and spreadsheet-based workflows.\n\nDesigned for advanced development and agentic systems, Gemini 3.1 Pro Preview improves long-horizon stability and tool orchestration while increasing token efficiency. It introduces a new medium thinking level to better balance cost, speed, and performance. The model excels in agentic coding, structured planning, multimodal analysis, and workflow automation, making it well-suited for autonomous agents, financial modeling, spreadsheet automation, and high-context enterprise tasks.",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text",
+          "audio"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "google/gemini-3-flash-preview",
+      "raw": {
+        "id": "google/gemini-3-flash-preview",
+        "name": "Gemini 3 Flash Preview",
+        "provider": "google",
+        "context_length": 1048576,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0005000000",
+          "completion_usd_per_1k": "0.0030000000",
+          "prompt_usd_per_1m": "0.50000000",
+          "completion_usd_per_1m": "3.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "Gemini 3 Flash Preview is a high speed, high value thinking model designed for agentic workflows, multi turn chat, and coding assistance. It delivers near Pro level reasoning and tool use performance with substantially lower latency than larger Gemini variants, making it well suited for interactive development, long running agent loops, and collaborative coding tasks. Compared to Gemini 2.5 Flash, it provides broad quality improvements across reasoning, multimodal understanding, and reliability.\n\nThe model supports a 1M token context window and multimodal inputs including text, images, audio, video, and PDFs, with text output. It includes configurable reasoning via thinking levels (minimal, low, medium, high), structured output, tool use, and automatic context caching. Gemini 3 Flash Preview is optimized for users who want strong reasoning and agentic behavior without the cost or latency of full scale frontier models.",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text",
+          "audio"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "google/imagen-3",
+      "raw": {
+        "id": "google/imagen-3",
+        "name": "Imagen 3",
+        "provider": "google",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "None",
+          "completion_usd_per_1k": "None",
+          "prompt_usd_per_1m": null,
+          "completion_usd_per_1m": null,
+          "image_usd_per_image": "0.04000000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": false,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "google/imagen-3-fast",
+      "raw": {
+        "id": "google/imagen-3-fast",
+        "name": "Imagen 3 Fast",
+        "provider": "google",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "None",
+          "completion_usd_per_1k": "None",
+          "prompt_usd_per_1m": null,
+          "completion_usd_per_1m": null,
+          "image_usd_per_image": "0.02000000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": false,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "google/imagen-3-v1",
+      "raw": {
+        "id": "google/imagen-3-v1",
+        "name": "Imagen 3 V1",
+        "provider": "google",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "None",
+          "completion_usd_per_1k": "None",
+          "prompt_usd_per_1m": null,
+          "completion_usd_per_1m": null,
+          "image_usd_per_image": "0.04000000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": false,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-4o",
+      "raw": {
+        "id": "openai/gpt-4o",
+        "name": "OpenAI: GPT-4o",
+        "provider": "openai",
+        "context_length": 128000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0025000000",
+          "completion_usd_per_1k": "0.0100000000",
+          "prompt_usd_per_1m": "2.50000000",
+          "completion_usd_per_1m": "10.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "GPT-4o (\"o\" for \"omni\") is OpenAI's latest AI model, supporting both text and image inputs with text outputs. It maintains the intelligence level of [GPT-4 Turbo](/models/openai/gpt-4-turbo) while being twice as...",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": true,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-4o-2024-05-13",
+      "raw": {
+        "id": "openai/gpt-4o-2024-05-13",
+        "name": "OpenAI: GPT-4o (2024-05-13)",
+        "provider": "openai",
+        "context_length": 128000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0050000000",
+          "completion_usd_per_1k": "0.0150000000",
+          "prompt_usd_per_1m": "5.00000000",
+          "completion_usd_per_1m": "15.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "GPT-4o (\"o\" for \"omni\") is OpenAI's latest AI model, supporting both text and image inputs with text outputs. It maintains the intelligence level of [GPT-4 Turbo](/models/openai/gpt-4-turbo) while being twice as...",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": true,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-4o-2024-08-06",
+      "raw": {
+        "id": "openai/gpt-4o-2024-08-06",
+        "name": "OpenAI: GPT-4o (2024-08-06)",
+        "provider": "openai",
+        "context_length": 128000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0025000000",
+          "completion_usd_per_1k": "0.0100000000",
+          "prompt_usd_per_1m": "2.50000000",
+          "completion_usd_per_1m": "10.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "The 2024-08-06 version of GPT-4o offers improved performance in structured outputs, with the ability to supply a JSON schema in the respone_format. Read more [here](https://openai.com/index/introducing-structured-outputs-in-the-api/). GPT-4o (\"o\" for \"omni\") is...",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-4o-2024-11-20",
+      "raw": {
+        "id": "openai/gpt-4o-2024-11-20",
+        "name": "OpenAI: GPT-4o (2024-11-20)",
+        "provider": "openai",
+        "context_length": 128000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0025000000",
+          "completion_usd_per_1k": "0.0100000000",
+          "prompt_usd_per_1m": "2.50000000",
+          "completion_usd_per_1m": "10.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "The 2024-11-20 version of GPT-4o offers a leveled-up creative writing ability with more natural, engaging, and tailored writing to improve relevance & readability. It\u2019s also better at working with uploaded...",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-4o-mini",
+      "raw": {
+        "id": "openai/gpt-4o-mini",
+        "name": "OpenAI: GPT-4o-mini",
+        "provider": "openai",
+        "context_length": 128000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0001500000",
+          "completion_usd_per_1k": "0.0006000000",
+          "prompt_usd_per_1m": "0.15000000",
+          "completion_usd_per_1m": "0.60000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "GPT-4o mini is OpenAI's newest model after [GPT-4 Omni](/models/openai/gpt-4o), supporting both text and image inputs with text outputs. As their most advanced small model, it is many multiples more affordable...",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": true,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-4o-mini-2024-07-18",
+      "raw": {
+        "id": "openai/gpt-4o-mini-2024-07-18",
+        "name": "OpenAI: GPT-4o-mini (2024-07-18)",
+        "provider": "openai",
+        "context_length": 128000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0001500000",
+          "completion_usd_per_1k": "0.0006000000",
+          "prompt_usd_per_1m": "0.15000000",
+          "completion_usd_per_1m": "0.60000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "GPT-4o mini is OpenAI's newest model after [GPT-4 Omni](/models/openai/gpt-4o), supporting both text and image inputs with text outputs. As their most advanced small model, it is many multiples more affordable...",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-4o-mini-search-preview",
+      "raw": {
+        "id": "openai/gpt-4o-mini-search-preview",
+        "name": "OpenAI: GPT-4o-mini Search Preview",
+        "provider": "openai",
+        "context_length": 128000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0001500000",
+          "completion_usd_per_1k": "0.0006000000",
+          "prompt_usd_per_1m": "0.15000000",
+          "completion_usd_per_1m": "0.60000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "GPT-4o mini Search Preview is a specialized model for web search in Chat Completions. It is trained to understand and execute web search queries.",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-4o-search-preview",
+      "raw": {
+        "id": "openai/gpt-4o-search-preview",
+        "name": "OpenAI: GPT-4o Search Preview",
+        "provider": "openai",
+        "context_length": 128000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0025000000",
+          "completion_usd_per_1k": "0.0100000000",
+          "prompt_usd_per_1m": "2.50000000",
+          "completion_usd_per_1m": "10.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "GPT-4o Search Previewis a specialized model for web search in Chat Completions. It is trained to understand and execute web search queries.",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-5.1",
+      "raw": {
+        "id": "openai/gpt-5.1",
+        "name": "OpenAI: GPT-5.1",
+        "provider": "openai",
+        "context_length": 400000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0012500000",
+          "completion_usd_per_1k": "0.0100000000",
+          "prompt_usd_per_1m": "1.25000000",
+          "completion_usd_per_1m": "10.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "GPT-5.1 is the latest frontier-grade model in the GPT-5 series, offering stronger general-purpose reasoning, improved instruction adherence, and a more natural conversational style compared to GPT-5. It uses adaptive reasoning to allocate computation dynamically, responding quickly to simple queries while spending more depth on complex tasks. The model produces clearer, more grounded explanations with reduced jargon, making it easier to follow even on technical or multi-step problems.\n\nBuilt for broad task coverage, GPT-5.1 delivers consistent gains across math, coding, and structured analysis workloads, with more coherent long-form answers and improved tool-use reliability. It also features refined conversational alignment, enabling warmer, more intuitive responses without compromising precision. GPT-5.1 serves as the primary full-capability successor to GPT-5",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": true,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-5.1-chat",
+      "raw": {
+        "id": "openai/gpt-5.1-chat",
+        "name": "OpenAI: GPT-5.1 Chat",
+        "provider": "openai",
+        "context_length": 128000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0012500000",
+          "completion_usd_per_1k": "0.0100000000",
+          "prompt_usd_per_1m": "1.25000000",
+          "completion_usd_per_1m": "10.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "GPT-5.1 Chat (AKA Instant is the fast, lightweight member of the 5.1 family, optimized for low-latency chat while retaining strong general intelligence. It uses adaptive reasoning to selectively \u201cthink\u201d on harder queries, improving accuracy on math, coding, and multi-step tasks without slowing down typical conversations. The model is warmer and more conversational by default, with better instruction following and more stable short-form reasoning. GPT-5.1 Chat is designed for high-throughput, interactive workloads where responsiveness and consistency matter more than deep deliberation.\n",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-5.1-codex",
+      "raw": {
+        "id": "openai/gpt-5.1-codex",
+        "name": "OpenAI: GPT-5.1-Codex",
+        "provider": "openai",
+        "context_length": 400000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0012500000",
+          "completion_usd_per_1k": "0.0100000000",
+          "prompt_usd_per_1m": "1.25000000",
+          "completion_usd_per_1m": "10.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "GPT-5.1-Codex is a specialized version of GPT-5.1 optimized for software engineering and coding workflows. It is designed for both interactive development sessions and long, independent execution of complex engineering tasks. The model supports building projects from scratch, feature development, debugging, large-scale refactoring, and code review. Compared to GPT-5.1, Codex is more steerable, adheres closely to developer instructions, and produces cleaner, higher-quality code outputs. Reasoning effort can be adjusted with the `reasoning.effort` parameter. Read the [docs here](https://openrouter.ai/docs/use-cases/reasoning-tokens#reasoning-effort-level)\n\nCodex integrates into developer environments including the CLI, IDE extensions, GitHub, and cloud tasks. It adapts reasoning effort dynamically\u2014providing fast responses for small tasks while sustaining extended multi-hour runs for large projects. The model is trained to perform structured code reviews, catching critical flaws by reasoning over dependencies and validating behavior against tests. It also supports multimodal inputs such as images or screenshots for UI development and integrates tool use for search, dependency installation, and environment setup. Codex is intended specifically for agentic coding applications.",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-5.2",
+      "raw": {
+        "id": "openai/gpt-5.2",
+        "name": "OpenAI: GPT-5.2",
+        "provider": "openai",
+        "context_length": 400000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0017500000",
+          "completion_usd_per_1k": "0.0140000000",
+          "prompt_usd_per_1m": "1.75000000",
+          "completion_usd_per_1m": "14.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "GPT-5.2 is the latest frontier-grade model in the GPT-5 series, offering stronger agentic and long context perfomance compared to GPT-5.1. It uses adaptive reasoning to allocate computation dynamically, responding quickly to simple queries while spending more depth on complex tasks.\n\nBuilt for broad task coverage, GPT-5.2 delivers consistent gains across math, coding, sciende, and tool calling workloads, with more coherent long-form answers and improved tool-use reliability.",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": true,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-5.2-chat",
+      "raw": {
+        "id": "openai/gpt-5.2-chat",
+        "name": "OpenAI: GPT-5.2 Chat",
+        "provider": "openai",
+        "context_length": 128000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0017500000",
+          "completion_usd_per_1k": "0.0140000000",
+          "prompt_usd_per_1m": "1.75000000",
+          "completion_usd_per_1m": "14.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "GPT-5.2 Chat (AKA Instant) is the fast, lightweight member of the 5.2 family, optimized for low-latency chat while retaining strong general intelligence. It uses adaptive reasoning to selectively \u201cthink\u201d on harder queries, improving accuracy on math, coding, and multi-step tasks without slowing down typical conversations. The model is warmer and more conversational by default, with better instruction following and more stable short-form reasoning. GPT-5.2 Chat is designed for high-throughput, interactive workloads where responsiveness and consistency matter more than deep deliberation.",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-5.2-codex",
+      "raw": {
+        "id": "openai/gpt-5.2-codex",
+        "name": "OpenAI: GPT-5.2-Codex",
+        "provider": "openai",
+        "context_length": 400000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0017500000",
+          "completion_usd_per_1k": "0.0140000000",
+          "prompt_usd_per_1m": "1.75000000",
+          "completion_usd_per_1m": "14.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "GPT-5.2-Codex is an upgraded version of GPT-5.1-Codex optimized for software engineering and coding workflows. It is designed for both interactive development sessions and long, independent execution of complex engineering tasks. The model supports building projects from scratch, feature development, debugging, large-scale refactoring, and code review. Compared to GPT-5.1-Codex, 5.2-Codex is more steerable, adheres closely to developer instructions, and produces cleaner, higher-quality code outputs. Reasoning effort can be adjusted with the `reasoning.effort` parameter. Read the [docs here](https://openrouter.ai/docs/use-cases/reasoning-tokens#reasoning-effort-level)\n\nCodex integrates into developer environments including the CLI, IDE extensions, GitHub, and cloud tasks. It adapts reasoning effort dynamically\u2014providing fast responses for small tasks while sustaining extended multi-hour runs for large projects. The model is trained to perform structured code reviews, catching critical flaws by reasoning over dependencies and validating behavior against tests. It also supports multimodal inputs such as images or screenshots for UI development and integrates tool use for search, dependency installation, and environment setup. Codex is intended specifically for agentic coding applications.",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-5.2-pro",
+      "raw": {
+        "id": "openai/gpt-5.2-pro",
+        "name": "OpenAI: GPT-5.2 Pro",
+        "provider": "openai",
+        "context_length": 400000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0210000000",
+          "completion_usd_per_1k": "0.1680000000",
+          "prompt_usd_per_1m": "21.00000000",
+          "completion_usd_per_1m": "168.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "GPT-5.2 Pro is OpenAI\u2019s most advanced model, offering major improvements in agentic coding and long context performance over GPT-5 Pro. It is optimized for complex tasks that require step-by-step reasoning, instruction following, and accuracy in high-stakes use cases. It supports test-time routing features and advanced prompt understanding, including user-specified intent like \"think hard about this.\" Improvements include reductions in hallucination, sycophancy, and better performance in coding, writing, and health-related tasks.",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-5.3-chat",
+      "raw": {
+        "id": "openai/gpt-5.3-chat",
+        "name": "OpenAI: GPT-5.3 Chat",
+        "provider": "openai",
+        "context_length": 128000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0017500000",
+          "completion_usd_per_1k": "0.0140000000",
+          "prompt_usd_per_1m": "1.75000000",
+          "completion_usd_per_1m": "14.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "GPT-5.3 Chat is an update to ChatGPT's most-used model that makes everyday conversations smoother, more useful, and more directly helpful. It delivers more accurate answers with better contextualization and significantly reduces unnecessary refusals, caveats, and overly cautious phrasing that can interrupt conversational flow.",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-5.3-codex",
+      "raw": {
+        "id": "openai/gpt-5.3-codex",
+        "name": "OpenAI: GPT-5.3-Codex",
+        "provider": "openai",
+        "context_length": 400000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0017500000",
+          "completion_usd_per_1k": "0.0140000000",
+          "prompt_usd_per_1m": "1.75000000",
+          "completion_usd_per_1m": "14.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "GPT-5.3-Codex is OpenAI\u2019s most advanced agentic coding model, combining the frontier software engineering performance of GPT-5.2-Codex with the broader reasoning and professional knowledge capabilities of GPT-5.2. It achieves state-of-the-art results on SWE-Bench Pro and strong performance on Terminal-Bench 2.0 and OSWorld-Verified, reflecting improved multi-language coding, terminal proficiency, and real-world computer-use skills. The model is optimized for long-running, tool-using workflows and supports interactive steering during execution, making it suitable for complex development tasks, debugging, deployment, and iterative product work.\n\nBeyond coding, GPT-5.3-Codex performs strongly on structured knowledge-work benchmarks such as GDPval, supporting tasks like document drafting, spreadsheet analysis, slide creation, and operational research across domains. It is trained with enhanced cybersecurity awareness, including vulnerability identification capabilities, and deployed with additional safeguards for high-risk use cases. Compared to prior Codex models, it is more token-efficient and approximately 25% faster, targeting professional end-to-end workflows that span reasoning, execution, and computer interaction.",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-5.4",
+      "raw": {
+        "id": "openai/gpt-5.4",
+        "name": "OpenAI: GPT-5.4",
+        "provider": "openai",
+        "context_length": 1050000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0025000000",
+          "completion_usd_per_1k": "0.0150000000",
+          "prompt_usd_per_1m": "2.50000000",
+          "completion_usd_per_1m": "15.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": "0.25000000",
+          "cached_text_input_usd_per_1m": "0.25000000",
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "GPT-5.4 is OpenAI\u2019s latest frontier model, unifying the Codex and GPT lines into a single system. It features a 1M+ token context window (922K input, 128K output) with support for text and image inputs, enabling high-context reasoning, coding, and multimodal analysis within the same workflow.\n\nThe model delivers improved performance in coding, document understanding, tool use, and instruction following. It is designed as a strong default for both general-purpose tasks and software engineering, capable of generating production-quality code, synthesizing information across multiple sources, and executing complex multi-step workflows with fewer iterations and greater token efficiency.",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": true,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-5.4-image",
+      "raw": {
+        "id": "openai/gpt-5.4-image",
+        "name": "Gpt 5 4 Image",
+        "provider": "openai",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0080000000",
+          "completion_usd_per_1k": "0.0150000000",
+          "prompt_usd_per_1m": "8.00000000",
+          "completion_usd_per_1m": "15.00000000",
+          "image_usd_per_image": "0.04000000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": "1.25000000",
+          "cached_text_input_usd_per_1m": "1.25000000",
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ],
+        "is_composite": true,
+        "composite_models": [
+          "openai/gpt-5.4",
+          "openai/gpt-image-1"
+        ]
+      }
+    },
+    {
+      "id": "openai/gpt-5.4-image-2",
+      "raw": {
+        "id": "openai/gpt-5.4-image-2",
+        "name": "Gpt 5 4 Image 2",
+        "provider": "openai",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0080000000",
+          "completion_usd_per_1k": "0.0150000000",
+          "prompt_usd_per_1m": "8.00000000",
+          "completion_usd_per_1m": "15.00000000",
+          "image_usd_per_image": "0.03000000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": "2.00000000",
+          "cached_text_input_usd_per_1m": "2.00000000",
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ],
+        "is_composite": true,
+        "composite_models": [
+          "openai/gpt-5.4",
+          "openai/gpt-image-2"
+        ]
+      }
+    },
+    {
+      "id": "openai/gpt-5.4-image-mini",
+      "raw": {
+        "id": "openai/gpt-5.4-image-mini",
+        "name": "Gpt 5 4 Image Mini",
+        "provider": "openai",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0080000000",
+          "completion_usd_per_1k": "0.0150000000",
+          "prompt_usd_per_1m": "8.00000000",
+          "completion_usd_per_1m": "15.00000000",
+          "image_usd_per_image": "0.00800000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": "0.25000000",
+          "cached_text_input_usd_per_1m": "0.25000000",
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ],
+        "is_composite": true,
+        "composite_models": [
+          "openai/gpt-5.4",
+          "openai/gpt-image-1-mini"
+        ]
+      }
+    },
+    {
+      "id": "openai/gpt-5.4-mini",
+      "raw": {
+        "id": "openai/gpt-5.4-mini",
+        "name": "OpenAI: GPT-5.4 Mini",
+        "provider": "openai",
+        "context_length": 400000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0007500000",
+          "completion_usd_per_1k": "0.0045000000",
+          "prompt_usd_per_1m": "0.75000000",
+          "completion_usd_per_1m": "4.50000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "GPT-5.4 mini brings the core capabilities of GPT-5.4 to a faster, more efficient model optimized for high-throughput workloads. It supports text and image inputs with strong performance across reasoning, coding, and tool use, while reducing latency and cost for large-scale deployments.\n\nThe model is designed for production environments that require a balance of capability and efficiency, making it well suited for chat applications, coding assistants, and agent workflows that operate at scale. GPT-5.4 mini delivers reliable instruction following, solid multi-step reasoning, and consistent performance across diverse tasks with improved cost efficiency.",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": true,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-5.4-nano",
+      "raw": {
+        "id": "openai/gpt-5.4-nano",
+        "name": "OpenAI: GPT-5.4 Nano",
+        "provider": "openai",
+        "context_length": 400000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0002000000",
+          "completion_usd_per_1k": "0.0012500000",
+          "prompt_usd_per_1m": "0.20000000",
+          "completion_usd_per_1m": "1.25000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "GPT-5.4 nano is the most lightweight and cost-efficient variant of the GPT-5.4 family, optimized for speed-critical and high-volume tasks. It supports text and image inputs and is designed for low-latency use cases such as classification, data extraction, ranking, and sub-agent execution.\n\nThe model prioritizes responsiveness and efficiency over deep reasoning, making it ideal for pipelines that require fast, reliable outputs at scale. GPT-5.4 nano is well suited for background tasks, real-time systems, and distributed agent architectures where minimizing cost and latency is essential.",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-5.4-pro",
+      "raw": {
+        "id": "openai/gpt-5.4-pro",
+        "name": "OpenAI: GPT-5.4 Pro",
+        "provider": "openai",
+        "context_length": 1050000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0300000000",
+          "completion_usd_per_1k": "0.1800000000",
+          "prompt_usd_per_1m": "30.00000000",
+          "completion_usd_per_1m": "180.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "GPT-5.4 Pro is OpenAI's most advanced model, building on GPT-5.4's unified architecture with enhanced reasoning capabilities for complex, high-stakes tasks. It features a 1M+ token context window (922K input, 128K output) with support for text and image inputs. Optimized for step-by-step reasoning, instruction following, and accuracy, GPT-5.4 Pro excels at agentic coding, long-context workflows, and multi-step problem solving.",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-5.5-pro",
+      "raw": {
+        "id": "openai/gpt-5.5-pro",
+        "name": "openai/gpt-5.5-pro",
+        "provider": "openai",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0300000000",
+          "completion_usd_per_1k": "0.1800000000",
+          "prompt_usd_per_1m": "30.00000000",
+          "completion_usd_per_1m": "180.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": true,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-5-chat",
+      "raw": {
+        "id": "openai/gpt-5-chat",
+        "name": "OpenAI: GPT-5 Chat",
+        "provider": "openai",
+        "context_length": 128000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0012500000",
+          "completion_usd_per_1k": "0.0100000000",
+          "prompt_usd_per_1m": "1.25000000",
+          "completion_usd_per_1m": "10.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "GPT-5 Chat is designed for advanced, natural, multimodal, and context-aware conversations for enterprise applications.",
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-5-nano",
+      "raw": {
+        "id": "openai/gpt-5-nano",
+        "name": "Gpt 5 Nano",
+        "provider": "openai",
+        "context_length": 131072,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0000500000",
+          "completion_usd_per_1k": "0.0004000000",
+          "prompt_usd_per_1m": "0.05000000",
+          "completion_usd_per_1m": "0.40000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": true,
+        "supports_responses_api": true,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-5-pro",
+      "raw": {
+        "id": "openai/gpt-5-pro",
+        "name": "openai/gpt-5-pro",
+        "provider": "openai",
+        "context_length": 400000,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0150000000",
+          "completion_usd_per_1k": "0.1200000000",
+          "prompt_usd_per_1m": "15.00000000",
+          "completion_usd_per_1m": "120.00000000",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": "High-compute version of GPT-5 for complex reasoning tasks",
+        "supports_thinking": false,
+        "supports_completions_api": false,
+        "supports_responses_api": true,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-image-1",
+      "raw": {
+        "id": "openai/gpt-image-1",
+        "name": "Gpt Image 1",
+        "provider": "openai",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0050000000",
+          "completion_usd_per_1k": "0E-10",
+          "prompt_usd_per_1m": "5.00000000",
+          "completion_usd_per_1m": "0E-8",
+          "image_usd_per_image": "0.04000000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": "2.50000000",
+          "cached_text_input_usd_per_1m": "2.50000000",
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": false,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-image-1.5",
+      "raw": {
+        "id": "openai/gpt-image-1.5",
+        "name": "Gpt Image 1 5",
+        "provider": "openai",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0050000000",
+          "completion_usd_per_1k": "0.0100000000",
+          "prompt_usd_per_1m": "5.00000000",
+          "completion_usd_per_1m": "10.00000000",
+          "image_usd_per_image": "0.03200000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": "2.00000000",
+          "cached_text_input_usd_per_1m": "2.00000000",
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": false,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "text",
+          "image"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-image-1-mini",
+      "raw": {
+        "id": "openai/gpt-image-1-mini",
+        "name": "Gpt Image 1 Mini",
+        "provider": "openai",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0020000000",
+          "completion_usd_per_1k": "0E-10",
+          "prompt_usd_per_1m": "2.00000000",
+          "completion_usd_per_1m": "0E-8",
+          "image_usd_per_image": "0.00800000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": "0.25000000",
+          "cached_text_input_usd_per_1m": "0.25000000",
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": false,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "openai/gpt-image-2",
+      "raw": {
+        "id": "openai/gpt-image-2",
+        "name": "Gpt Image 2",
+        "provider": "openai",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0050000000",
+          "completion_usd_per_1k": "0E-10",
+          "prompt_usd_per_1m": "5.00000000",
+          "completion_usd_per_1m": "0E-8",
+          "image_usd_per_image": "0.03000000",
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": "2.00000000",
+          "cached_text_input_usd_per_1m": "2.00000000",
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": false,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "image",
+        "input_modalities": [
+          "text",
+          "image"
+        ],
+        "output_modalities": [
+          "image"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    },
+    {
+      "id": "vertex/gemini-embedding-001",
+      "raw": {
+        "id": "vertex/gemini-embedding-001",
+        "name": "vertex/gemini-embedding-001",
+        "provider": "vertex",
+        "context_length": null,
+        "is_free": false,
+        "pricing": {
+          "prompt_usd_per_1k": "0.0001500000",
+          "completion_usd_per_1k": "0E-10",
+          "prompt_usd_per_1m": "0.15000000",
+          "completion_usd_per_1m": "0E-8",
+          "image_usd_per_image": null,
+          "audio_input_usd_per_1m": null,
+          "audio_output_usd_per_1m": null,
+          "cached_audio_input_usd_per_1m": null,
+          "cached_text_input_usd_per_1m": null,
+          "discount_pct": null,
+          "prompt_usd_per_1k_discounted": null,
+          "completion_usd_per_1k_discounted": null,
+          "prompt_usd_per_1m_discounted": null,
+          "completion_usd_per_1m_discounted": null
+        },
+        "description": null,
+        "supports_thinking": false,
+        "supports_completions_api": false,
+        "supports_responses_api": false,
+        "supports_realtime": true,
+        "model_type": "text",
+        "input_modalities": [
+          "text"
+        ],
+        "output_modalities": [
+          "text"
+        ],
+        "is_composite": false,
+        "composite_models": null
+      }
+    }
+  ],
+  "coverage_against_models_py": {
+    "pilot_routable": [
+      "google/imagen-4-fast",
+      "google/imagen-4-ultra",
+      "openai/gpt-image-1-mini",
+      "openai/gpt-image-1.5",
+      "openai/gpt-image-2"
+    ],
+    "pilot_missing": [],
+    "stretch_routable": [
+      "google/gemini-2.5-flash-image",
+      "google/imagen-3",
+      "google/imagen-4",
+      "openai/gpt-image-1"
+    ],
+    "stretch_missing": [],
+    "judge_routable": [
+      "anthropic/claude-opus-4.7",
+      "openai/gpt-5.5-pro"
+    ],
+    "judge_missing": [],
+    "judge_fallback_routable": [
+      "anthropic/claude-sonnet-4.6",
+      "openai/gpt-4o"
+    ]
+  }
+}

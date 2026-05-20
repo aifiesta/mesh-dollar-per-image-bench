@@ -1,0 +1,135 @@
+{
+  "_metadata": {
+    "version": 2,
+    "fetched_date": "2026-05-20",
+    "currency": "USD",
+    "notes": "Per-image prices sourced from Mesh /v1/models catalog (image_usd_per_image field) on 2026-05-20. Mesh exposes one flat per-image price per model; the quality parameter doesn't change billing in v1 of this benchmark (will be probed empirically). All entries below verified routable via discover.py. Missing (model, size, quality) = hard error in runner.py — per rules.md, never default to $0.",
+    "sources": [
+      "Mesh /v1/models endpoint, image_usd_per_image field, fetched 2026-05-20",
+      "Cross-referenced with https://openai.com/api/pricing and https://cloud.google.com/vertex-ai/generative-ai/pricing"
+    ]
+  },
+
+  "openai/gpt-image-2": {
+    "1024x1024": { "auto": 0.030, "low": 0.030, "medium": 0.030, "high": 0.030 },
+    "1024x1536": { "auto": 0.045 },
+    "1536x1024": { "auto": 0.045 },
+    "_source": "Mesh catalog 2026-05-20 (image_usd_per_image=0.030)",
+    "_fetched": "2026-05-20",
+    "_notes": "Mesh's per-image price is flat across quality params; non-square sizes estimated at 1.5x."
+  },
+
+  "openai/gpt-5.4-image": {
+    "1024x1024": { "auto": 0.040, "low": 0.040, "medium": 0.040, "high": 0.040 },
+    "_source": "Mesh catalog 2026-05-20 (image_usd_per_image=0.040)",
+    "_fetched": "2026-05-20",
+    "_notes": "Added in v2 lineup expansion. Hybrid pricing: prompt $8/M, completion $15/M, image $0.040 flat."
+  },
+
+  "openai/gpt-5.4-image-2": {
+    "1024x1024": { "auto": 0.030 },
+    "_source": "Mesh catalog 2026-05-20 (image_usd_per_image=0.030)",
+    "_fetched": "2026-05-20"
+  },
+
+  "openai/gpt-5.4-image-mini": {
+    "1024x1024": { "auto": 0.008 },
+    "_source": "Mesh catalog 2026-05-20 (image_usd_per_image=0.008)",
+    "_fetched": "2026-05-20"
+  },
+
+  "openai/gpt-image-1.5": {
+    "1024x1024": { "auto": 0.032, "low": 0.032, "medium": 0.032, "high": 0.032 },
+    "1024x1536": { "auto": 0.048 },
+    "1536x1024": { "auto": 0.048 },
+    "_source": "Mesh catalog 2026-05-20 (image_usd_per_image=0.032)",
+    "_fetched": "2026-05-20"
+  },
+
+  "openai/gpt-image-1": {
+    "1024x1024": { "auto": 0.040, "low": 0.040, "medium": 0.040, "high": 0.040 },
+    "1024x1536": { "auto": 0.060 },
+    "1536x1024": { "auto": 0.060 },
+    "_source": "Mesh catalog 2026-05-20 (image_usd_per_image=0.040)",
+    "_fetched": "2026-05-20"
+  },
+
+  "openai/gpt-image-1-mini": {
+    "1024x1024": { "auto": 0.008, "low": 0.008, "medium": 0.008, "high": 0.008 },
+    "1024x1536": { "auto": 0.012 },
+    "1536x1024": { "auto": 0.012 },
+    "_source": "Mesh catalog 2026-05-20 (image_usd_per_image=0.008)",
+    "_fetched": "2026-05-20"
+  },
+
+  "google/imagen-4-ultra": {
+    "1024x1024": { "auto": 0.060, "ultra": 0.060 },
+    "_source": "Mesh catalog 2026-05-20 (image_usd_per_image=0.060)",
+    "_fetched": "2026-05-20"
+  },
+
+  "google/imagen-4": {
+    "1024x1024": { "auto": 0.040, "standard": 0.040 },
+    "_source": "Mesh catalog 2026-05-20 (image_usd_per_image=0.040)",
+    "_fetched": "2026-05-20"
+  },
+
+  "google/imagen-4-fast": {
+    "1024x1024": { "auto": 0.020, "fast": 0.020 },
+    "_source": "Mesh catalog 2026-05-20 (image_usd_per_image=0.020)",
+    "_fetched": "2026-05-20"
+  },
+
+  "google/imagen-3": {
+    "1024x1024": { "auto": 0.040, "standard": 0.040 },
+    "_source": "Mesh catalog 2026-05-20 (image_usd_per_image=0.040)",
+    "_fetched": "2026-05-20"
+  },
+
+  "google/imagen-3-fast": {
+    "1024x1024": { "auto": 0.020 },
+    "_source": "Mesh catalog 2026-05-20 (image_usd_per_image=0.020)",
+    "_fetched": "2026-05-20"
+  },
+
+  "google/gemini-2.5-flash-image": {
+    "1024x1024": { "auto": 0.030 },
+    "_source": "Mesh catalog 2026-05-20 — token-priced ($0.30/M input, $30/M output). Estimated $0.030/image based on typical 1024² output token count (~1000 output tokens × $30/M).",
+    "_fetched": "2026-05-20",
+    "_notes": "Aka 'Nano Banana'. Token-based pricing; per-image cost is approximate and will be empirically refined from observed usage."
+  },
+
+  "google/gemini-3.1-flash-image-preview": {
+    "1024x1024": { "auto": 0.050 },
+    "_source": "Mesh catalog 2026-05-20 — token-priced ($0.50/M input, $49.585/M output). Estimated $0.050/image.",
+    "_fetched": "2026-05-20",
+    "_notes": "Preview model. Token-based pricing; per-image cost approximate."
+  },
+
+  "_lineup_notes": {
+    "v2_pilot_5": [
+      "openai/gpt-image-2 — $0.030/img — premium OpenAI, latest",
+      "openai/gpt-image-1.5 — $0.032/img — premium OpenAI, LM Arena #1",
+      "google/imagen-4-ultra — $0.060/img — premium Google",
+      "google/imagen-4-fast — $0.020/img — budget Google",
+      "openai/gpt-image-1-mini — $0.008/img — budget OpenAI"
+    ],
+    "v2_stretch_3": [
+      "google/gemini-2.5-flash-image — alt architecture (Nano Banana)",
+      "google/imagen-4 — mid-tier Google",
+      "google/imagen-3 — older Google baseline",
+      "openai/gpt-image-1 — older OpenAI baseline"
+    ],
+    "price_spread": "7.5x ($0.008 → $0.060) across pilot lineup",
+    "all_routable_image_models_on_mesh_2026_05_20": [
+      "google/gemini-2.5-flash-image", "google/gemini-3.1-flash-image-preview",
+      "google/imagen-3", "google/imagen-3-fast", "google/imagen-3-v1",
+      "google/imagen-4", "google/imagen-4-fast", "google/imagen-4-ultra",
+      "openai/gpt-5.4-image", "openai/gpt-5.4-image-2", "openai/gpt-5.4-image-mini",
+      "openai/gpt-image-1", "openai/gpt-image-1.5", "openai/gpt-image-1-mini",
+      "openai/gpt-image-2"
+    ],
+    "edit_endpoint_status": "/v1/images/edits returns 404 on Mesh 2026-05-20 — editing benchmark deferred to v2",
+    "_note": "OpenAI gpt-5.4-image variants are present but not selected for the pilot; their relationship to gpt-image-1/2 is unclear from naming and they'd add 3 more line items without obvious narrative value."
+  }
+}
