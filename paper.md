@@ -1,5 +1,7 @@
 # Mesh Dollar per Image Bench: A Holistic Cost–Quality–Latency Pilot Benchmark of Frontier Text-to-Image Models Through a Unified API Gateway
 
+![Mesh API](mesh_api_logo.svg)
+
 *Preprint. Pilot edition (v0.1), 2026-05-20. Reproducible artifacts at https://github.com/aifiesta/mesh-dollar-per-image-bench.*
 
 ---
@@ -348,6 +350,95 @@ Two findings:
 2. **GPT-Image-1 (legacy) holds up surprisingly well on C12 (3.23) — within 0.07 points of GPT-Image-1.5 (3.30).** This suggests the **GPT-Image family architecture is more robust to hyper-complex prompts than the Imagen family**, where every Imagen variant (4-Fast 2.68, 4-Ultra 2.63, Legacy-3 2.67) clusters near 2.65. On the routine bucket, however, GPT-Image-1 has no $/quality argument: at $0.040 it costs 5× the Mini and 1.25× GPT-Image-1.5, but scores 0.14 and 0.20 points lower respectively. The legacy OpenAI variant is operationally interesting (it's the only sub-50s OpenAI image model on hyper-complex that completed all 3 prompts) but commercially dominated by its successors on routine.
 
 The expansion therefore extends the §6.1 routing argument: at this point, the lineup partitions into **three families** (cheap proprietary mini, Imagen-family, GPT-Image-family) and the right routing policy depends on the workload mix. A routine-heavy workload picks the Mini; a hyper-complex-heavy workload picks a GPT-Image variant (1.0, 1.5, or — if latency permits — 2); a latency-sensitive routine workload picks Imagen 4 Fast. **Cross-provider diversity beyond OpenAI ↔ Google is currently not addressable through Mesh** (§6.3); a v2 of this benchmark adding FLUX, Recraft, or Ideogram would require either a Mesh server-side fix or a parallel direct-provider code path.
+
+---
+
+### 5.9 Hyper-Complex Deep Dive: Three Prompts End-to-End
+
+This subsection zooms into the three C12 prompts individually and shows the outputs of **all seven** models (the original 5-model pilot lineup plus the two §5.8 expansion models), grouped by architectural family. The §5.7 fault-line — top four C12 ranks are GPT-Image variants, bottom three are Imagen variants — is most visible here, prompt by prompt.
+
+#### 5.9.1 T2I-111 — City Block (isometric, 16+ constraints)
+
+*Category:* `hyper_complex`. *Has in-image text:* yes.
+
+> An isometric top-down illustration of one full city block at noon containing exactly: (1) a corner café 'Aurora Café' on the lower-left with three outdoor tables, one occupied by a woman in a yellow dress reading a paperback, another by two men in business suits drinking espresso, the third empty with a fallen chair; (2) a bookstore 'Bramble & Vine Books' adjacent to the café with a black cat on the windowsill and a brass rolling ladder visible inside; (3) a dentist's office above the bookstore with a small white-on-blue plaque reading 'Dr. M. Ruiz, DDS'; (4) a public library on the upper-right with six stone steps and two banners hanging beside the entrance one reading 'SUMMER READING' the other 'OPEN UNTIL 8 PM'; (5) a street running across the middle with one yellow taxi mid-block, one red electric bicycle ridden by a courier carrying a flat pizza box, and one black dog walking on a leash held by a person whose face is not visible; (6) exactly four pedestrians on the sidewalk in various poses, none repeating the same coat color; (7) a public square in the center with a single bronze statue of a writer on a granite plinth, three pigeons on the plinth, and a single discarded coffee cup nearby; (8) noon shadows pointing roughly toward the upper-right of the frame for every object. Detailed, illustrative, not photographic.
+
+**Eval focus:** isometric top-down, Aurora Café lower-left with 3 outdoor tables (occupied/occupied/empty-fallen-chair), woman in yellow reading, two men in suits drinking espresso, Bramble & Vine Books adjacent with cat and ladder, Dr. M. Ruiz DDS plaque, public library upper-right with 6 steps and two banners, banners 'SUMMER READING' and 'OPEN UNTIL 8 PM', yellow taxi, red electric bicycle with pizza-box courier, black dog on leash, exactly 4 pedestrians, distinct coats, bronze writer statue with 3 pigeons, noon shadows pointing upper-right.
+
+_GPT-Image family:_
+
+| Mini | GPT-1.5 | GPT-1 (legacy) | GPT-2 |
+| --- | --- | --- | --- |
+| ![](images/openai_gpt-image-1-mini__T2I-111.png) | ![](images/openai_gpt-image-1.5__T2I-111.png) | ![](images/openai_gpt-image-1__T2I-111.png) | ![](images/openai_gpt-image-2__T2I-111.png) |
+| $0.008<br>39.5s · Q=2.50 | $0.032<br>42.3s · Q=2.75 | $0.040<br>46.3s · Q=2.80 | $0.030<br>189.3s · Q=3.60 |
+
+_Imagen family:_
+
+| Imagen 4 Fast | Imagen 3 (legacy) | Imagen 4 Ultra |
+| --- | --- | --- |
+| ![](images/google_imagen-4-fast__T2I-111.png) | ![](images/google_imagen-3__T2I-111.png) | ![](images/google_imagen-4-ultra__T2I-111.png) |
+| $0.020<br>7.2s · Q=2.50 | $0.040<br>8.0s · Q=2.75 | $0.060<br>23.7s · Q=2.50 |
+
+**Per-image axis scores reveal a sharp split.** All four GPT-Image variants render the major signage correctly ('Bramble & Vine Books', 'PUBLIC LIBRARY', 'Dr. M. Ruiz, DDS') and produce a coherent isometric view. GPT-Image-2 (Q=3.60) and GPT-Image-1.5 (Q=2.75) include the most named elements; the Mini (Q=2.50) and legacy GPT-Image-1 (Q=2.80) lose a pedestrian or two but keep the layout. None of the four render the 'fallen chair at the third café table' detail. Library banner text consistently truncates at 'OPEN UNTI' rather than reaching 'OPEN UNTIL 8 PM'.
+
+**Imagen variants degrade more sharply on this prompt.** Imagen 4 Fast (Q=2.50), Imagen 4 Ultra (Q=2.50), and Imagen 3 (Q=2.75) all produce isometric scenes but with notably worse signage rendering — the bookstore name is often illegible, the library is generic, and the dental plaque is omitted. The bronze writer statue with three pigeons — a distinctive specific instruction — is rendered as a generic statue with no pigeons in all three Imagen outputs.
+
+#### 5.9.2 T2I-118 — Mughal-Tradition Indian Miniature (16+ named participants)
+
+*Category:* `hyper_complex`. *Has in-image text:* no.
+
+> A panoramic wide-format painting in detailed traditional Indian miniature style (Mughal court tradition) depicting a marketplace at sunset with at least sixteen named participants: (1) a fruit seller on the left under a striped red-and-cream awning weighing pomegranates on a balance scale; (2) a young customer in a saffron kurta pointing at the pomegranates; (3) a snake charmer center-left playing a been before a swaying cobra in a wicker basket, three children watching from a respectful distance; (4) a brassware vendor center with a pyramid of stacked pots; (5) a sadhu in orange robes seated cross-legged on a small woven mat near the brassware vendor, eyes closed in meditation; (6) two musicians right-of-center, one playing a tabla one playing a sitar, on a small raised platform; (7) a noblewoman on a richly caparisoned white elephant in the upper-right background being fanned by an attendant with a peacock-feather fan; (8) a stray dog drinking from a water bowl near the lower-right corner; (9) a small boy on the lower-left flying a red kite, with the kite string visible reaching up out of the frame; (10) the city's fort wall and minarets visible in the distant background. Vivid jewel tones — gold leaf accents, deep crimson, peacock blue, emerald green. Highly detailed faces, hand-painted feel, fine line work, no photorealism.
+
+**Eval focus:** Indian Mughal-miniature style panoramic, 16+ named participants in named positions, fruit seller with balance scale on left under striped awning, snake charmer with been and cobra basket, three children watching, brassware vendor with pyramid of pots, sadhu in orange robes seated cross-legged, tabla + sitar duo on platform, noblewoman on caparisoned white elephant being fanned with peacock-feather fan upper-right, stray dog drinking lower-right, boy flying red kite lower-left, fort wall and minarets distant background, jewel-tone palette with gold leaf accents.
+
+_GPT-Image family:_
+
+| Mini | GPT-1.5 | GPT-1 (legacy) | GPT-2 |
+| --- | --- | --- | --- |
+| ![](images/openai_gpt-image-1-mini__T2I-118.png) | ![](images/openai_gpt-image-1.5__T2I-118.png) | ![](images/openai_gpt-image-1__T2I-118.png) | ![](images/openai_gpt-image-2__T2I-118.png) |
+| $0.008<br>41.8s · Q=3.62 | $0.032<br>41.2s · Q=3.75 | $0.040<br>56.7s · Q=3.50 | $0.030<br>207.2s · Q=3.75 |
+
+_Imagen family:_
+
+| Imagen 4 Fast | Imagen 3 (legacy) | Imagen 4 Ultra |
+| --- | --- | --- |
+| ![](images/google_imagen-4-fast__T2I-118.png) | ![](images/google_imagen-3__T2I-118.png) | ![](images/google_imagen-4-ultra__T2I-118.png) |
+| $0.020<br>5.6s · Q=3.14 | $0.040<br>7.9s · Q=3.25 | $0.060<br>24.1s · Q=3.00 |
+
+**All seven models preserve the painterly aesthetic.** Both families produce flat-color planes with fine line work and gold-leaf accents — this category does not separate models on style. The separation is entirely in named-figure coverage.
+
+**Figure coverage clusters around 5-7 of 16+ regardless of price.** GPT-Image-2 (Q=3.75) and GPT-Image-1.5 (Q=3.75) render the most identifiable named figures, but even these top performers miss the noblewoman on the white elephant — the prompt's single most distinctive element. The snake charmer with cobra basket appears in 4 of 7 outputs; the boy flying a red kite in 2 of 7. This is the clearest evidence in the benchmark that hyper-complex isn't simply 'more of the same task' — it's a different task where current 2026 models cap out around 30-45% named-element coverage.
+
+#### 5.9.3 T2I-119 — Anatomical Respiratory-System Illustration (14 required labels)
+
+*Category:* `hyper_complex`. *Has in-image text:* yes.
+
+> A medical-textbook-style fully-labeled cross-sectional anatomical illustration of the human respiratory system, drawn in clinical neutral colors over a faintly tinted cream background, with each major structure annotated with a thin leader line and a sans-serif label. Required labels in their correct anatomical positions: 'Nasal cavity', 'Oral cavity', 'Pharynx', 'Larynx', 'Trachea', 'Right primary bronchus', 'Left primary bronchus', 'Secondary bronchi', 'Bronchioles', 'Alveoli (inset detail)', 'Right lung (3 lobes)', 'Left lung (2 lobes)', 'Diaphragm', 'Pleural cavity'. The 'Alveoli (inset detail)' label must point to a circular zoomed-in inset on the right showing a small cluster of alveoli with two capillaries crossing one alveolus. The right lung must clearly show three distinct lobes; the left lung must clearly show two distinct lobes plus the cardiac notch. A horizontal title across the top reading 'Human Respiratory System — Anterior View'. Subtle anatomical accuracy — bronchial branching plausibly correct, diaphragm dome-shape correct. No watermarks, no signatures.
+
+**Eval focus:** anatomical cross-section respiratory system, textbook clinical style, all required labels in correct positions: nasal/oral cavity, pharynx, larynx, trachea, R+L primary bronchi, secondary bronchi, bronchioles, alveoli inset, R lung 3 lobes, L lung 2 lobes, diaphragm, pleural cavity, inset detail for alveoli with capillaries crossing, right lung shows 3 lobes, left lung shows 2 lobes plus cardiac notch, title across top 'Human Respiratory System — Anterior View', no signature/watermark.
+
+_GPT-Image family:_
+
+| Mini | GPT-1.5 | GPT-1 (legacy) | GPT-2 |
+| --- | --- | --- | --- |
+| ![](images/openai_gpt-image-1-mini__T2I-119.png) | ![](images/openai_gpt-image-1.5__T2I-119.png) | ![](images/openai_gpt-image-1__T2I-119.png) | ![](images/openai_gpt-image-2__T2I-119.png) |
+| $0.008<br>39.1s · Q=2.80 | $0.032<br>37.2s · Q=3.40 | $0.040<br>55.8s · Q=3.40 | $0.030<br>170.9s · Q=3.40 |
+
+_Imagen family:_
+
+| Imagen 4 Fast | Imagen 3 (legacy) | Imagen 4 Ultra |
+| --- | --- | --- |
+| ![](images/google_imagen-4-fast__T2I-119.png) | ![](images/google_imagen-3__T2I-119.png) | ![](images/google_imagen-4-ultra__T2I-119.png) |
+| $0.020<br>7.5s · Q=2.40 | $0.040<br>8.8s · Q=2.00 | $0.060<br>21.7s · Q=2.40 |
+
+**Textbook style is achieved by every model.** All 7 outputs render a clinical illustration over a faintly tinted cream background with leader lines, sans-serif labels, and the requested vertical-cross-section perspective. Style is not the differentiator.
+
+**Anatomical accuracy and label correctness differ sharply.** GPT-Image-2 (Q=3.40) and GPT-Image-1.5 (Q=3.40) emit the most labels in the correct positions. GPT-Image-1 legacy (Q=3.40) also performs well, including text-axis 4.0. **Every Imagen variant (Fast 2.40, Ultra 2.40, Legacy-3 2.00) labels the right lung as '2 lobes' when it should be 3** — a consistent factual error in the Imagen family on this prompt. Imagen 3 also produces a footer label reading 'Human Superior View' that contradicts the requested 'Anterior View' title. The alveoli inset is missing or mis-positioned in all three Imagen outputs and in the Mini. Only GPT-Image-1.5 and GPT-Image-2 emit a clear inset.
+
+#### 5.9.4 Synthesis
+
+Across the three deep-dive prompts, the same pattern recurs: **style is solved, anatomical and positional accuracy is not**. Every model in the lineup — independent of family or price — produces output in the correct visual register (isometric, painterly miniature, textbook illustration). The differentiation is entirely in *how many named elements survive the rendering*. GPT-Image variants survive more (especially text labels and signage); Imagen variants survive fewer (especially when those elements include in-image text or counted structures like lung lobes). The single most striking finding is the **shared Imagen-family error on T2I-119**: all three Imagen variants (Fast, Ultra, and Legacy-3) label the right lung as "2 lobes" when the correct count is 3. This is not a stylistic preference — it is a factual error consistent across an entire model family, and one that would silently propagate into any medical-illustration product using Imagen. That is exactly the kind of long-tail failure mode that a routine-prompt benchmark like §5.1 cannot surface.
+
 
 ---
 

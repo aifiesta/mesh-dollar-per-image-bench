@@ -35,27 +35,36 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* Top bar — arxiv-like */
-  .arxiv-bar {
-    background: #b31b1b;
-    color: #fff;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 13px;
-    padding: 6px 20px;
+  /* Top header — Mesh API brand logo (replacing prior arxiv-style red bar) */
+  .header-logo {
+    padding: 22px 20px 14px;
+    border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 16px;
   }
-  .arxiv-bar a { color: #fff; text-decoration: none; }
-  .arxiv-bar a:hover { text-decoration: underline; }
-  .arxiv-bar .tag {
-    background: #fff;
-    color: #b31b1b;
-    padding: 1px 7px;
+  .header-logo img {
+    height: 48px;
+    width: auto;
+    display: block;
+  }
+  .header-meta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .header-meta .tag {
+    background: #1A83FE;
+    color: #fff;
+    padding: 2px 8px;
     border-radius: 3px;
     font-weight: 700;
     font-size: 11px;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.4px;
   }
 
   main {
@@ -383,10 +392,13 @@
 </head>
 <body>
 
-<div class="arxiv-bar">
-  <span><a href="#">meshapi &gt; cs.AI &gt; benchmarks &gt; Mesh Dollar per Image Bench</a> &nbsp; <span class="tag">PILOT v0.1</span></span>
-  <span>2026-05-20</span>
-</div>
+<header class="header-logo">
+  <a href="https://meshapi.ai" aria-label="Mesh API"><img src="mesh_api_logo.svg" alt="Mesh API" /></a>
+  <div class="header-meta">
+    <span class="tag">PILOT v0.1</span>
+    <span>2026-05-21</span>
+  </div>
+</header>
 
 <main>
 
@@ -771,6 +783,142 @@ USER (multimodal):
 <figcaption><strong>Figure 6.</strong> The two legacy variants on T2I-011 (typography). Both correctly rendered "OPEN 24 HOURS". Imagen 3 stayed tight to the prompt (just the sign on the brick wall). GPT-Image-1 took the creative step of adding "DINER" text above the sign — not requested in the prompt but plausibly in-scene; the judge penalized the over-creativity slightly (4.75 vs 5.00 from Image 4 Fast's render).</figcaption>
 
 <p>The expansion therefore extends the §6.1 routing argument: at this point, the lineup partitions into <strong>three families</strong> (cheap proprietary mini, Imagen-family, GPT-Image-family) and the right routing policy depends on the workload mix. A routine-heavy workload picks the Mini; a hyper-complex-heavy workload picks a GPT-Image variant (1.0, 1.5, or — if latency permits — 2); a latency-sensitive routine workload picks Imagen 4 Fast. <strong>Cross-provider diversity beyond OpenAI ↔ Google is currently not addressable through Mesh</strong> (§6.3); a v2 of this benchmark adding FLUX, Recraft, or Ideogram would require either a Mesh server-side fix or a parallel direct-provider code path.</p>
+
+<!-- BEGIN SECTION 5.9 — HYPER-COMPLEX DEEP DIVE -->
+<h3>5.9 Hyper-Complex Deep Dive: Three Prompts End-to-End</h3>
+<p>This subsection zooms into the three C12 prompts individually and shows the outputs of <strong>all seven</strong> models (the original 5-model pilot lineup plus the two §5.8 expansion models), grouped by architectural family. The §5.7 fault-line — top four C12 ranks are GPT-Image variants, bottom three are Imagen variants — is most visible here, prompt by prompt. The full prompt text is reproduced verbatim alongside the <code>eval_focus</code> annotations from <code>tasks/t2i_prompts.json</code> so a reviewer can audit which named elements each model rendered.</p>
+<h4>5.9.1 &nbsp;T2I-111 &mdash; City Block (isometric, 16+ constraints)</h4>
+<p><em>Category:</em> <code>hyper_complex</code>. <em>Has in-image text:</em> yes.</p>
+<blockquote style="font-style: italic; font-size: 14px; color: #333; border-left: 3px solid #b31b1b; padding: 6px 14px; margin: 10px 0;">
+An isometric top-down illustration of one full city block at noon containing exactly: (1) a corner café 'Aurora Café' on the lower-left with three outdoor tables, one occupied by a woman in a yellow dress reading a paperback, another by two men in business suits drinking espresso, the third empty with a fallen chair; (2) a bookstore 'Bramble & Vine Books' adjacent to the café with a black cat on the windowsill and a brass rolling ladder visible inside; (3) a dentist's office above the bookstore with a small white-on-blue plaque reading 'Dr. M. Ruiz, DDS'; (4) a public library on the upper-right with six stone steps and two banners hanging beside the entrance one reading 'SUMMER READING' the other 'OPEN UNTIL 8 PM'; (5) a street running across the middle with one yellow taxi mid-block, one red electric bicycle ridden by a courier carrying a flat pizza box, and one black dog walking on a leash held by a person whose face is not visible; (6) exactly four pedestrians on the sidewalk in various poses, none repeating the same coat color; (7) a public square in the center with a single bronze statue of a writer on a granite plinth, three pigeons on the plinth, and a single discarded coffee cup nearby; (8) noon shadows pointing roughly toward the upper-right of the frame for every object. Detailed, illustrative, not photographic.
+</blockquote>
+<p style="font-size: 13.5px; color: #555;"><strong>Eval focus the prompt author flagged:</strong> isometric top-down, Aurora Café lower-left with 3 outdoor tables (occupied/occupied/empty-fallen-chair), woman in yellow reading, two men in suits drinking espresso, Bramble & Vine Books adjacent with cat and ladder, Dr. M. Ruiz DDS plaque, public library upper-right with 6 steps and two banners, banners 'SUMMER READING' and 'OPEN UNTIL 8 PM', yellow taxi, red electric bicycle with pizza-box courier, black dog on leash, exactly 4 pedestrians, distinct coats, bronze writer statue with 3 pigeons, noon shadows pointing upper-right.</p>
+<p>Tests spatial layout, named businesses with readable signage, named pedestrians at named positions, named props (yellow taxi, red bicycle, bronze statue, pigeons), and a coherent multi-block isometric composition. The prompt enumerates 8 distinct elements with positional constraints. Failure modes to look for: truncated banner text, pedestrian count drift, missing 'fallen chair' detail, statue/pigeon coherence.</p>
+<p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 700; margin: 14px 0 6px; color: #b31b1b;">GPT-Image family</p>
+<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 6px;">
+<figure style="margin: 0;">
+<img src="images/openai_gpt-image-1-mini__T2I-111.png" alt="GPT-Image-1 Mini render of T2I-111" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-1 Mini</strong><br><span style="color: #777;">$0.008/img · 39.5s</span><br><strong>Q=2.50</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh2 aes3 txt2 ana3</span></figcaption>
+</figure>
+<figure style="margin: 0;">
+<img src="images/openai_gpt-image-1.5__T2I-111.png" alt="GPT-Image-1.5 render of T2I-111" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-1.5</strong><br><span style="color: #777;">$0.032/img · 42.3s</span><br><strong>Q=2.75</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh2 aes3 txt3 ana3</span></figcaption>
+</figure>
+<figure style="margin: 0;">
+<img src="images/openai_gpt-image-1__T2I-111.png" alt="GPT-Image-1 (legacy) render of T2I-111" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-1 (legacy)</strong><br><span style="color: #777;">$0.040/img · 46.3s</span><br><strong>Q=2.80</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh2 aes3 pho4 txt2 ana3</span></figcaption>
+</figure>
+<figure style="margin: 0;">
+<img src="images/openai_gpt-image-2__T2I-111.png" alt="GPT-Image-2 render of T2I-111" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-2</strong><br><span style="color: #777;">$0.030/img · 189.3s</span><br><strong>Q=3.60</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh3 aes4 pho4 txt3 ana4</span></figcaption>
+</figure>
+</div>
+<p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 700; margin: 14px 0 6px; color: #b31b1b;">Imagen family</p>
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 6px;">
+<figure style="margin: 0;">
+<img src="images/google_imagen-4-fast__T2I-111.png" alt="Imagen 4 Fast render of T2I-111" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>Imagen 4 Fast</strong><br><span style="color: #777;">$0.020/img · 7.2s</span><br><strong>Q=2.50</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh2 aes3 txt2 ana3</span></figcaption>
+</figure>
+<figure style="margin: 0;">
+<img src="images/google_imagen-3__T2I-111.png" alt="Imagen 3 (legacy) render of T2I-111" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>Imagen 3 (legacy)</strong><br><span style="color: #777;">$0.040/img · 8.0s</span><br><strong>Q=2.75</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh2 aes4 txt2 ana3</span></figcaption>
+</figure>
+<figure style="margin: 0;">
+<img src="images/google_imagen-4-ultra__T2I-111.png" alt="Imagen 4 Ultra render of T2I-111" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>Imagen 4 Ultra</strong><br><span style="color: #777;">$0.060/img · 23.7s</span><br><strong>Q=2.50</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh2 aes3 txt2 ana3</span></figcaption>
+</figure>
+</div>
+<p><strong>Per-image axis scores reveal a sharp split.</strong> All four GPT-Image variants render the major signage correctly ('Bramble & Vine Books', 'PUBLIC LIBRARY', 'Dr. M. Ruiz, DDS') and produce a coherent isometric view. GPT-Image-2 (Q=3.60) and GPT-Image-1.5 (Q=2.75) include the most named elements; the Mini (Q=2.50) and legacy GPT-Image-1 (Q=2.80) lose a pedestrian or two but keep the layout. None of the four render the 'fallen chair at the third café table' detail. Library banner text consistently truncates at 'OPEN UNTI' rather than reaching 'OPEN UNTIL 8 PM'.</p>
+<p><strong>Imagen variants degrade more sharply on this prompt.</strong> Imagen 4 Fast (Q=2.50), Imagen 4 Ultra (Q=2.50), and Imagen 3 (Q=2.75) all produce isometric scenes but with notably worse signage rendering — the bookstore name is often illegible, the library is generic, and the dental plaque is omitted. The bronze writer statue with three pigeons — a distinctive specific instruction — is rendered as a generic statue with no pigeons in all three Imagen outputs.</p>
+<h4>5.9.2 &nbsp;T2I-118 &mdash; Mughal-Tradition Indian Miniature (16+ named participants)</h4>
+<p><em>Category:</em> <code>hyper_complex</code>. <em>Has in-image text:</em> no.</p>
+<blockquote style="font-style: italic; font-size: 14px; color: #333; border-left: 3px solid #b31b1b; padding: 6px 14px; margin: 10px 0;">
+A panoramic wide-format painting in detailed traditional Indian miniature style (Mughal court tradition) depicting a marketplace at sunset with at least sixteen named participants: (1) a fruit seller on the left under a striped red-and-cream awning weighing pomegranates on a balance scale; (2) a young customer in a saffron kurta pointing at the pomegranates; (3) a snake charmer center-left playing a been before a swaying cobra in a wicker basket, three children watching from a respectful distance; (4) a brassware vendor center with a pyramid of stacked pots; (5) a sadhu in orange robes seated cross-legged on a small woven mat near the brassware vendor, eyes closed in meditation; (6) two musicians right-of-center, one playing a tabla one playing a sitar, on a small raised platform; (7) a noblewoman on a richly caparisoned white elephant in the upper-right background being fanned by an attendant with a peacock-feather fan; (8) a stray dog drinking from a water bowl near the lower-right corner; (9) a small boy on the lower-left flying a red kite, with the kite string visible reaching up out of the frame; (10) the city's fort wall and minarets visible in the distant background. Vivid jewel tones — gold leaf accents, deep crimson, peacock blue, emerald green. Highly detailed faces, hand-painted feel, fine line work, no photorealism.
+</blockquote>
+<p style="font-size: 13.5px; color: #555;"><strong>Eval focus the prompt author flagged:</strong> Indian Mughal-miniature style panoramic, 16+ named participants in named positions, fruit seller with balance scale on left under striped awning, snake charmer with been and cobra basket, three children watching, brassware vendor with pyramid of pots, sadhu in orange robes seated cross-legged, tabla + sitar duo on platform, noblewoman on caparisoned white elephant being fanned with peacock-feather fan upper-right, stray dog drinking lower-right, boy flying red kite lower-left, fort wall and minarets distant background, jewel-tone palette with gold leaf accents.</p>
+<p>Tests style fidelity to a traditional Indian miniature aesthetic, plus the ability to populate a single composition with 16+ specific named figures (fruit seller weighing pomegranates, snake charmer with cobra, three watching children, brassware vendor with pyramid of pots, sadhu in orange robes, tabla+sitar duo, noblewoman on white elephant being fanned, stray dog drinking, boy with red kite, fort wall and minarets in distance). Failure modes: style drift toward generic painted scene, missing distinctive figures (the elephant is the most distinctive element).</p>
+<p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 700; margin: 14px 0 6px; color: #b31b1b;">GPT-Image family</p>
+<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 6px;">
+<figure style="margin: 0;">
+<img src="images/openai_gpt-image-1-mini__T2I-118.png" alt="GPT-Image-1 Mini render of T2I-118" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-1 Mini</strong><br><span style="color: #777;">$0.008/img · 41.8s</span><br><strong>Q=3.62</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh3 aes4 pho4 ana3.5</span></figcaption>
+</figure>
+<figure style="margin: 0;">
+<img src="images/openai_gpt-image-1.5__T2I-118.png" alt="GPT-Image-1.5 render of T2I-118" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-1.5</strong><br><span style="color: #777;">$0.032/img · 41.2s</span><br><strong>Q=3.75</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh3 aes4 pho4 ana4</span></figcaption>
+</figure>
+<figure style="margin: 0;">
+<img src="images/openai_gpt-image-1__T2I-118.png" alt="GPT-Image-1 (legacy) render of T2I-118" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-1 (legacy)</strong><br><span style="color: #777;">$0.040/img · 56.7s</span><br><strong>Q=3.50</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh3 aes4 ana3.5</span></figcaption>
+</figure>
+<figure style="margin: 0;">
+<img src="images/openai_gpt-image-2__T2I-118.png" alt="GPT-Image-2 render of T2I-118" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-2</strong><br><span style="color: #777;">$0.030/img · 207.2s</span><br><strong>Q=3.75</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh4 aes4 txt3 ana4</span></figcaption>
+</figure>
+</div>
+<p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 700; margin: 14px 0 6px; color: #b31b1b;">Imagen family</p>
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 6px;">
+<figure style="margin: 0;">
+<img src="images/google_imagen-4-fast__T2I-118.png" alt="Imagen 4 Fast render of T2I-118" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>Imagen 4 Fast</strong><br><span style="color: #777;">$0.020/img · 5.6s</span><br><strong>Q=3.14</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh3 aes3 pho3 ana3.5</span></figcaption>
+</figure>
+<figure style="margin: 0;">
+<img src="images/google_imagen-3__T2I-118.png" alt="Imagen 3 (legacy) render of T2I-118" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>Imagen 3 (legacy)</strong><br><span style="color: #777;">$0.040/img · 7.9s</span><br><strong>Q=3.25</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh3 aes3.5 pho3.5 ana3</span></figcaption>
+</figure>
+<figure style="margin: 0;">
+<img src="images/google_imagen-4-ultra__T2I-118.png" alt="Imagen 4 Ultra render of T2I-118" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>Imagen 4 Ultra</strong><br><span style="color: #777;">$0.060/img · 24.1s</span><br><strong>Q=3.00</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh2 aes3 pho3 ana4</span></figcaption>
+</figure>
+</div>
+<p><strong>All seven models preserve the painterly aesthetic.</strong> Both families produce flat-color planes with fine line work and gold-leaf accents — this category does not separate models on style. The separation is entirely in named-figure coverage.</p>
+<p><strong>Figure coverage clusters around 5–7 of 16+ regardless of price.</strong> GPT-Image-2 (Q=3.75) and GPT-Image-1.5 (Q=3.75) render the most identifiable named figures, but even these top performers miss the noblewoman on the white elephant — the prompt's single most distinctive element. The snake charmer with cobra basket appears in 4 of 7 outputs; the boy flying a red kite in 2 of 7. This is the clearest evidence in the benchmark that hyper-complex isn't simply 'more of the same task' — it's a different task where current 2026 models cap out around 30–45% named-element coverage.</p>
+<h4>5.9.3 &nbsp;T2I-119 &mdash; Anatomical Respiratory-System Illustration (14 required labels)</h4>
+<p><em>Category:</em> <code>hyper_complex</code>. <em>Has in-image text:</em> yes.</p>
+<blockquote style="font-style: italic; font-size: 14px; color: #333; border-left: 3px solid #b31b1b; padding: 6px 14px; margin: 10px 0;">
+A medical-textbook-style fully-labeled cross-sectional anatomical illustration of the human respiratory system, drawn in clinical neutral colors over a faintly tinted cream background, with each major structure annotated with a thin leader line and a sans-serif label. Required labels in their correct anatomical positions: 'Nasal cavity', 'Oral cavity', 'Pharynx', 'Larynx', 'Trachea', 'Right primary bronchus', 'Left primary bronchus', 'Secondary bronchi', 'Bronchioles', 'Alveoli (inset detail)', 'Right lung (3 lobes)', 'Left lung (2 lobes)', 'Diaphragm', 'Pleural cavity'. The 'Alveoli (inset detail)' label must point to a circular zoomed-in inset on the right showing a small cluster of alveoli with two capillaries crossing one alveolus. The right lung must clearly show three distinct lobes; the left lung must clearly show two distinct lobes plus the cardiac notch. A horizontal title across the top reading 'Human Respiratory System — Anterior View'. Subtle anatomical accuracy — bronchial branching plausibly correct, diaphragm dome-shape correct. No watermarks, no signatures.
+</blockquote>
+<p style="font-size: 13.5px; color: #555;"><strong>Eval focus the prompt author flagged:</strong> anatomical cross-section respiratory system, textbook clinical style, all required labels in correct positions: nasal/oral cavity, pharynx, larynx, trachea, R+L primary bronchi, secondary bronchi, bronchioles, alveoli inset, R lung 3 lobes, L lung 2 lobes, diaphragm, pleural cavity, inset detail for alveoli with capillaries crossing, right lung shows 3 lobes, left lung shows 2 lobes plus cardiac notch, title across top 'Human Respiratory System — Anterior View', no signature/watermark.</p>
+<p>Tests textbook visual style, label placement, and embedded anatomical knowledge — specifically that the right lung has 3 lobes and the left lung has 2 lobes plus a cardiac notch, plus a circular alveoli inset on the right with two capillaries crossing one alveolus, plus a horizontal title 'Human Respiratory System — Anterior View'. Failure modes: wrong lobe count, mis-placed or missing labels, missing alveoli inset.</p>
+<p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 700; margin: 14px 0 6px; color: #b31b1b;">GPT-Image family</p>
+<div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 6px;">
+<figure style="margin: 0;">
+<img src="images/openai_gpt-image-1-mini__T2I-119.png" alt="GPT-Image-1 Mini render of T2I-119" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-1 Mini</strong><br><span style="color: #777;">$0.008/img · 39.1s</span><br><strong>Q=2.80</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh2 aes3 pho3 txt4 ana2</span></figcaption>
+</figure>
+<figure style="margin: 0;">
+<img src="images/openai_gpt-image-1.5__T2I-119.png" alt="GPT-Image-1.5 render of T2I-119" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-1.5</strong><br><span style="color: #777;">$0.032/img · 37.2s</span><br><strong>Q=3.40</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh3 aes4 pho4 txt3 ana3</span></figcaption>
+</figure>
+<figure style="margin: 0;">
+<img src="images/openai_gpt-image-1__T2I-119.png" alt="GPT-Image-1 (legacy) render of T2I-119" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-1 (legacy)</strong><br><span style="color: #777;">$0.040/img · 55.8s</span><br><strong>Q=3.40</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh3 aes4 pho4 txt4 ana2</span></figcaption>
+</figure>
+<figure style="margin: 0;">
+<img src="images/openai_gpt-image-2__T2I-119.png" alt="GPT-Image-2 render of T2I-119" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-2</strong><br><span style="color: #777;">$0.030/img · 170.9s</span><br><strong>Q=3.40</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh3 aes4 pho4 txt4 ana2</span></figcaption>
+</figure>
+</div>
+<p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 700; margin: 14px 0 6px; color: #b31b1b;">Imagen family</p>
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 6px;">
+<figure style="margin: 0;">
+<img src="images/google_imagen-4-fast__T2I-119.png" alt="Imagen 4 Fast render of T2I-119" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>Imagen 4 Fast</strong><br><span style="color: #777;">$0.020/img · 7.5s</span><br><strong>Q=2.40</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh2 aes3 pho3 txt2 ana2</span></figcaption>
+</figure>
+<figure style="margin: 0;">
+<img src="images/google_imagen-3__T2I-119.png" alt="Imagen 3 (legacy) render of T2I-119" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>Imagen 3 (legacy)</strong><br><span style="color: #777;">$0.040/img · 8.8s</span><br><strong>Q=2.00</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh2 aes2 pho3 txt1 ana2</span></figcaption>
+</figure>
+<figure style="margin: 0;">
+<img src="images/google_imagen-4-ultra__T2I-119.png" alt="Imagen 4 Ultra render of T2I-119" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>Imagen 4 Ultra</strong><br><span style="color: #777;">$0.060/img · 21.7s</span><br><strong>Q=2.40</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh2 aes3 pho3 txt2 ana2</span></figcaption>
+</figure>
+</div>
+<p><strong>Textbook style is achieved by every model.</strong> All 7 outputs render a clinical illustration over a faintly tinted cream background with leader lines, sans-serif labels, and the requested vertical-cross-section perspective. Style is not the differentiator.</p>
+<p><strong>Anatomical accuracy and label correctness differ sharply.</strong> GPT-Image-2 (Q=3.40) and GPT-Image-1.5 (Q=3.40) emit the most labels in the correct positions. GPT-Image-1 legacy (Q=3.40) also performs well, including text-axis 4.0 — its in-figure label spelling is the cleanest of the seven. <strong>Every Imagen variant (Fast 2.40, Ultra 2.40, Legacy-3 2.00) labels the right lung as '2 lobes' when it should be 3</strong> — a consistent factual error in the Imagen family on this prompt. Imagen 3 also produces a footer label reading 'Human Superior View' that contradicts the requested 'Anterior View' title. The alveoli inset is missing or mis-positioned in all three Imagen outputs and in the Mini. Only GPT-Image-1.5 and GPT-Image-2 emit a clear inset.</p>
+<h4>5.9.4 &nbsp;Synthesis</h4>
+<p>Across the three deep-dive prompts, the same pattern recurs: <strong>style is solved, anatomical and positional accuracy is not</strong>. Every model in the lineup — independent of family or price — produces output in the correct visual register (isometric, painterly miniature, textbook illustration). The differentiation is entirely in <em>how many named elements survive the rendering</em>. GPT-Image variants survive more (especially text labels and signage); Imagen variants survive fewer (especially when those elements include in-image text or counted structures like lung lobes). The single most striking finding is the <strong>shared Imagen-family error on T2I-119</strong>: all three Imagen variants (Fast, Ultra, and Legacy-3) label the right lung as "2 lobes" when the correct count is 3. This is not a stylistic preference — it is a factual error consistent across an entire model family, and one that would silently propagate into any medical-illustration product using Imagen. That is exactly the kind of long-tail failure mode that a routine-prompt benchmark like §5.1 cannot surface.</p>
+<!-- END SECTION 5.9 -->
 
 <h2>6. Discussion</h2>
 

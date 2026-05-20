@@ -4,6 +4,10 @@ __pycache__/
 *.pyc
 .pytest_cache/
 
+# PDF build temp artifacts (regenerate via build_pdf.py)
+paper_pdf.html
+images_pdf/
+
 # Generated images: included in this repo because paper.html / paper.md reference
 # them inline (Appendix D, Appendix E, figures throughout). Sanity-ping images and
 # any explicitly excluded ones can still be ignored on a per-pattern basis below.
