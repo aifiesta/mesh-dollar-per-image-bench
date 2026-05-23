@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Mesh Dollar per Image Bench — X thread</title>
+<title>Mesh Dollar per Image Bench, X thread</title>
 <meta name="description" content="A 16-post thread: pilot benchmark of frontier text-to-image models routed through Mesh API. Cost · latency · quality · the five hidden taxes." />
 <meta property="og:title" content="Mesh Dollar per Image Bench (X thread)" />
 <meta property="og:description" content="GPT-Image-1 Mini ($0.008) sits within 0.07 quality points of Imagen 4 Ultra ($0.060). Pilot results, fully reproducible." />
@@ -382,7 +382,7 @@
         <span class="time">May 21</span>
         <span class="count">1/16</span>
       </div>
-      <div class="text">New preprint: <strong>Mesh Dollar per Image Bench</strong> — a holistic cost · quality · latency pilot benchmark of five 2026 frontier text-to-image models, all routed through one API gateway (Mesh).
+      <div class="text">New preprint: <strong>Mesh Dollar per Image Bench</strong>, a holistic cost · quality · latency pilot benchmark of five 2026 frontier text-to-image models, all routed through one API gateway (Mesh).
 
 n=5/model, $1.27 total spend, fully reproducible.
 
@@ -413,12 +413,12 @@ paper: <a href="https://github.com/aifiesta/mesh-dollar-per-image-bench">github.
       </div>
       <div class="text">Headline result, in one chart:
 
-GPT-Image-1 Mini at <strong>$0.008/image</strong> sits within 0.07 quality-points of Imagen 4 Ultra at $0.060/image — <strong>7.5× cheaper, same neighborhood on quality.</strong>
+GPT-Image-1 Mini at <strong>$0.008/image</strong> sits within 0.07 quality-points of Imagen 4 Ultra at $0.060/image, <strong>7.5× cheaper, same neighborhood on quality.</strong>
 
 The premium tier paid for noise.</div>
       <div class="embed-media">
         <img src="../charts/chart_5_quality_vs_cost.png" alt="Quality vs cost scatter chart" loading="lazy" />
-        <div class="caption">Chart 5 — quality (1–5) vs $/image (log). Closer to top-left = better value.</div>
+        <div class="caption">Chart 5, quality (1–5) vs $/image (log). Closer to top-left = better value.</div>
       </div>
       <div class="actions">
         <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z"/></svg> 28</span>
@@ -485,9 +485,9 @@ The premium tier paid for noise.</div>
 
 We surface three from pilot data, two flagged for the full run:
 
-1. <strong>Quality saturation</strong> — 7.5× cost spread, 3.4% quality spread
-2. <strong>Latency spread</strong> — 7.8× p50 gap
-3. <strong>Retry tax</strong> — GPT-Image-2 retried 20% of calls
+1. <strong>Quality saturation</strong>, 7.5× cost spread, 3.4% quality spread
+2. <strong>Latency spread</strong>, 7.8× p50 gap
+3. <strong>Retry tax</strong>, GPT-Image-2 retried 20% of calls
 4. Refusal rate (full run)
 5. Watermark visibility (full run)</div>
       <div class="actions">
@@ -516,7 +516,7 @@ We surface three from pilot data, two flagged for the full run:
       </div>
       <div class="text"><strong>Tax 1: quality saturation.</strong>
 
-All 5 models scored 4.77–4.94 on a 1–5 scale. The price spread is 7.5×, the quality spread is <strong>0.17 points</strong> — smaller than the median per-image judge variance.
+All 5 models scored 4.77–4.94 on a 1–5 scale. The price spread is 7.5×, the quality spread is <strong>0.17 points</strong>, smaller than the median per-image judge variance.
 
 Buyers paying $0.060 are paying for an effect that's within noise.</div>
       <div class="actions">
@@ -553,7 +553,7 @@ Two premium-tier models priced within 2× of each other (Imagen 4 Ultra $0.060, 
 For interactive UX: latency is the real differentiator, not cost.</div>
       <div class="embed-media">
         <img src="../charts/chart_3_latency_p50_p95.png" alt="Latency p50 / p95 chart" loading="lazy" />
-        <div class="caption">Chart 3 — p50 / p95 latency per model. The p95 bars are doing most of the work.</div>
+        <div class="caption">Chart 3, p50 / p95 latency per model. The p95 bars are doing most of the work.</div>
       </div>
       <div class="actions">
         <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.751 10c0-4.42z"/></svg> 19</span>
@@ -612,9 +612,9 @@ Retry tax shows up in the effective-cost column; never on the price card.</div>
       </div>
       <div class="text">Two findings on the rubric axes:
 
-(a) <strong>Text rendering scored 5.0 across every model</strong> on the typography prompt ("OPEN 24 HOURS" diner neon). The 2026 generation has solved in-image text — every glyph correct on every model.
+(a) <strong>Text rendering scored 5.0 across every model</strong> on the typography prompt ("OPEN 24 HOURS" diner neon). The 2026 generation has solved in-image text, every glyph correct on every model.
 
-(b) Imagen 4 Fast scored 4.45 on adherence — the only weak spot in the lineup.</div>
+(b) Imagen 4 Fast scored 4.45 on adherence, the only weak spot in the lineup.</div>
       <div class="actions">
         <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.751 10z"/></svg> 12</span>
         <span class="act repost"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.88z"/></svg> 19</span>
@@ -683,7 +683,7 @@ Both scored 5/5 on text fidelity from both judges.</div>
       </div>
       <div class="text">Why route through Mesh API (<code>api.meshapi.ai</code>)?
 
-One client, one key, one billing surface across every model in the lineup. Per-provider SDK differences, rate-limit dialects, auth-flow drift — all eliminated as confounders.
+One client, one key, one billing surface across every model in the lineup. Per-provider SDK differences, rate-limit dialects, auth-flow drift, all eliminated as confounders.
 
 Switching models = changing a string.</div>
       <div class="actions">
@@ -741,7 +741,7 @@ Same prompt, same <code>size=1024x1024</code>, same <code>quality=auto</code>, s
 
 GPT-5.5 (Judge B) scores 0.08–0.27 points higher than Claude Opus 4.7 (Judge A) on every model. Claude is the stricter judge.
 
-GPT-5.5 gave GPT-Image-2 a perfect 5.00 — consistent with own-provider preference. We report <strong>both</strong> judge means so the bias is auditable.</div>
+GPT-5.5 gave GPT-Image-2 a perfect 5.00, consistent with own-provider preference. We report <strong>both</strong> judge means so the bias is auditable.</div>
       <div class="actions">
         <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.751 10z"/></svg> 14</span>
         <span class="act repost"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.88z"/></svg> 33</span>
@@ -831,7 +831,7 @@ Most teams skip step 2 and overpay structurally.</div>
 • n=5/model
 • 5 of 12 prompt categories sampled (long-prompt, knowledge, counting, neg-space, edge-case, multilingual, hyper-complex deferred to full run)
 • Single region, single time, single seed
-• 2-judge ensemble — no human eval yet
+• 2-judge ensemble, no human eval yet
 • Mesh only routes OpenAI + Google for image; FLUX/Midjourney/Ideogram absent</div>
       <div class="actions">
         <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.751 10z"/></svg> 5</span>
