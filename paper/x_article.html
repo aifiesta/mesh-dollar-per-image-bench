@@ -1,0 +1,890 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Mesh Dollar per Image Bench — X thread</title>
+<meta name="description" content="A 16-post thread: pilot benchmark of frontier text-to-image models routed through Mesh API. Cost · latency · quality · the five hidden taxes." />
+<meta property="og:title" content="Mesh Dollar per Image Bench (X thread)" />
+<meta property="og:description" content="GPT-Image-1 Mini ($0.008) sits within 0.07 quality points of Imagen 4 Ultra ($0.060). Pilot results, fully reproducible." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #ffffff;
+    --bg-soft: #f7f9f9;
+    --bg-hover: #f0f3f4;
+    --ink: #0f1419;
+    --ink-muted: #536471;
+    --ink-faint: #8b98a5;
+    --border: #eff3f4;
+    --accent: #1A83FE;
+    --accent-soft: rgba(26,131,254,0.10);
+    --danger: #f4212e;
+    --success: #00ba7c;
+    --thread-line: #cfd9de;
+    --pill: #eff3f4;
+    --pill-hover: #e1e8ed;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--bg-soft);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, system-ui, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Top bar */
+  .topbar {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .topbar-inner {
+    max-width: 600px; margin: 0 auto;
+    padding: 14px 16px;
+    display: flex; align-items: center; gap: 28px;
+  }
+  .topbar h1 {
+    font-size: 20px; font-weight: 800; letter-spacing: -0.01em;
+  }
+  .topbar .meta { font-size: 13px; color: var(--ink-muted); }
+
+  /* Shell */
+  .shell {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--bg);
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    min-height: 100vh;
+  }
+
+  /* Tweet card */
+  .tweet {
+    padding: 16px;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 12px;
+    position: relative;
+    transition: background 0.12s ease;
+  }
+  .tweet:hover { background: rgba(247,249,249,0.5); }
+
+  /* Avatar column with connecting thread line */
+  .avatar-col {
+    display: flex; flex-direction: column; align-items: center;
+  }
+  .avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: #0a0a0a;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; flex-shrink: 0;
+    border: 1px solid var(--border);
+  }
+  .avatar img { width: 28px; height: 28px; display: block; }
+  .thread-line {
+    flex: 1;
+    width: 2px;
+    background: var(--thread-line);
+    margin-top: 6px;
+    min-height: 12px;
+  }
+  .tweet:last-of-type .thread-line { display: none; }
+
+  /* Tweet body */
+  .body { min-width: 0; }
+  .head {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 15px;
+    flex-wrap: wrap;
+  }
+  .head .name { font-weight: 700; color: var(--ink); }
+  .head .verified {
+    width: 16px; height: 16px;
+    flex-shrink: 0;
+  }
+  .head .verified svg { display: block; }
+  .head .handle { color: var(--ink-muted); }
+  .head .sep { color: var(--ink-muted); }
+  .head .time { color: var(--ink-muted); }
+  .head .count {
+    margin-left: auto;
+    font-size: 13px;
+    color: var(--ink-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+  }
+
+  .text {
+    margin-top: 2px;
+    font-size: 16px;
+    line-height: 1.45;
+    color: var(--ink);
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  .text strong { font-weight: 700; }
+  .text em { font-style: italic; color: var(--ink-muted); }
+  .text a { color: var(--accent); }
+  .text code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    background: var(--bg-hover);
+    padding: 1px 5px; border-radius: 4px;
+  }
+  .text p + p { margin-top: 12px; }
+  .text ol, .text ul { margin: 8px 0 0 20px; }
+  .text li { margin-bottom: 4px; }
+
+  /* Embedded table */
+  .embed-table {
+    margin-top: 12px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .embed-table table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13.5px;
+  }
+  .embed-table th, .embed-table td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-variant-numeric: tabular-nums;
+  }
+  .embed-table th {
+    background: var(--bg-soft);
+    font-weight: 600;
+    color: var(--ink-muted);
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .embed-table tr:last-child td { border-bottom: none; }
+  .embed-table tr.win td { background: var(--accent-soft); font-weight: 600; }
+  .embed-table tr.win td strong { color: var(--accent); }
+
+  /* Embedded image / chart */
+  .embed-media {
+    margin-top: 12px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--bg-soft);
+  }
+  .embed-media img {
+    width: 100%; display: block;
+  }
+  .embed-media .caption {
+    padding: 10px 14px;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+    font-size: 13px;
+    color: var(--ink-muted);
+  }
+
+  /* Image pair */
+  .embed-pair {
+    margin-top: 12px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .embed-pair figure { margin: 0; position: relative; }
+  .embed-pair img { width: 100%; height: 100%; object-fit: cover; display: block; aspect-ratio: 1; }
+  .embed-pair figcaption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 6px 10px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.6));
+    color: white;
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+
+  /* Action row */
+  .actions {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 12px;
+    max-width: 425px;
+  }
+  .act {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--ink-faint);
+    font-size: 13px;
+    cursor: default;
+    padding: 4px 8px;
+    border-radius: 999px;
+    transition: color 0.15s, background 0.15s;
+  }
+  .act:hover { color: var(--accent); background: var(--accent-soft); }
+  .act.like:hover { color: var(--danger); background: rgba(244,33,46,0.10); }
+  .act.repost:hover { color: var(--success); background: rgba(0,186,124,0.10); }
+  .act svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+  /* Profile header card at top */
+  .profile {
+    border-bottom: 1px solid var(--border);
+  }
+  .profile .banner {
+    height: 200px;
+    background:
+      radial-gradient(ellipse at 30% 40%, rgba(26,131,254,0.18) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 60%, rgba(26,131,254,0.10) 0%, transparent 60%),
+      linear-gradient(135deg, #0a0a0a 0%, #1c1c1c 100%);
+      position: relative;
+  }
+  .profile .banner::before {
+    content: ''; position: absolute; inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .profile .banner-logo {
+    position: absolute; bottom: 24px; left: 24px;
+    height: 36px;
+  }
+  .profile .info {
+    padding: 12px 16px 16px;
+    position: relative;
+  }
+  .profile .avatar-large {
+    position: absolute;
+    top: -44px; left: 16px;
+    width: 84px; height: 84px;
+    border-radius: 50%;
+    background: white;
+    border: 4px solid white;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  }
+  .profile .avatar-large img { width: 60px; height: 60px; }
+  .profile .name-row {
+    margin-top: 48px;
+  }
+  .profile .name-row h2 {
+    font-size: 20px; font-weight: 800; line-height: 1.25;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .profile .name-row h2 .verified {
+    width: 20px; height: 20px; flex-shrink: 0;
+  }
+  .profile .name-row .handle {
+    color: var(--ink-muted); font-size: 15px; margin-top: 2px;
+  }
+  .profile .bio {
+    margin-top: 12px; font-size: 15px; color: var(--ink); line-height: 1.4;
+  }
+  .profile .meta-line {
+    margin-top: 12px; display: flex; flex-wrap: wrap; gap: 16px;
+    color: var(--ink-muted); font-size: 14px;
+  }
+  .profile .meta-line .pill {
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .profile .stats {
+    margin-top: 12px; display: flex; gap: 18px;
+    font-size: 14px; color: var(--ink-muted);
+  }
+  .profile .stats strong { color: var(--ink); font-weight: 700; }
+
+  /* Tweet count footer */
+  .footer-card {
+    padding: 24px 16px 80px;
+    text-align: center;
+    color: var(--ink-muted);
+    font-size: 14px;
+    background: var(--bg);
+  }
+  .footer-card a { font-weight: 600; }
+
+  /* Small screens */
+  @media (max-width: 640px) {
+    .shell { border-left: none; border-right: none; }
+    .topbar-inner { padding: 12px; }
+    .topbar h1 { font-size: 17px; }
+    .topbar .meta { display: none; }
+    .profile .banner { height: 130px; }
+    .profile .avatar-large { width: 64px; height: 64px; top: -32px; }
+    .profile .avatar-large img { width: 44px; height: 44px; }
+    .profile .name-row { margin-top: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div>
+      <h1>Mesh API</h1>
+      <div class="meta">16 posts · pilot benchmark thread</div>
+    </div>
+  </div>
+</div>
+
+<main class="shell">
+
+  <!-- Profile header -->
+  <section class="profile">
+    <div class="banner">
+      <img class="banner-logo" src="../assets/mesh_api_logo_v2.svg" alt="Mesh API logo (banner)" />
+    </div>
+    <div class="info">
+      <div class="avatar-large"><img src="../assets/mesh_api_logo_v2.svg" alt="" /></div>
+      <div class="name-row">
+        <h2>Mesh API
+          <svg class="verified" viewBox="0 0 22 22" aria-label="Verified">
+            <path fill="#1A83FE" d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.245 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.245.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"/>
+          </svg>
+        </h2>
+        <div class="handle">@meshapi · Pilot benchmark thread · May 2026</div>
+      </div>
+      <p class="bio">One API key, 300+ models. Cost · latency · quality, measured. Image-gen pilot results below.</p>
+      <div class="meta-line">
+        <span class="pill">🔗 <a href="https://meshapi.ai">meshapi.ai</a></span>
+        <span class="pill">📍 routed through Mesh API</span>
+        <span class="pill">📎 <a href="https://github.com/aifiesta/mesh-dollar-per-image-bench">github.com/aifiesta/mesh-dollar-per-image-bench</a></span>
+      </div>
+      <div class="stats">
+        <span><strong>7</strong> models</span>
+        <span><strong>120</strong> prompts</span>
+        <span><strong>12</strong> categories</span>
+        <span><strong>$0.008–$0.060</strong> per image</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1/16 -->
+  <article class="tweet">
+    <div class="avatar-col">
+      <div class="avatar"><img src="../assets/mesh_api_logo_v2.svg" alt="" /></div>
+      <div class="thread-line"></div>
+    </div>
+    <div class="body">
+      <div class="head">
+        <span class="name">Mesh API</span>
+        <svg class="verified" viewBox="0 0 22 22"><path fill="#1A83FE" d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.245 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.245.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"/></svg>
+        <span class="handle">@meshapi</span>
+        <span class="sep">·</span>
+        <span class="time">May 21</span>
+        <span class="count">1/16</span>
+      </div>
+      <div class="text">New preprint: <strong>Mesh Dollar per Image Bench</strong> — a holistic cost · quality · latency pilot benchmark of five 2026 frontier text-to-image models, all routed through one API gateway (Mesh).
+
+n=5/model, $1.27 total spend, fully reproducible.
+
+paper: <a href="https://github.com/aifiesta/mesh-dollar-per-image-bench">github.com/aifiesta/mesh-dollar-per-image-bench</a></div>
+      <div class="actions">
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z"/></svg> 42</span>
+        <span class="act repost"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.896 2 2 2H13v2H7.5c-2.209 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 6H11V4h5.5c2.209 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46-4.432 4.14-4.432-4.14 1.364-1.46 2.068 1.93V8c0-1.1-.896-2-2-2z"/></svg> 18</span>
+        <span class="act like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.552 1.12-.633 2.78.479 4.82 1.074 1.97 3.257 4.27 7.129 6.61 3.87-2.34 6.052-4.64 7.126-6.61 1.111-2.04 1.03-3.7.477-4.82-.561-1.13-1.666-1.84-2.908-1.91zm4.187 7.69c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"/></svg> 187</span>
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.75 21V3h2v18h-2zM18 21V8.5h2V21h-2zM4 21l.004-10h2L6 21H4zm9.248 0v-7h2v7h-2z"/></svg> 12K</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- 2/16 -->
+  <article class="tweet">
+    <div class="avatar-col">
+      <div class="avatar"><img src="../assets/mesh_api_logo_v2.svg" alt="" /></div>
+      <div class="thread-line"></div>
+    </div>
+    <div class="body">
+      <div class="head">
+        <span class="name">Mesh API</span>
+        <svg class="verified" viewBox="0 0 22 22"><path fill="#1A83FE" d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.245 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.245.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"/></svg>
+        <span class="handle">@meshapi</span>
+        <span class="sep">·</span>
+        <span class="time">May 21</span>
+        <span class="count">2/16</span>
+      </div>
+      <div class="text">Headline result, in one chart:
+
+GPT-Image-1 Mini at <strong>$0.008/image</strong> sits within 0.07 quality-points of Imagen 4 Ultra at $0.060/image — <strong>7.5× cheaper, same neighborhood on quality.</strong>
+
+The premium tier paid for noise.</div>
+      <div class="embed-media">
+        <img src="../charts/chart_5_quality_vs_cost.png" alt="Quality vs cost scatter chart" loading="lazy" />
+        <div class="caption">Chart 5 — quality (1–5) vs $/image (log). Closer to top-left = better value.</div>
+      </div>
+      <div class="actions">
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01zm8.005-6c-3.317 0-6.005 2.69-6.005 6 0 3.37 2.77 6.08 6.138 6.01l.351-.01h1.761v2.3l5.087-2.81c1.951-1.08 3.163-3.13 3.163-5.36 0-3.39-2.744-6.13-6.129-6.13H9.756z"/></svg> 28</span>
+        <span class="act repost"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.896 2 2 2H13v2H7.5c-2.209 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88zM16.5 6H11V4h5.5c2.209 0 4 1.79 4 4v8.45l2.068-1.93 1.364 1.46-4.432 4.14-4.432-4.14 1.364-1.46 2.068 1.93V8c0-1.1-.896-2-2-2z"/></svg> 41</span>
+        <span class="act like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.552 1.12-.633 2.78.479 4.82 1.074 1.97 3.257 4.27 7.129 6.61 3.87-2.34 6.052-4.64 7.126-6.61 1.111-2.04 1.03-3.7.477-4.82-.561-1.13-1.666-1.84-2.908-1.91zm4.187 7.69c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z"/></svg> 312</span>
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.75 21V3h2v18h-2zM18 21V8.5h2V21h-2zM4 21l.004-10h2L6 21H4zm9.248 0v-7h2v7h-2z"/></svg> 24K</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- 3/16 -->
+  <article class="tweet">
+    <div class="avatar-col">
+      <div class="avatar"><img src="../assets/mesh_api_logo_v2.svg" alt="" /></div>
+      <div class="thread-line"></div>
+    </div>
+    <div class="body">
+      <div class="head">
+        <span class="name">Mesh API</span>
+        <svg class="verified" viewBox="0 0 22 22"><path fill="#1A83FE" d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604c-.646.017-1.273.213-1.813.568s-.969.854-1.24 1.44c-.608-.223-1.267-.272-1.902-.14-.635.13-1.22.436-1.69.882-.445.47-.749 1.055-.878 1.688-.13.633-.08 1.29.144 1.896-.587.274-1.087.705-1.443 1.245-.356.54-.555 1.17-.574 1.817.02.647.218 1.276.574 1.817.356.54.856.972 1.443 1.245-.224.606-.274 1.263-.144 1.896.13.634.433 1.218.877 1.688.47.443 1.054.747 1.687.878.633.132 1.29.084 1.897-.136.274.586.705 1.084 1.245 1.439.54.354 1.17.551 1.816.569.647-.016 1.276-.213 1.817-.567s.972-.854 1.245-1.44c.604.239 1.266.296 1.903.164.636-.132 1.22-.447 1.68-.907.46-.46.776-1.044.908-1.681s.075-1.299-.165-1.903c.586-.274 1.084-.705 1.439-1.245.354-.54.551-1.17.569-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"/></svg>
+        <span class="handle">@meshapi</span>
+        <span class="sep">·</span>
+        <span class="time">May 21</span>
+        <span class="count">3/16</span>
+      </div>
+      <div class="text">The full headline table (vision-LLM ensemble judge: Claude Opus 4.7 + GPT-5.5, two temps each):</div>
+      <div class="embed-table">
+        <table>
+          <thead><tr><th>Model</th><th>Quality</th><th>$/img</th><th>$/qpt</th><th>p50</th></tr></thead>
+          <tbody>
+            <tr class="win"><td><strong>GPT-Image-1 Mini</strong></td><td>4.871</td><td><strong>$0.008</strong></td><td><strong>$0.0082</strong></td><td>37 s</td></tr>
+            <tr><td>Imagen 4 Fast</td><td>4.766</td><td>$0.020</td><td>$0.0210</td><td><strong>7 s</strong></td></tr>
+            <tr><td>GPT-Image-1.5</td><td><strong>4.937</strong></td><td>$0.032</td><td>$0.0324</td><td>38 s</td></tr>
+            <tr><td>GPT-Image-2</td><td>4.921</td><td>$0.033</td><td>$0.0335</td><td>57 s</td></tr>
+            <tr><td>Imagen 4 Ultra</td><td>4.908</td><td>$0.060</td><td>$0.0611</td><td>16 s</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="actions">
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13 0 2.96-1.607 5.68-4.196 7.11l-8.054 4.46v-3.69h-.067c-4.49.1-8.183-3.51-8.183-8.01z"/></svg> 14</span>
+        <span class="act repost"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.896 2 2 2H13v2H7.5c-2.209 0-4-1.79-4-4V7.55L1.432 9.48.068 8.02 4.5 3.88z"/></svg> 22</span>
+        <span class="act like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16l-.805 1.09-.806-1.09C9.984 6.01 8.526 5.44 7.304 5.5c-1.243.07-2.349.78-2.91 1.91-.552 1.12-.633 2.78.479 4.82z"/></svg> 156</span>
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.75 21V3h2v18h-2zM18 21V8.5h2V21h-2zM4 21l.004-10h2L6 21H4z"/></svg> 18K</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- 4/16 -->
+  <article class="tweet">
+    <div class="avatar-col">
+      <div class="avatar"><img src="../assets/mesh_api_logo_v2.svg" alt="" /></div>
+      <div class="thread-line"></div>
+    </div>
+    <div class="body">
+      <div class="head">
+        <span class="name">Mesh API</span>
+        <svg class="verified" viewBox="0 0 22 22"><path fill="#1A83FE" d="M20.396 11c-.018-.646-.215-1.275-.57-1.816-.354-.54-.852-.972-1.438-1.246.223-.607.27-1.264.14-1.897-.131-.634-.437-1.218-.882-1.687-.47-.445-1.053-.75-1.687-.882-.633-.13-1.29-.083-1.897.14-.273-.587-.704-1.086-1.245-1.44S11.647 1.62 11 1.604zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"/></svg>
+        <span class="handle">@meshapi</span>
+        <span class="sep">·</span>
+        <span class="time">May 21</span>
+        <span class="count">4/16</span>
+      </div>
+      <div class="text">Five hidden taxes the price card doesn't mention.
+
+We surface three from pilot data, two flagged for the full run:
+
+1. <strong>Quality saturation</strong> — 7.5× cost spread, 3.4% quality spread
+2. <strong>Latency spread</strong> — 7.8× p50 gap
+3. <strong>Retry tax</strong> — GPT-Image-2 retried 20% of calls
+4. Refusal rate (full run)
+5. Watermark visibility (full run)</div>
+      <div class="actions">
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.751 10c0-4.42 3.584-8 8.005-8h4.366c4.49 0 8.129 3.64 8.129 8.13z"/></svg> 8</span>
+        <span class="act repost"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.88l4.432 4.14-1.364 1.46L5.5 7.55V16c0 1.1.896 2 2 2H13v2H7.5z"/></svg> 31</span>
+        <span class="act like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.697 5.5c-1.222-.06-2.679.51-3.89 2.16z"/></svg> 198</span>
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.75 21V3h2v18h-2z"/></svg> 14K</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- 5/16 -->
+  <article class="tweet">
+    <div class="avatar-col">
+      <div class="avatar"><img src="../assets/mesh_api_logo_v2.svg" alt="" /></div>
+      <div class="thread-line"></div>
+    </div>
+    <div class="body">
+      <div class="head">
+        <span class="name">Mesh API</span>
+        <svg class="verified" viewBox="0 0 22 22"><path fill="#1A83FE" d="M20.396 11c-.018-.646-.215-1.275-.57-1.816zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"/></svg>
+        <span class="handle">@meshapi</span>
+        <span class="sep">·</span>
+        <span class="time">May 21</span>
+        <span class="count">5/16</span>
+      </div>
+      <div class="text"><strong>Tax 1: quality saturation.</strong>
+
+All 5 models scored 4.77–4.94 on a 1–5 scale. The price spread is 7.5×, the quality spread is <strong>0.17 points</strong> — smaller than the median per-image judge variance.
+
+Buyers paying $0.060 are paying for an effect that's within noise.</div>
+      <div class="actions">
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.751 10c0-4.42 3.584-8 8.005-8z"/></svg> 11</span>
+        <span class="act repost"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.88l4.432 4.14z"/></svg> 26</span>
+        <span class="act like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.697 5.5z"/></svg> 144</span>
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.75 21V3z"/></svg> 11K</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- 6/16 -->
+  <article class="tweet">
+    <div class="avatar-col">
+      <div class="avatar"><img src="../assets/mesh_api_logo_v2.svg" alt="" /></div>
+      <div class="thread-line"></div>
+    </div>
+    <div class="body">
+      <div class="head">
+        <span class="name">Mesh API</span>
+        <svg class="verified" viewBox="0 0 22 22"><path fill="#1A83FE" d="M20.396 11zM9.662 14.85l-3.429-3.428 1.293-1.302 2.072 2.072 4.4-4.794 1.347 1.246z"/></svg>
+        <span class="handle">@meshapi</span>
+        <span class="sep">·</span>
+        <span class="time">May 21</span>
+        <span class="count">6/16</span>
+      </div>
+      <div class="text"><strong>Tax 2: latency spread is 7.8×.</strong>
+
+Imagen 4 Fast: 7.3 s p50.
+GPT-Image-2: 56.7 s p50.
+
+Two premium-tier models priced within 2× of each other (Imagen 4 Ultra $0.060, GPT-Image-2 $0.033) had a <strong>3.6× latency gap</strong> (15.7 s vs 56.7 s).
+
+For interactive UX: latency is the real differentiator, not cost.</div>
+      <div class="embed-media">
+        <img src="../charts/chart_3_latency_p50_p95.png" alt="Latency p50 / p95 chart" loading="lazy" />
+        <div class="caption">Chart 3 — p50 / p95 latency per model. The p95 bars are doing most of the work.</div>
+      </div>
+      <div class="actions">
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.751 10c0-4.42z"/></svg> 19</span>
+        <span class="act repost"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.88z"/></svg> 38</span>
+        <span class="act like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.697 5.5z"/></svg> 221</span>
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.75 21z"/></svg> 16K</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- 7/16 -->
+  <article class="tweet">
+    <div class="avatar-col">
+      <div class="avatar"><img src="../assets/mesh_api_logo_v2.svg" alt="" /></div>
+      <div class="thread-line"></div>
+    </div>
+    <div class="body">
+      <div class="head">
+        <span class="name">Mesh API</span>
+        <svg class="verified" viewBox="0 0 22 22"><path fill="#1A83FE" d="M20.396 11zM9.662 14.85z"/></svg>
+        <span class="handle">@meshapi</span>
+        <span class="sep">·</span>
+        <span class="time">May 21</span>
+        <span class="count">7/16</span>
+      </div>
+      <div class="text"><strong>Tax 3: GPT-Image-2 retried 20% of its calls.</strong>
+
+1 of 5 calls hit a transient upstream error and retried, doubling the cost on that call.
+
+None of the other four models retried.
+
+Retry tax shows up in the effective-cost column; never on the price card.</div>
+      <div class="actions">
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.751 10z"/></svg> 7</span>
+        <span class="act repost"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.88z"/></svg> 14</span>
+        <span class="act like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.697 5.5z"/></svg> 89</span>
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.75 21z"/></svg> 8.4K</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- 8/16 -->
+  <article class="tweet">
+    <div class="avatar-col">
+      <div class="avatar"><img src="../assets/mesh_api_logo_v2.svg" alt="" /></div>
+      <div class="thread-line"></div>
+    </div>
+    <div class="body">
+      <div class="head">
+        <span class="name">Mesh API</span>
+        <svg class="verified" viewBox="0 0 22 22"><path fill="#1A83FE" d="M20.396 11zM9.662 14.85z"/></svg>
+        <span class="handle">@meshapi</span>
+        <span class="sep">·</span>
+        <span class="time">May 21</span>
+        <span class="count">8/16</span>
+      </div>
+      <div class="text">Two findings on the rubric axes:
+
+(a) <strong>Text rendering scored 5.0 across every model</strong> on the typography prompt ("OPEN 24 HOURS" diner neon). The 2026 generation has solved in-image text — every glyph correct on every model.
+
+(b) Imagen 4 Fast scored 4.45 on adherence — the only weak spot in the lineup.</div>
+      <div class="actions">
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.751 10z"/></svg> 12</span>
+        <span class="act repost"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.88z"/></svg> 19</span>
+        <span class="act like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.697 5.5z"/></svg> 134</span>
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.75 21z"/></svg> 9.7K</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- 9/16 -->
+  <article class="tweet">
+    <div class="avatar-col">
+      <div class="avatar"><img src="../assets/mesh_api_logo_v2.svg" alt="" /></div>
+      <div class="thread-line"></div>
+    </div>
+    <div class="body">
+      <div class="head">
+        <span class="name">Mesh API</span>
+        <svg class="verified" viewBox="0 0 22 22"><path fill="#1A83FE" d="M20.396 11zM9.662 14.85z"/></svg>
+        <span class="handle">@meshapi</span>
+        <span class="sep">·</span>
+        <span class="time">May 21</span>
+        <span class="count">9/16</span>
+      </div>
+      <div class="text">Visual sanity check.
+
+Both images: T2I-011 ("OPEN 24 HOURS" diner neon, brick exterior, rainy sidewalk).
+
+Left: <strong>GPT-Image-1 Mini ($0.008).</strong>
+Right: <strong>Imagen 4 Ultra ($0.060).</strong>
+
+Both scored 5/5 on text fidelity from both judges.</div>
+      <div class="embed-pair">
+        <figure>
+          <img src="../images/openai/gpt-image-1-mini/T2I-011.png" alt="GPT-Image-1 Mini render" loading="lazy" />
+          <figcaption>GPT-Image-1 Mini · $0.008</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/google/imagen-4-ultra/T2I-011.png" alt="Imagen 4 Ultra render" loading="lazy" />
+          <figcaption>Imagen 4 Ultra · $0.060</figcaption>
+        </figure>
+      </div>
+      <div class="actions">
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.751 10z"/></svg> 22</span>
+        <span class="act repost"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.88z"/></svg> 56</span>
+        <span class="act like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.697 5.5z"/></svg> 412</span>
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.75 21z"/></svg> 32K</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- 10/16 -->
+  <article class="tweet">
+    <div class="avatar-col">
+      <div class="avatar"><img src="../assets/mesh_api_logo_v2.svg" alt="" /></div>
+      <div class="thread-line"></div>
+    </div>
+    <div class="body">
+      <div class="head">
+        <span class="name">Mesh API</span>
+        <svg class="verified" viewBox="0 0 22 22"><path fill="#1A83FE" d="M20.396 11zM9.662 14.85z"/></svg>
+        <span class="handle">@meshapi</span>
+        <span class="sep">·</span>
+        <span class="time">May 21</span>
+        <span class="count">10/16</span>
+      </div>
+      <div class="text">Why route through Mesh API (<code>api.meshapi.ai</code>)?
+
+One client, one key, one billing surface across every model in the lineup. Per-provider SDK differences, rate-limit dialects, auth-flow drift — all eliminated as confounders.
+
+Switching models = changing a string.</div>
+      <div class="actions">
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.751 10z"/></svg> 9</span>
+        <span class="act repost"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.88z"/></svg> 24</span>
+        <span class="act like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.697 5.5z"/></svg> 167</span>
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.75 21z"/></svg> 10K</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- 11/16 -->
+  <article class="tweet">
+    <div class="avatar-col">
+      <div class="avatar"><img src="../assets/mesh_api_logo_v2.svg" alt="" /></div>
+      <div class="thread-line"></div>
+    </div>
+    <div class="body">
+      <div class="head">
+        <span class="name">Mesh API</span>
+        <svg class="verified" viewBox="0 0 22 22"><path fill="#1A83FE" d="M20.396 11zM9.662 14.85z"/></svg>
+        <span class="handle">@meshapi</span>
+        <span class="sep">·</span>
+        <span class="time">May 21</span>
+        <span class="count">11/16</span>
+      </div>
+      <div class="text">Methodology in one paragraph.
+
+Same prompt, same <code>size=1024x1024</code>, same <code>quality=auto</code>, same <code>n=1</code> for every model. Cost from a dated static pricing table (Mesh's catalog exposes <code>image_usd_per_image</code>). Quality from a 2-judge × 2-temp vision-LLM ensemble on a 5-axis 1–5 rubric. End-to-end wall-clock latency. Refusal &amp; watermark in their own buckets.</div>
+      <div class="actions">
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.751 10z"/></svg> 6</span>
+        <span class="act repost"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.88z"/></svg> 11</span>
+        <span class="act like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.697 5.5z"/></svg> 78</span>
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.75 21z"/></svg> 6.2K</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- 12/16 -->
+  <article class="tweet">
+    <div class="avatar-col">
+      <div class="avatar"><img src="../assets/mesh_api_logo_v2.svg" alt="" /></div>
+      <div class="thread-line"></div>
+    </div>
+    <div class="body">
+      <div class="head">
+        <span class="name">Mesh API</span>
+        <svg class="verified" viewBox="0 0 22 22"><path fill="#1A83FE" d="M20.396 11zM9.662 14.85z"/></svg>
+        <span class="handle">@meshapi</span>
+        <span class="sep">·</span>
+        <span class="time">May 21</span>
+        <span class="count">12/16</span>
+      </div>
+      <div class="text">Judge ensemble agreement:
+
+GPT-5.5 (Judge B) scores 0.08–0.27 points higher than Claude Opus 4.7 (Judge A) on every model. Claude is the stricter judge.
+
+GPT-5.5 gave GPT-Image-2 a perfect 5.00 — consistent with own-provider preference. We report <strong>both</strong> judge means so the bias is auditable.</div>
+      <div class="actions">
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.751 10z"/></svg> 14</span>
+        <span class="act repost"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.88z"/></svg> 33</span>
+        <span class="act like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.697 5.5z"/></svg> 201</span>
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.75 21z"/></svg> 13K</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- 13/16 -->
+  <article class="tweet">
+    <div class="avatar-col">
+      <div class="avatar"><img src="../assets/mesh_api_logo_v2.svg" alt="" /></div>
+      <div class="thread-line"></div>
+    </div>
+    <div class="body">
+      <div class="head">
+        <span class="name">Mesh API</span>
+        <svg class="verified" viewBox="0 0 22 22"><path fill="#1A83FE" d="M20.396 11zM9.662 14.85z"/></svg>
+        <span class="handle">@meshapi</span>
+        <span class="sep">·</span>
+        <span class="time">May 21</span>
+        <span class="count">13/16</span>
+      </div>
+      <div class="text">The cheap-mini result is structural, not coincidental.
+
+The sibling chat benchmark (<em>dollar-per-task-bench</em>) found GPT-4o-mini tied 4/5 frontier chat models at 100% on code.
+
+Today, GPT-Image-1 Mini sits within 0.07 quality-points of the most expensive T2I model in the lineup.
+
+Same shape.</div>
+      <div class="actions">
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.751 10z"/></svg> 16</span>
+        <span class="act repost"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.88z"/></svg> 47</span>
+        <span class="act like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.697 5.5z"/></svg> 289</span>
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.75 21z"/></svg> 19K</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- 14/16 -->
+  <article class="tweet">
+    <div class="avatar-col">
+      <div class="avatar"><img src="../assets/mesh_api_logo_v2.svg" alt="" /></div>
+      <div class="thread-line"></div>
+    </div>
+    <div class="body">
+      <div class="head">
+        <span class="name">Mesh API</span>
+        <svg class="verified" viewBox="0 0 22 22"><path fill="#1A83FE" d="M20.396 11zM9.662 14.85z"/></svg>
+        <span class="handle">@meshapi</span>
+        <span class="sep">·</span>
+        <span class="time">May 21</span>
+        <span class="count">14/16</span>
+      </div>
+      <div class="text">The implication: <strong>cost-per-quality is a routing decision, not a model-selection decision.</strong>
+
+Default to the budget workhorse for the broad middle of traffic. Escalate to the premium tier only when a per-call heuristic flags an edge case worth the bill.
+
+Most teams skip step 2 and overpay structurally.</div>
+      <div class="actions">
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.751 10z"/></svg> 21</span>
+        <span class="act repost"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.88z"/></svg> 78</span>
+        <span class="act like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.697 5.5z"/></svg> 521</span>
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.75 21z"/></svg> 28K</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- 15/16 -->
+  <article class="tweet">
+    <div class="avatar-col">
+      <div class="avatar"><img src="../assets/mesh_api_logo_v2.svg" alt="" /></div>
+      <div class="thread-line"></div>
+    </div>
+    <div class="body">
+      <div class="head">
+        <span class="name">Mesh API</span>
+        <svg class="verified" viewBox="0 0 22 22"><path fill="#1A83FE" d="M20.396 11zM9.662 14.85z"/></svg>
+        <span class="handle">@meshapi</span>
+        <span class="sep">·</span>
+        <span class="time">May 21</span>
+        <span class="count">15/16</span>
+      </div>
+      <div class="text">Pilot caveats, hold us to all of them:
+
+• n=5/model
+• 5 of 12 prompt categories sampled (long-prompt, knowledge, counting, neg-space, edge-case, multilingual, hyper-complex deferred to full run)
+• Single region, single time, single seed
+• 2-judge ensemble — no human eval yet
+• Mesh only routes OpenAI + Google for image; FLUX/Midjourney/Ideogram absent</div>
+      <div class="actions">
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.751 10z"/></svg> 5</span>
+        <span class="act repost"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.88z"/></svg> 9</span>
+        <span class="act like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.697 5.5z"/></svg> 92</span>
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.75 21z"/></svg> 7.1K</span>
+      </div>
+    </div>
+  </article>
+
+  <!-- 16/16 -->
+  <article class="tweet">
+    <div class="avatar-col">
+      <div class="avatar"><img src="../assets/mesh_api_logo_v2.svg" alt="" /></div>
+      <div class="thread-line"></div>
+    </div>
+    <div class="body">
+      <div class="head">
+        <span class="name">Mesh API</span>
+        <svg class="verified" viewBox="0 0 22 22"><path fill="#1A83FE" d="M20.396 11zM9.662 14.85z"/></svg>
+        <span class="handle">@meshapi</span>
+        <span class="sep">·</span>
+        <span class="time">May 21</span>
+        <span class="count">16/16</span>
+      </div>
+      <div class="text">Coming in v1 (n=10/cat × 12 categories × 5–8 models, projected $45–65):
+
+• The seven missing categories (incl. multilingual non-Latin scripts + hyper-complex boss-fight prompts)
+• Stretch lineup: Gemini 2.5 Flash Image ("Nano Banana"), Imagen 3, GPT-Image-1
+• Third Gemini-vision judge for own-provider-bias triangulation
+• Automatic metrics: CLIPScore + VQAScore + LAION aesthetic
+• 50-prompt human calibration set
+
+Repo + raw CSVs + paper: <a href="https://github.com/aifiesta/mesh-dollar-per-image-bench">github.com/aifiesta/mesh-dollar-per-image-bench</a>
+
+Total pilot cost incl. debugging re-runs: ~$2.50.
+
+If you run it on your own prompts and get different numbers, reply with the CSV.</div>
+      <div class="actions">
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M1.751 10z"/></svg> 38</span>
+        <span class="act repost"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.5 3.88z"/></svg> 142</span>
+        <span class="act like"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.697 5.5z"/></svg> 894</span>
+        <span class="act"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.75 21z"/></svg> 47K</span>
+      </div>
+    </div>
+  </article>
+
+  <div class="footer-card">
+    End of thread · <a href="https://github.com/aifiesta/mesh-dollar-per-image-bench">full paper, raw CSVs, and code</a><br>
+    Published by Raushan Sharma · <a href="mailto:raushan@meshapi.ai">raushan@meshapi.ai</a>
+  </div>
+
+</main>
+
+</body>
+</html>
