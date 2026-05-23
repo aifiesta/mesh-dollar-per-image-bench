@@ -2,211 +2,275 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>Mesh Dollar per Image Bench — cover v2</title>
+<title>Mesh Dollar per Image Bench — cover</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { width: 1600px; height: 900px; overflow: hidden; }
+  html, body {
+    width: 1600px; height: 900px; overflow: hidden;
+  }
   body {
-    background: #fafafa;
-    font-family: 'Charter','Georgia','Cambria','Times New Roman',serif;
-    color: #1a1a1a;
+    background: #fbfbfa;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #0a0a0a;
     position: relative;
   }
-  .accent      { color: #1A83FE; }
-  .crimson     { color: #b31b1b; }
-  .num-mono    { font-variant-numeric: tabular-nums; }
 
-  /* Header — logo unchanged */
-  .header {
+  /* Subtle grid pattern */
+  .grid-bg {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(26,131,254,0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(26,131,254,0.045) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse 1100px 700px at 80% 50%, #000 30%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 1100px 700px at 80% 50%, #000 30%, transparent 75%);
+    pointer-events: none;
+  }
+
+  /* Accent dot cluster top-right */
+  .dot-cluster {
+    position: absolute; top: 0; right: 0;
+    width: 520px; height: 360px;
+    background-image: radial-gradient(circle, rgba(26,131,254,0.18) 1.2px, transparent 1.5px);
+    background-size: 18px 18px;
+    mask-image: linear-gradient(225deg, #000 10%, transparent 80%);
+    -webkit-mask-image: linear-gradient(225deg, #000 10%, transparent 80%);
+    pointer-events: none;
+  }
+
+  /* Top bar */
+  .top-bar {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 38px 64px 22px;
-    border-bottom: 1px solid #e5e5e5;
+    padding: 56px 80px 0;
+    position: relative; z-index: 3;
   }
-  .header img { height: 64px; width: auto; display: block; }
-  .header .tag {
-    background: #1A83FE; color: #fff;
-    padding: 5px 14px; border-radius: 4px;
-    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
-    font-size: 14px; font-weight: 700; letter-spacing: 0.5px;
+  .top-bar img.logo { height: 52px; width: auto; display: block; }
+  .badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: #ffffff;
+    border: 1px solid #e7e5e4;
+    padding: 9px 16px;
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    font-size: 12px;
+    color: #44403c;
+    letter-spacing: 0.04em;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+  }
+  .badge .pulse {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 0 4px rgba(34,197,94,0.18);
   }
 
-  /* Hero row */
+  /* Hero */
   .hero {
-    padding: 36px 64px 14px;
+    padding: 70px 80px 0;
+    position: relative; z-index: 3;
+    max-width: 980px;
   }
-  .hero .kicker {
-    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
-    font-size: 13px; font-weight: 700;
-    color: #777; text-transform: uppercase; letter-spacing: 0.22em;
-    margin-bottom: 14px;
+  .kicker {
+    font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: #1A83FE;
+    margin-bottom: 24px;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .kicker::before {
+    content: ''; display: inline-block;
+    width: 24px; height: 1px; background: #1A83FE;
   }
   .hero h1 {
-    font-size: 56px; font-weight: 700; line-height: 1.04;
-    letter-spacing: -0.015em;
+    font-size: 68px;
+    font-weight: 700;
+    letter-spacing: -0.028em;
+    line-height: 1.04;
+    color: #0a0a0a;
   }
-  .hero h1 .big-price-cheap { color: #1A83FE; }
-  .hero h1 .big-price-spend { color: #b31b1b; }
-  .hero h1 .last { color: #b31b1b; }
+  .hero h1 .accent { color: #1A83FE; }
+  .hero h1 .underline {
+    background-image: linear-gradient(transparent 78%, rgba(26,131,254,0.22) 78%);
+    padding: 0 4px;
+  }
+  .subtitle {
+    margin-top: 28px;
+    font-size: 21px;
+    line-height: 1.45;
+    color: #57534e;
+    max-width: 880px;
+    font-weight: 400;
+  }
+  .subtitle strong { color: #0a0a0a; font-weight: 600; }
 
-  /* Two-column lower section */
-  .lower {
-    display: grid;
-    grid-template-columns: 1.05fr 1fr;
-    gap: 32px;
-    padding: 18px 64px 0;
-    align-items: start;
-  }
-
-  /* Left: saturation strip + caption */
-  .strip-wrap .strip-label {
-    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
-    font-size: 12.5px; color: #555; margin-bottom: 8px;
-    text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700;
-  }
-  .strip {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px;
-  }
-  .strip figure {
-    margin: 0; background: #fff;
-    border: 1px solid #e5e5e5; border-radius: 4px;
+  /* Terminal card on the right */
+  .terminal {
+    position: absolute;
+    right: 80px; top: 220px;
+    width: 460px;
+    background: #ffffff;
+    border: 1px solid #e7e5e4;
+    border-radius: 14px;
     overflow: hidden;
+    box-shadow: 0 20px 48px -16px rgba(15,15,15,0.12), 0 4px 12px -4px rgba(15,15,15,0.04);
+    z-index: 4;
   }
-  .strip figure img {
-    width: 100%; aspect-ratio: 1; object-fit: cover; display: block;
+  .term-head {
+    background: #fafaf9;
+    border-bottom: 1px solid #e7e5e4;
+    padding: 11px 16px;
+    display: flex; align-items: center; gap: 7px;
   }
-  .strip figure figcaption {
-    padding: 5px 6px 7px;
-    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
-    font-size: 11px; text-align: center; color: #333; line-height: 1.3;
+  .term-head .tdot {
+    width: 11px; height: 11px; border-radius: 50%;
+    background: #e7e5e4;
   }
-  .strip figure figcaption .price {
-    color: #1A83FE; font-weight: 700; display: block;
+  .term-head .tdot:nth-child(1) { background: #fda4af; }
+  .term-head .tdot:nth-child(2) { background: #fcd34d; }
+  .term-head .tdot:nth-child(3) { background: #86efac; }
+  .term-head .tlabel {
+    margin-left: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: #78716c;
   }
-  .strip figure figcaption .qlat {
-    color: #888; font-size: 10px;
+  .term-body {
+    padding: 20px 22px;
+    font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
+    font-size: 13px;
+    line-height: 1.85;
+    color: #292524;
   }
-  .strip-caption {
-    margin-top: 10px;
-    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
-    font-size: 13px; color: #555; line-height: 1.45;
+  .term-body .c { color: #a8a29e; }
+  .term-body .p { color: #1A83FE; font-weight: 600; }
+  .term-body .k { color: #0a0a0a; font-weight: 600; }
+  .term-body .s { color: #16a34a; }
+  .term-body .n { color: #b31b1b; font-weight: 600; }
+  .term-body hr {
+    border: none;
+    border-top: 1px dashed #e7e5e4;
+    margin: 10px 0;
   }
-  .strip-caption strong { color: #1a1a1a; }
 
-  /* Right: stats grid */
+  /* Stats row */
   .stats {
+    position: absolute;
+    left: 80px; right: 80px;
+    bottom: 120px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+    z-index: 3;
   }
   .stat {
-    background: #fff;
-    border: 1px solid #e5e5e5;
-    border-radius: 6px;
-    padding: 16px 18px;
+    padding: 0 0 0 18px;
+    border-left: 2px solid #1A83FE;
   }
-  .stat.full-width { grid-column: 1 / -1; }
   .stat .num {
-    font-size: 40px; font-weight: 700; color: #1A83FE;
-    line-height: 1; font-variant-numeric: tabular-nums;
+    font-size: 40px;
+    font-weight: 700;
+    color: #0a0a0a;
+    letter-spacing: -0.024em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
   }
-  .stat.danger .num { color: #b31b1b; }
   .stat .lbl {
-    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
-    font-size: 13px; color: #444; margin-top: 8px; line-height: 1.35;
+    margin-top: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: #78716c;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
   }
-  .stat.full-width .lbl { font-size: 14px; }
-  .stat .lbl strong { color: #1a1a1a; }
 
-  /* Footer (no GitHub URL — clean meta-only) */
+  /* Footer */
   .footer {
-    position: absolute; bottom: 0; left: 0; right: 0;
-    padding: 18px 64px 22px;
-    background: #fafafa;
-    border-top: 1px solid #e5e5e5;
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 22px 80px 26px;
+    border-top: 1px solid #e7e5e4;
+    background: #fbfbfa;
     display: flex; justify-content: space-between; align-items: center;
-    font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-size: 13px;
+    color: #78716c;
+    z-index: 3;
   }
-  .footer .left-meta {
-    font-size: 14px; color: #1a1a1a; font-weight: 700;
-    letter-spacing: 0.02em;
+  .footer .left {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    color: #0a0a0a;
   }
-  .footer .left-meta .accent { color: #1A83FE; }
-  .footer .right-meta {
-    font-size: 12.5px; color: #666;
-  }
+  .footer .left .accent { color: #1A83FE; }
+  .footer .right { font-family: 'Inter', sans-serif; }
+  .footer .right .sep { color: #d6d3d1; margin: 0 8px; }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <img src="mesh_api_logo.svg" alt="Mesh API" />
-  <span class="tag">PILOT v0.1 &middot; 2026-05-21</span>
+<div class="grid-bg"></div>
+<div class="dot-cluster"></div>
+
+<div class="top-bar">
+  <img class="logo" src="assets/mesh_api_logo_v2.svg" alt="Mesh API" />
+  <div class="badge"><span class="pulse"></span>PILOT v0.1 · 2026-05-21</div>
 </div>
 
 <div class="hero">
-  <div class="kicker">Mesh Dollar per Image Bench — pilot finding</div>
+  <div class="kicker">// Dollar per Image Bench</div>
   <h1>
-    A <span class="big-price-cheap">$0.008</span> model ties a <span class="big-price-spend">$0.060</span> model on routine prompts.<br>
-    On hyper-complex prompts, the most expensive model drops to <span class="last">last place.</span>
+    How much does <span class="accent">one image</span><br>
+    <span class="underline">actually</span> cost?
   </h1>
+  <p class="subtitle">
+    A reproducible benchmark across <strong>7 image-generation models</strong> on Mesh API.
+    Cost, latency, quality, and the hidden taxes nobody publishes.
+  </p>
 </div>
 
-<div class="lower">
-  <div class="strip-wrap">
-    <div class="strip-label">Same prompt, five models, 7.5× cost spread</div>
-    <div class="strip">
-      <figure>
-        <img src="images/openai_gpt-image-1-mini__T2I-021.png" alt="Mini" />
-        <figcaption><span class="price">$0.008</span><span class="qlat">Q=4.67 · 17s</span></figcaption>
-      </figure>
-      <figure>
-        <img src="images/google_imagen-4-fast__T2I-021.png" alt="Imagen Fast" />
-        <figcaption><span class="price">$0.020</span><span class="qlat">Q=4.83 · 8s</span></figcaption>
-      </figure>
-      <figure>
-        <img src="images/openai_gpt-image-2__T2I-021.png" alt="GPT-Image-2" />
-        <figcaption><span class="price">$0.030</span><span class="qlat">Q=4.83 · 51s</span></figcaption>
-      </figure>
-      <figure>
-        <img src="images/openai_gpt-image-1.5__T2I-021.png" alt="GPT-Image-1.5" />
-        <figcaption><span class="price">$0.032</span><span class="qlat">Q=5.00 · 17s</span></figcaption>
-      </figure>
-      <figure>
-        <img src="images/google_imagen-4-ultra__T2I-021.png" alt="Imagen Ultra" />
-        <figcaption><span class="price">$0.060</span><span class="qlat">Q=4.83 · 15s</span></figcaption>
-      </figure>
-    </div>
-    <p class="strip-caption">
-      T2I-021 ("red wooden cube on the left, blue glass sphere on the right") across the full pilot lineup.
-      Cost rises 7.5× from left to right; <strong>per-image quality scores span 0.33 points.</strong>
-    </p>
+<div class="terminal">
+  <div class="term-head">
+    <span class="tdot"></span><span class="tdot"></span><span class="tdot"></span>
+    <span class="tlabel">~/mesh-bench/runner.py</span>
   </div>
+  <div class="term-body">
+    <span class="c"># 7 models · 120 prompts · 12 categories</span><br>
+    <span class="p">$</span> python3 runner.py \<br>
+    &nbsp;&nbsp;<span class="k">--task</span> <span class="s">"t2i_prompts.json"</span> \<br>
+    &nbsp;&nbsp;<span class="k">--budget-cap</span> 60.00
+    <hr>
+    <span class="c">// cost spread .......</span> <span class="n">7.5×</span><br>
+    <span class="c">// latency spread ....</span> <span class="n">7.8×</span><br>
+    <span class="c">// quality spread ....</span> 0.17 pts<br>
+    <span class="c">// status ............</span> <span class="s">passed ✓</span>
+  </div>
+</div>
 
-  <div class="stats">
-    <div class="stat">
-      <div class="num num-mono">7.5×</div>
-      <div class="lbl">Cost spread on routine,<br><strong>0.17 quality-pt</strong> spread.</div>
-    </div>
-    <div class="stat">
-      <div class="num num-mono">7.8×</div>
-      <div class="lbl">p50 latency spread:<br>Imagen Fast 7 s &harr; <strong>GPT-Image-2 57 s.</strong></div>
-    </div>
-    <div class="stat danger">
-      <div class="num num-mono">189 s</div>
-      <div class="lbl">GPT-Image-2 on hyper-complex.<br>4–5× its routine p50.</div>
-    </div>
-    <div class="stat">
-      <div class="num num-mono">3/3</div>
-      <div class="lbl">Imagen models label the right lung as <strong>"2 lobes"</strong> when correct is 3.</div>
-    </div>
+<div class="stats">
+  <div class="stat">
+    <div class="num">7</div>
+    <div class="lbl">Models</div>
+  </div>
+  <div class="stat">
+    <div class="num">120</div>
+    <div class="lbl">Prompts</div>
+  </div>
+  <div class="stat">
+    <div class="num">12</div>
+    <div class="lbl">Categories</div>
+  </div>
+  <div class="stat">
+    <div class="num" style="font-size:34px;">$0.008<span style="color:#a8a29e;font-weight:500;"> – </span>$0.060</div>
+    <div class="lbl">Per Image</div>
   </div>
 </div>
 
 <div class="footer">
-  <span class="left-meta">7 models &middot; 120 prompts &middot; 12 categories <span class="accent">/</span> Mesh Dollar per Image Bench</span>
-  <span class="right-meta">Reproducible &middot; MIT &middot; routed through Mesh API</span>
+  <span class="left">github.com<span class="accent">/</span>aifiesta<span class="accent">/</span>mesh-dollar-per-image-bench</span>
+  <span class="right">Reproducible<span class="sep">·</span>MIT<span class="sep">·</span>Routed through Mesh API</span>
 </div>
 
 </body>

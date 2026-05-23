@@ -1,6 +1,6 @@
 # Mesh Dollar per Image Bench: A Holistic Cost–Quality–Latency Pilot Benchmark of Frontier Text-to-Image Models Through a Unified API Gateway
 
-![Mesh API](mesh_api_logo.svg)
+![Mesh API](../assets/mesh_api_logo.svg)
 
 *Preprint. Pilot edition (v0.1), 2026-05-20. Reproducible artifacts at https://github.com/aifiesta/mesh-dollar-per-image-bench.*
 
@@ -129,7 +129,7 @@ Axes scored `"N/A"` (e.g., `text` on a prompt with no in-image text) are dropped
 
 To make the judging contract concrete, here is one full end-to-end scoring of one image. The prompt is T2I-011 (typography category): *"A vintage diner sign at night with the text 'OPEN 24 HOURS' in bright red neon, mounted on the brick exterior of a 1950s American diner, slight rain on the sidewalk reflecting the neon."* The generated image is from `openai/gpt-image-1-mini` at `quality=auto`, $0.008. Judge is `anthropic/claude-opus-4.7` at temperature 0.0.
 
-![GPT-Image-1 Mini T2I-011 generation](images/openai_gpt-image-1-mini__T2I-011.png)
+![GPT-Image-1 Mini T2I-011 generation](../images/openai/gpt-image-1-mini/T2I-011.png)
 
 **Judge input:**
 
@@ -194,7 +194,7 @@ The dominant finding is **quality saturation**: all five models cluster between 
 
 Figure 1 visualizes the cost–quality scatter (effective US\$/image on the x-axis, log scale; quality on the y-axis).
 
-> ![Figure 1: Quality vs cost per image](chart_5_quality_vs_cost.png)
+> ![Figure 1: Quality vs cost per image](../charts/chart_5_quality_vs_cost.png)
 > **Figure 1.** Quality (vision-LLM ensemble mean) versus effective cost per image. Log-scale x-axis. The cheapest model (Mini) sits within 0.07 quality-points of the most expensive (Imagen 4 Ultra) while costing one-seventh as much.
 
 ### 5.2 Per-Axis Quality Breakdown
@@ -227,14 +227,14 @@ Latency varies by **7.8×** end-to-end across the lineup (Table 3, Figure 2).
 | GPT-Image-1.5    | 37,647     | 41,563     | 33,093 | 5 |
 | GPT-Image-2      | 56,728     | 71,937     | 59,175 | 5 |
 
-> ![Figure 2: Latency p50/p95](chart_3_latency_p50_p95.png)
+> ![Figure 2: Latency p50/p95](../charts/chart_3_latency_p50_p95.png)
 > **Figure 2.** End-to-end latency by model. Imagen 4 Fast is 7.8× faster than GPT-Image-2 at p50 and 8.2× faster at p95.
 
 For interactive product UX, the OpenAI image models — including the cost-winning Mini — are **not viable without an asynchronous interaction pattern**. The Google models, particularly Imagen 4 Fast, are the only options under ~10 s.
 
 | Imagen 4 Fast (6.9 s · $0.020) | GPT-Image-2 (55.8 s · $0.030) |
 |---|---|
-| ![Imagen 4 Fast T2I-001](images/google_imagen-4-fast__T2I-001.png) | ![GPT-Image-2 T2I-001](images/openai_gpt-image-2__T2I-001.png) |
+| ![Imagen 4 Fast T2I-001](../images/google/imagen-4-fast/T2I-001.png) | ![GPT-Image-2 T2I-001](../images/openai/gpt-image-2/T2I-001.png) |
 
 *Figure 3a. Latency cost made concrete. Both T2I-001 (70-year-old woman portrait), both judge-ensemble Q ≥ 4.9. The user waits **8× longer** for the GPT-Image-2 generation.*
 
@@ -246,7 +246,7 @@ Mirroring `dollar-per-task-bench`'s exposure of four chat-tier hidden taxes (tok
 
 | Mini ($0.008, Q=4.67) | Imagen Fast ($0.020, Q=4.83) | GPT-2 ($0.030, Q=4.83) | GPT-1.5 ($0.032, Q=5.00) | Imagen Ultra ($0.060, Q=4.83) |
 |---|---|---|---|---|
-| ![Mini](images/openai_gpt-image-1-mini__T2I-021.png) | ![Fast](images/google_imagen-4-fast__T2I-021.png) | ![GPT-2](images/openai_gpt-image-2__T2I-021.png) | ![GPT-1.5](images/openai_gpt-image-1.5__T2I-021.png) | ![Ultra](images/google_imagen-4-ultra__T2I-021.png) |
+| ![Mini](../images/openai/gpt-image-1-mini/T2I-021.png) | ![Fast](../images/google/imagen-4-fast/T2I-021.png) | ![GPT-2](../images/openai/gpt-image-2/T2I-021.png) | ![GPT-1.5](../images/openai/gpt-image-1.5/T2I-021.png) | ![Ultra](../images/google/imagen-4-ultra/T2I-021.png) |
 
 *Figure 4a. Same prompt (T2I-021, "red wooden cube on the left, blue glass sphere on the right") across all five pilot models. Cost rises 7.5× left to right; per-image quality scores span just 0.33 points. Whichever cell you pick, the buyer gets a usable image.*
 
@@ -369,14 +369,14 @@ _GPT-Image family:_
 
 | Mini | GPT-1.5 | GPT-1 (legacy) | GPT-2 |
 | --- | --- | --- | --- |
-| ![](images/openai_gpt-image-1-mini__T2I-111.png) | ![](images/openai_gpt-image-1.5__T2I-111.png) | ![](images/openai_gpt-image-1__T2I-111.png) | ![](images/openai_gpt-image-2__T2I-111.png) |
+| ![](../images/openai/gpt-image-1-mini/T2I-111.png) | ![](../images/openai/gpt-image-1.5/T2I-111.png) | ![](../images/openai/gpt-image-1/T2I-111.png) | ![](../images/openai/gpt-image-2/T2I-111.png) |
 | $0.008<br>39.5s · Q=2.50 | $0.032<br>42.3s · Q=2.75 | $0.040<br>46.3s · Q=2.80 | $0.030<br>189.3s · Q=3.60 |
 
 _Imagen family:_
 
 | Imagen 4 Fast | Imagen 3 (legacy) | Imagen 4 Ultra |
 | --- | --- | --- |
-| ![](images/google_imagen-4-fast__T2I-111.png) | ![](images/google_imagen-3__T2I-111.png) | ![](images/google_imagen-4-ultra__T2I-111.png) |
+| ![](../images/google/imagen-4-fast/T2I-111.png) | ![](../images/google/imagen-3/T2I-111.png) | ![](../images/google/imagen-4-ultra/T2I-111.png) |
 | $0.020<br>7.2s · Q=2.50 | $0.040<br>8.0s · Q=2.75 | $0.060<br>23.7s · Q=2.50 |
 
 **Per-image axis scores reveal a sharp split.** All four GPT-Image variants render the major signage correctly ('Bramble & Vine Books', 'PUBLIC LIBRARY', 'Dr. M. Ruiz, DDS') and produce a coherent isometric view. GPT-Image-2 (Q=3.60) and GPT-Image-1.5 (Q=2.75) include the most named elements; the Mini (Q=2.50) and legacy GPT-Image-1 (Q=2.80) lose a pedestrian or two but keep the layout. None of the four render the 'fallen chair at the third café table' detail. Library banner text consistently truncates at 'OPEN UNTI' rather than reaching 'OPEN UNTIL 8 PM'.
@@ -395,14 +395,14 @@ _GPT-Image family:_
 
 | Mini | GPT-1.5 | GPT-1 (legacy) | GPT-2 |
 | --- | --- | --- | --- |
-| ![](images/openai_gpt-image-1-mini__T2I-118.png) | ![](images/openai_gpt-image-1.5__T2I-118.png) | ![](images/openai_gpt-image-1__T2I-118.png) | ![](images/openai_gpt-image-2__T2I-118.png) |
+| ![](../images/openai/gpt-image-1-mini/T2I-118.png) | ![](../images/openai/gpt-image-1.5/T2I-118.png) | ![](../images/openai/gpt-image-1/T2I-118.png) | ![](../images/openai/gpt-image-2/T2I-118.png) |
 | $0.008<br>41.8s · Q=3.62 | $0.032<br>41.2s · Q=3.75 | $0.040<br>56.7s · Q=3.50 | $0.030<br>207.2s · Q=3.75 |
 
 _Imagen family:_
 
 | Imagen 4 Fast | Imagen 3 (legacy) | Imagen 4 Ultra |
 | --- | --- | --- |
-| ![](images/google_imagen-4-fast__T2I-118.png) | ![](images/google_imagen-3__T2I-118.png) | ![](images/google_imagen-4-ultra__T2I-118.png) |
+| ![](../images/google/imagen-4-fast/T2I-118.png) | ![](../images/google/imagen-3/T2I-118.png) | ![](../images/google/imagen-4-ultra/T2I-118.png) |
 | $0.020<br>5.6s · Q=3.14 | $0.040<br>7.9s · Q=3.25 | $0.060<br>24.1s · Q=3.00 |
 
 **All seven models preserve the painterly aesthetic.** Both families produce flat-color planes with fine line work and gold-leaf accents — this category does not separate models on style. The separation is entirely in named-figure coverage.
@@ -421,14 +421,14 @@ _GPT-Image family:_
 
 | Mini | GPT-1.5 | GPT-1 (legacy) | GPT-2 |
 | --- | --- | --- | --- |
-| ![](images/openai_gpt-image-1-mini__T2I-119.png) | ![](images/openai_gpt-image-1.5__T2I-119.png) | ![](images/openai_gpt-image-1__T2I-119.png) | ![](images/openai_gpt-image-2__T2I-119.png) |
+| ![](../images/openai/gpt-image-1-mini/T2I-119.png) | ![](../images/openai/gpt-image-1.5/T2I-119.png) | ![](../images/openai/gpt-image-1/T2I-119.png) | ![](../images/openai/gpt-image-2/T2I-119.png) |
 | $0.008<br>39.1s · Q=2.80 | $0.032<br>37.2s · Q=3.40 | $0.040<br>55.8s · Q=3.40 | $0.030<br>170.9s · Q=3.40 |
 
 _Imagen family:_
 
 | Imagen 4 Fast | Imagen 3 (legacy) | Imagen 4 Ultra |
 | --- | --- | --- |
-| ![](images/google_imagen-4-fast__T2I-119.png) | ![](images/google_imagen-3__T2I-119.png) | ![](images/google_imagen-4-ultra__T2I-119.png) |
+| ![](../images/google/imagen-4-fast/T2I-119.png) | ![](../images/google/imagen-3/T2I-119.png) | ![](../images/google/imagen-4-ultra/T2I-119.png) |
 | $0.020<br>7.5s · Q=2.40 | $0.040<br>8.8s · Q=2.00 | $0.060<br>21.7s · Q=2.40 |
 
 **Textbook style is achieved by every model.** All 7 outputs render a clinical illustration over a faintly tinted cream background with leader lines, sans-serif labels, and the requested vertical-cross-section perspective. Style is not the differentiator.
@@ -630,11 +630,11 @@ The corresponding per-image quality scores (vision-LLM ensemble mean of 4 passes
 
 |  | **T2I-001**<br>Photorealism | **T2I-011**<br>Typography | **T2I-021**<br>Spatial | **T2I-031**<br>Multi-subject | **T2I-041**<br>Style |
 |---|---|---|---|---|---|
-| **GPT-Image-1 Mini** ($0.008/img) | [001](images/openai_gpt-image-1-mini__T2I-001.png) Q=4.69 · 22.3s | [011](images/openai_gpt-image-1-mini__T2I-011.png) Q=5.00 · 38.3s | [021](images/openai_gpt-image-1-mini__T2I-021.png) Q=4.67 · 16.5s | [031](images/openai_gpt-image-1-mini__T2I-031.png) Q=5.00 · 37.2s | [041](images/openai_gpt-image-1-mini__T2I-041.png) Q=5.00 · 37.7s |
-| **Imagen 4 Fast** ($0.020/img)    | [001](images/google_imagen-4-fast__T2I-001.png) Q=4.88 · 6.9s | [011](images/google_imagen-4-fast__T2I-011.png) Q=4.81 · 7.3s | [021](images/google_imagen-4-fast__T2I-021.png) Q=4.83 · 8.1s | [031](images/google_imagen-4-fast__T2I-031.png) Q=4.31 · 6.3s | [041](images/google_imagen-4-fast__T2I-041.png) Q=5.00 · 8.9s |
-| **GPT-Image-1.5** ($0.032/img)    | [001](images/openai_gpt-image-1.5__T2I-001.png) Q=5.00 · 29.3s | [011](images/openai_gpt-image-1.5__T2I-011.png) Q=4.88 · 37.6s | [021](images/openai_gpt-image-1.5__T2I-021.png) Q=5.00 · 17.3s | [031](images/openai_gpt-image-1.5__T2I-031.png) Q=4.81 · 39.0s | [041](images/openai_gpt-image-1.5__T2I-041.png) Q=5.00 · 42.2s |
-| **GPT-Image-2** ($0.030/img)      | [001](images/openai_gpt-image-2__T2I-001.png) Q=4.94 · 55.8s | [011](images/openai_gpt-image-2__T2I-011.png) Q=5.00 · 75.7s | [021](images/openai_gpt-image-2__T2I-021.png) Q=4.83 · 50.8s | [031](images/openai_gpt-image-2__T2I-031.png) Q=5.00 · 56.7s | [041](images/openai_gpt-image-2__T2I-041.png) Q=4.83 · 56.8s |
-| **Imagen 4 Ultra** ($0.060/img)   | [001](images/google_imagen-4-ultra__T2I-001.png) Q=5.00 · 14.0s | [011](images/google_imagen-4-ultra__T2I-011.png) Q=4.88 · 16.3s | [021](images/google_imagen-4-ultra__T2I-021.png) Q=4.83 · 14.7s | [031](images/google_imagen-4-ultra__T2I-031.png) Q=5.00 · 17.8s | [041](images/google_imagen-4-ultra__T2I-041.png) Q=4.83 · 15.7s |
+| **GPT-Image-1 Mini** ($0.008/img) | [001](../images/openai/gpt-image-1-mini/T2I-001.png) Q=4.69 · 22.3s | [011](../images/openai/gpt-image-1-mini/T2I-011.png) Q=5.00 · 38.3s | [021](../images/openai/gpt-image-1-mini/T2I-021.png) Q=4.67 · 16.5s | [031](../images/openai/gpt-image-1-mini/T2I-031.png) Q=5.00 · 37.2s | [041](../images/openai/gpt-image-1-mini/T2I-041.png) Q=5.00 · 37.7s |
+| **Imagen 4 Fast** ($0.020/img)    | [001](../images/google/imagen-4-fast/T2I-001.png) Q=4.88 · 6.9s | [011](../images/google/imagen-4-fast/T2I-011.png) Q=4.81 · 7.3s | [021](../images/google/imagen-4-fast/T2I-021.png) Q=4.83 · 8.1s | [031](../images/google/imagen-4-fast/T2I-031.png) Q=4.31 · 6.3s | [041](../images/google/imagen-4-fast/T2I-041.png) Q=5.00 · 8.9s |
+| **GPT-Image-1.5** ($0.032/img)    | [001](../images/openai/gpt-image-1.5/T2I-001.png) Q=5.00 · 29.3s | [011](../images/openai/gpt-image-1.5/T2I-011.png) Q=4.88 · 37.6s | [021](../images/openai/gpt-image-1.5/T2I-021.png) Q=5.00 · 17.3s | [031](../images/openai/gpt-image-1.5/T2I-031.png) Q=4.81 · 39.0s | [041](../images/openai/gpt-image-1.5/T2I-041.png) Q=5.00 · 42.2s |
+| **GPT-Image-2** ($0.030/img)      | [001](../images/openai/gpt-image-2/T2I-001.png) Q=4.94 · 55.8s | [011](../images/openai/gpt-image-2/T2I-011.png) Q=5.00 · 75.7s | [021](../images/openai/gpt-image-2/T2I-021.png) Q=4.83 · 50.8s | [031](../images/openai/gpt-image-2/T2I-031.png) Q=5.00 · 56.7s | [041](../images/openai/gpt-image-2/T2I-041.png) Q=4.83 · 56.8s |
+| **Imagen 4 Ultra** ($0.060/img)   | [001](../images/google/imagen-4-ultra/T2I-001.png) Q=5.00 · 14.0s | [011](../images/google/imagen-4-ultra/T2I-011.png) Q=4.88 · 16.3s | [021](../images/google/imagen-4-ultra/T2I-021.png) Q=4.83 · 14.7s | [031](../images/google/imagen-4-ultra/T2I-031.png) Q=5.00 · 17.8s | [041](../images/google/imagen-4-ultra/T2I-041.png) Q=4.83 · 15.7s |
 
 **Reading the grid:** column-wise, you see how every model rendered the same prompt — directly testing the saturation finding. Row-wise, you see one model's consistency across categories. The HTML version of this paper (`paper.html`) renders all 25 images inline as a 5 × 5 grid with per-axis breakdowns; the markdown version above links to each PNG to keep the source file lean.
 
@@ -646,11 +646,11 @@ The corresponding per-image quality scores (vision-LLM ensemble mean of 4 passes
 
 |  | **T2I-111**<br>City block (isometric) | **T2I-118**<br>Mughal miniature | **T2I-119**<br>Anatomical illustration |
 |---|---|---|---|
-| **GPT-Image-1 Mini** ($0.008/img) | [111](images/openai_gpt-image-1-mini__T2I-111.png) Q=2.50 · 39.5s | [118](images/openai_gpt-image-1-mini__T2I-118.png) Q=3.63 · 41.8s | [119](images/openai_gpt-image-1-mini__T2I-119.png) Q=2.80 · 39.1s |
-| **Imagen 4 Fast** ($0.020/img)    | [111](images/google_imagen-4-fast__T2I-111.png) Q=2.50 · 7.2s   | [118](images/google_imagen-4-fast__T2I-118.png) Q=3.14 · 5.6s   | [119](images/google_imagen-4-fast__T2I-119.png) Q=2.40 · 7.5s |
-| **GPT-Image-1.5** ($0.032/img)    | [111](images/openai_gpt-image-1.5__T2I-111.png) Q=2.75 · 42.3s  | [118](images/openai_gpt-image-1.5__T2I-118.png) Q=3.75 · 41.2s  | [119](images/openai_gpt-image-1.5__T2I-119.png) Q=3.40 · 37.2s |
-| **GPT-Image-2** ($0.030/img)      | [111](images/openai_gpt-image-2__T2I-111.png) Q=3.60 · 189.3s | [118](images/openai_gpt-image-2__T2I-118.png) Q=3.75 · 207.2s | [119](images/openai_gpt-image-2__T2I-119.png) Q=3.40 · 170.9s |
-| **Imagen 4 Ultra** ($0.060/img)   | [111](images/google_imagen-4-ultra__T2I-111.png) Q=2.50 · 23.7s | [118](images/google_imagen-4-ultra__T2I-118.png) Q=3.00 · 24.1s | [119](images/google_imagen-4-ultra__T2I-119.png) Q=2.40 · 21.7s |
+| **GPT-Image-1 Mini** ($0.008/img) | [111](../images/openai/gpt-image-1-mini/T2I-111.png) Q=2.50 · 39.5s | [118](../images/openai/gpt-image-1-mini/T2I-118.png) Q=3.63 · 41.8s | [119](../images/openai/gpt-image-1-mini/T2I-119.png) Q=2.80 · 39.1s |
+| **Imagen 4 Fast** ($0.020/img)    | [111](../images/google/imagen-4-fast/T2I-111.png) Q=2.50 · 7.2s   | [118](../images/google/imagen-4-fast/T2I-118.png) Q=3.14 · 5.6s   | [119](../images/google/imagen-4-fast/T2I-119.png) Q=2.40 · 7.5s |
+| **GPT-Image-1.5** ($0.032/img)    | [111](../images/openai/gpt-image-1.5/T2I-111.png) Q=2.75 · 42.3s  | [118](../images/openai/gpt-image-1.5/T2I-118.png) Q=3.75 · 41.2s  | [119](../images/openai/gpt-image-1.5/T2I-119.png) Q=3.40 · 37.2s |
+| **GPT-Image-2** ($0.030/img)      | [111](../images/openai/gpt-image-2/T2I-111.png) Q=3.60 · 189.3s | [118](../images/openai/gpt-image-2/T2I-118.png) Q=3.75 · 207.2s | [119](../images/openai/gpt-image-2/T2I-119.png) Q=3.40 · 170.9s |
+| **Imagen 4 Ultra** ($0.060/img)   | [111](../images/google/imagen-4-ultra/T2I-111.png) Q=2.50 · 23.7s | [118](../images/google/imagen-4-ultra/T2I-118.png) Q=3.00 · 24.1s | [119](../images/google/imagen-4-ultra/T2I-119.png) Q=2.40 · 21.7s |
 
 **Compare to Appendix D.** On C1–C5 routine prompts every model scored 4.7–4.9. On these C12 boss-fight prompts the spread is 2.4–3.75 — almost the full bottom half of the rubric. Only GPT-Image-1.5 produces consistently 3+ outputs across all three prompts; Imagen 4 Ultra drops to 2.63 mean despite being the most expensive in the lineup. The strongest visible failure modes (manually verified): the city block (T2I-111) misses or duplicates several named pedestrians and truncates the public-library banner text; the Mughal miniature (T2I-118) preserves style but renders only 5–7 of the 16+ named figures; the anatomical illustration (T2I-119) consistently labels the right lung as "2 lobes" when it should be 3.
 

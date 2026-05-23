@@ -146,9 +146,9 @@ def render_judge_agreement_table(summaries: list[dict], out: Path) -> None:
 
 def main() -> int:
     p = argparse.ArgumentParser()
-    p.add_argument("--results", default=str(REPO_ROOT / "pilot_results.csv"))
+    p.add_argument("--results", default=str(REPO_ROOT / "data" / "pilot_results.csv"))
     p.add_argument("--pricing", default=str(REPO_ROOT / "pricing.json"))
-    p.add_argument("--outdir", default=str(REPO_ROOT))
+    p.add_argument("--outdir", default=str(REPO_ROOT / "tables"))
     args = p.parse_args()
 
     outdir = Path(args.outdir)

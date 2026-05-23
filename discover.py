@@ -21,7 +21,7 @@ import requests
 from models import MODELS, STRETCH_MODELS, VISION_JUDGES, VISION_JUDGE_FALLBACKS
 
 REPO_ROOT = Path(__file__).resolve().parent
-CATALOG_PATH = REPO_ROOT / "models_catalog.json"
+CATALOG_PATH = REPO_ROOT / "data" / "models_catalog.json"
 
 
 def _env(name: str, default: str | None = None) -> str:

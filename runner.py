@@ -227,7 +227,10 @@ def save_image(image_url: str | None, b64_json: str | None, filename_stem: str) 
       2. data['url'] is a `data:image/<type>;base64,...` URI → decode inline
       3. data['url'] is an HTTP(S) URL → fetch it
     """
-    IMAGES_DIR.mkdir(exist_ok=True)
+    IMAGES_DIR.mkdir(parents=True, exist_ok=True)
+    # filename_stem may contain a relative directory (e.g. "openai/gpt-image-1/T2I-001")
+    # to keep saved images organised by provider/model.
+    (IMAGES_DIR / filename_stem).parent.mkdir(parents=True, exist_ok=True)
     if b64_json:
         path = IMAGES_DIR / f"{filename_stem}.png"
         path.write_bytes(base64.b64decode(b64_json))
@@ -393,7 +396,7 @@ def run_benchmark(
                 w, h, nbytes = None, None, None
                 watermark = False
                 if result["ok"]:
-                    stem = f"{model_id.replace('/', '_')}__{it['id']}"
+                    stem = f"{model_id}/{it['id']}"
                     try:
                         saved = save_image(result["image_url"], result["b64_json"], stem)
                         try:

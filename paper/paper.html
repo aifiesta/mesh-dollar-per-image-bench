@@ -393,7 +393,7 @@
 <body>
 
 <header class="header-logo">
-  <a href="https://meshapi.ai" aria-label="Mesh API"><img src="mesh_api_logo.svg" alt="Mesh API" /></a>
+  <a href="https://meshapi.ai" aria-label="Mesh API"><img src="../assets/mesh_api_logo.svg" alt="Mesh API" /></a>
   <div class="header-meta">
     <span class="tag">PILOT v0.1</span>
     <span>2026-05-21</span>
@@ -520,7 +520,7 @@
 <p>To make the judging contract concrete, here is one full end-to-end scoring of one image. The prompt is T2I-011 ("vintage diner sign at night with the text 'OPEN 24 HOURS' in bright red neon, mounted on the brick exterior of a 1950s American diner, slight rain on the sidewalk reflecting the neon"). The generated image is from <code>openai/gpt-image-1-mini</code> at <code>quality=auto</code>, $0.008. Judge is <code>anthropic/claude-opus-4.7</code> at temperature 0.0.</p>
 
 <div class="figpair" style="grid-template-columns: 1fr 1.4fr; align-items: center;">
-  <img src="images/openai_gpt-image-1-mini__T2I-011.png" alt="GPT-Image-1 Mini T2I-011 generation" style="max-height: 320px; width: auto; margin: 0 auto;" />
+  <img src="../images/openai/gpt-image-1-mini/T2I-011.png" alt="GPT-Image-1 Mini T2I-011 generation" style="max-height: 320px; width: auto; margin: 0 auto;" />
   <div style="padding-left: 12px;">
     <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 12.5px; color: #555; margin-bottom: 6px;"><em>Judge input:</em></p>
     <pre style="margin-top: 0; font-size: 11.5px;"><code>SYSTEM: [5-axis rubric, anchors per axis, JSON schema] (§3.4)
@@ -575,7 +575,7 @@ USER (multimodal):
 <p>The dominant finding is <strong>quality saturation</strong>: all five models cluster between 4.766 and 4.937 on the 1–5 ensemble scale. The price spread is 7.5× ($0.008 → $0.060); the quality spread is 0.171 points (3.4% of the scale). <strong>GPT-Image-1 Mini</strong> costs <strong>7.5× less per quality-point</strong> than <strong>Imagen 4 Ultra</strong> while scoring only 0.037 points lower — a gap smaller than the median per-image judge variance.</p>
 
 <figure>
-  <img src="chart_5_quality_vs_cost.png" alt="Quality vs cost per image" />
+  <img src="../charts/chart_5_quality_vs_cost.png" alt="Quality vs cost per image" />
   <figcaption><strong>Figure 1.</strong> Quality (vision-LLM ensemble mean) versus effective cost per image. Log-scale x-axis. The cheapest model (Mini) sits within 0.07 quality-points of the most expensive (Imagen 4 Ultra) while costing one-seventh as much.</figcaption>
 </figure>
 
@@ -595,7 +595,7 @@ USER (multimodal):
 <p>Two observations stand out. First, <strong>in-image text rendering scored 5.0 across every model</strong> on the typography prompt (T2I-011, "OPEN 24 HOURS" diner neon). The 2026 generation of T2I systems has effectively solved a problem that defined the prior generation's failure mode: in our sample, every model rendered every glyph correctly. Second, <strong>Imagen 4 Fast underperforms on prompt adherence (4.45)</strong> — the cheapest Google model misses named attributes more often than any OpenAI model in the lineup. The Mini does not exhibit this drop.</p>
 
 <figure>
-  <img src="chart_2_quality_axes.png" alt="Quality by axis per model" />
+  <img src="../charts/chart_2_quality_axes.png" alt="Quality by axis per model" />
   <figcaption><strong>Figure 2.</strong> Per-axis quality scores per model. Text-rendering parity at 5.0 is the headline.</figcaption>
 </figure>
 
@@ -615,7 +615,7 @@ USER (multimodal):
 </table>
 
 <figure>
-  <img src="chart_3_latency_p50_p95.png" alt="Latency p50/p95" />
+  <img src="../charts/chart_3_latency_p50_p95.png" alt="Latency p50/p95" />
   <figcaption><strong>Figure 3.</strong> End-to-end latency by model. Imagen 4 Fast is 7.8× faster than GPT-Image-2 at p50 and 8.2× faster at p95.</figcaption>
 </figure>
 
@@ -623,11 +623,11 @@ USER (multimodal):
 
 <div class="figpair" style="grid-template-columns: 1fr 1fr;">
   <figure style="margin: 0;">
-    <img src="images/google_imagen-4-fast__T2I-001.png" alt="Imagen 4 Fast T2I-001" style="max-height: 320px;" />
+    <img src="../images/google/imagen-4-fast/T2I-001.png" alt="Imagen 4 Fast T2I-001" style="max-height: 320px;" />
     <figcaption style="text-align: center; padding: 4px 0;"><strong>Imagen 4 Fast</strong> · 6.9 s · $0.020</figcaption>
   </figure>
   <figure style="margin: 0;">
-    <img src="images/openai_gpt-image-2__T2I-001.png" alt="GPT-Image-2 T2I-001" style="max-height: 320px;" />
+    <img src="../images/openai/gpt-image-2/T2I-001.png" alt="GPT-Image-2 T2I-001" style="max-height: 320px;" />
     <figcaption style="text-align: center; padding: 4px 0;"><strong>GPT-Image-2</strong> · 55.8 s · $0.030</figcaption>
   </figure>
 </div>
@@ -640,23 +640,23 @@ USER (multimodal):
 
 <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin: 12px 0;">
   <figure style="margin: 0;">
-    <img src="images/openai_gpt-image-1-mini__T2I-021.png" alt="Mini T2I-021" style="width: 100%; aspect-ratio: 1; object-fit: cover;" />
+    <img src="../images/openai/gpt-image-1-mini/T2I-021.png" alt="Mini T2I-021" style="width: 100%; aspect-ratio: 1; object-fit: cover;" />
     <figcaption style="font-size: 11px; text-align: center; padding: 3px 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Mini · <strong>$0.008</strong><br>Q=4.67</figcaption>
   </figure>
   <figure style="margin: 0;">
-    <img src="images/google_imagen-4-fast__T2I-021.png" alt="Fast T2I-021" style="width: 100%; aspect-ratio: 1; object-fit: cover;" />
+    <img src="../images/google/imagen-4-fast/T2I-021.png" alt="Fast T2I-021" style="width: 100%; aspect-ratio: 1; object-fit: cover;" />
     <figcaption style="font-size: 11px; text-align: center; padding: 3px 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Imagen Fast · $0.020<br>Q=4.83</figcaption>
   </figure>
   <figure style="margin: 0;">
-    <img src="images/openai_gpt-image-2__T2I-021.png" alt="GPT-2 T2I-021" style="width: 100%; aspect-ratio: 1; object-fit: cover;" />
+    <img src="../images/openai/gpt-image-2/T2I-021.png" alt="GPT-2 T2I-021" style="width: 100%; aspect-ratio: 1; object-fit: cover;" />
     <figcaption style="font-size: 11px; text-align: center; padding: 3px 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">GPT-2 · $0.030<br>Q=4.83</figcaption>
   </figure>
   <figure style="margin: 0;">
-    <img src="images/openai_gpt-image-1.5__T2I-021.png" alt="GPT-1.5 T2I-021" style="width: 100%; aspect-ratio: 1; object-fit: cover;" />
+    <img src="../images/openai/gpt-image-1.5/T2I-021.png" alt="GPT-1.5 T2I-021" style="width: 100%; aspect-ratio: 1; object-fit: cover;" />
     <figcaption style="font-size: 11px; text-align: center; padding: 3px 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">GPT-1.5 · $0.032<br>Q=5.00</figcaption>
   </figure>
   <figure style="margin: 0;">
-    <img src="images/google_imagen-4-ultra__T2I-021.png" alt="Ultra T2I-021" style="width: 100%; aspect-ratio: 1; object-fit: cover;" />
+    <img src="../images/google/imagen-4-ultra/T2I-021.png" alt="Ultra T2I-021" style="width: 100%; aspect-ratio: 1; object-fit: cover;" />
     <figcaption style="font-size: 11px; text-align: center; padding: 3px 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">Imagen Ultra · <strong>$0.060</strong><br>Q=4.83</figcaption>
   </figure>
 </div>
@@ -688,7 +688,7 @@ USER (multimodal):
 <p>We note explicitly that <strong>GPT-5.5 rates the OpenAI-image models 4.90–5.00 across the board</strong> — a perfect 5.00 on GPT-Image-2 — which is consistent with own-provider preference. Mitigation: we report <strong>both</strong> judge means individually so this bias is auditable. In v1, a third Gemini-based vision judge will provide triangulation.</p>
 
 <figure>
-  <img src="chart_6_judge_agreement.png" alt="Judge ensemble agreement scatter" />
+  <img src="../charts/chart_6_judge_agreement.png" alt="Judge ensemble agreement scatter" />
   <figcaption><strong>Figure 4.</strong> Per-model judge means. Diagonal: perfect agreement. GPT-5.5 (Judge B) sits systematically above Claude (Judge A), but |Δ| never exceeds 0.27.</figcaption>
 </figure>
 
@@ -696,8 +696,8 @@ USER (multimodal):
 <p>A single representative comparison illustrates the saturation finding. Both images below are generated from T2I-011 — "A vintage diner sign at night with the text 'OPEN 24 HOURS' in bright red neon, mounted on the brick exterior of a 1950s American diner, slight rain on the sidewalk reflecting the neon."</p>
 
 <div class="figpair">
-  <img src="images/openai_gpt-image-1-mini__T2I-011.png" alt="GPT-Image-1 Mini render of T2I-011" />
-  <img src="images/google_imagen-4-ultra__T2I-011.png" alt="Imagen 4 Ultra render of T2I-011" />
+  <img src="../images/openai/gpt-image-1-mini/T2I-011.png" alt="GPT-Image-1 Mini render of T2I-011" />
+  <img src="../images/google/imagen-4-ultra/T2I-011.png" alt="Imagen 4 Ultra render of T2I-011" />
 </div>
 <figcaption><strong>Figure 5.</strong> Left: GPT-Image-1 Mini (US$0.008). Right: Imagen 4 Ultra (US$0.060). Both rendered "OPEN 24 HOURS" correctly. The Ultra adds atmospheric polish (cinematic angle, broader scene, ambient store light); the Mini focuses tighter on the sign itself. Both vision judges scored 5/5 on text fidelity for both images.</figcaption>
 
@@ -772,11 +772,11 @@ USER (multimodal):
 
 <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 14px 0;">
   <figure style="margin: 0;">
-    <img src="images/google_imagen-3__T2I-011.png" alt="Imagen 3 T2I-011" style="width: 100%; aspect-ratio: 1; object-fit: cover;" />
+    <img src="../images/google/imagen-3/T2I-011.png" alt="Imagen 3 T2I-011" style="width: 100%; aspect-ratio: 1; object-fit: cover;" />
     <figcaption style="font-size: 11.5px; text-align: center; padding: 3px 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;"><strong>Imagen 3 (legacy Google)</strong> · T2I-011 · 8.0 s · $0.040 · Q=4.31</figcaption>
   </figure>
   <figure style="margin: 0;">
-    <img src="images/openai_gpt-image-1__T2I-011.png" alt="GPT-Image-1 T2I-011" style="width: 100%; aspect-ratio: 1; object-fit: cover;" />
+    <img src="../images/openai/gpt-image-1/T2I-011.png" alt="GPT-Image-1 T2I-011" style="width: 100%; aspect-ratio: 1; object-fit: cover;" />
     <figcaption style="font-size: 11.5px; text-align: center; padding: 3px 0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;"><strong>GPT-Image-1 (legacy OpenAI)</strong> · T2I-011 · 48.1 s · $0.040 · Q=4.75</figcaption>
   </figure>
 </div>
@@ -797,34 +797,34 @@ An isometric top-down illustration of one full city block at noon containing exa
 <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 700; margin: 14px 0 6px; color: #b31b1b;">GPT-Image family</p>
 <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 6px;">
 <figure style="margin: 0;">
-<img src="images/openai_gpt-image-1-mini__T2I-111.png" alt="GPT-Image-1 Mini render of T2I-111" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<img src="../images/openai/gpt-image-1-mini/T2I-111.png" alt="GPT-Image-1 Mini render of T2I-111" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
 <figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-1 Mini</strong><br><span style="color: #777;">$0.008/img · 39.5s</span><br><strong>Q=2.50</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh2 aes3 txt2 ana3</span></figcaption>
 </figure>
 <figure style="margin: 0;">
-<img src="images/openai_gpt-image-1.5__T2I-111.png" alt="GPT-Image-1.5 render of T2I-111" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<img src="../images/openai/gpt-image-1.5/T2I-111.png" alt="GPT-Image-1.5 render of T2I-111" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
 <figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-1.5</strong><br><span style="color: #777;">$0.032/img · 42.3s</span><br><strong>Q=2.75</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh2 aes3 txt3 ana3</span></figcaption>
 </figure>
 <figure style="margin: 0;">
-<img src="images/openai_gpt-image-1__T2I-111.png" alt="GPT-Image-1 (legacy) render of T2I-111" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<img src="../images/openai/gpt-image-1/T2I-111.png" alt="GPT-Image-1 (legacy) render of T2I-111" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
 <figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-1 (legacy)</strong><br><span style="color: #777;">$0.040/img · 46.3s</span><br><strong>Q=2.80</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh2 aes3 pho4 txt2 ana3</span></figcaption>
 </figure>
 <figure style="margin: 0;">
-<img src="images/openai_gpt-image-2__T2I-111.png" alt="GPT-Image-2 render of T2I-111" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<img src="../images/openai/gpt-image-2/T2I-111.png" alt="GPT-Image-2 render of T2I-111" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
 <figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-2</strong><br><span style="color: #777;">$0.030/img · 189.3s</span><br><strong>Q=3.60</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh3 aes4 pho4 txt3 ana4</span></figcaption>
 </figure>
 </div>
 <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 700; margin: 14px 0 6px; color: #b31b1b;">Imagen family</p>
 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 6px;">
 <figure style="margin: 0;">
-<img src="images/google_imagen-4-fast__T2I-111.png" alt="Imagen 4 Fast render of T2I-111" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<img src="../images/google/imagen-4-fast/T2I-111.png" alt="Imagen 4 Fast render of T2I-111" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
 <figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>Imagen 4 Fast</strong><br><span style="color: #777;">$0.020/img · 7.2s</span><br><strong>Q=2.50</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh2 aes3 txt2 ana3</span></figcaption>
 </figure>
 <figure style="margin: 0;">
-<img src="images/google_imagen-3__T2I-111.png" alt="Imagen 3 (legacy) render of T2I-111" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<img src="../images/google/imagen-3/T2I-111.png" alt="Imagen 3 (legacy) render of T2I-111" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
 <figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>Imagen 3 (legacy)</strong><br><span style="color: #777;">$0.040/img · 8.0s</span><br><strong>Q=2.75</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh2 aes4 txt2 ana3</span></figcaption>
 </figure>
 <figure style="margin: 0;">
-<img src="images/google_imagen-4-ultra__T2I-111.png" alt="Imagen 4 Ultra render of T2I-111" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<img src="../images/google/imagen-4-ultra/T2I-111.png" alt="Imagen 4 Ultra render of T2I-111" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
 <figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>Imagen 4 Ultra</strong><br><span style="color: #777;">$0.060/img · 23.7s</span><br><strong>Q=2.50</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh2 aes3 txt2 ana3</span></figcaption>
 </figure>
 </div>
@@ -840,34 +840,34 @@ A panoramic wide-format painting in detailed traditional Indian miniature style 
 <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 700; margin: 14px 0 6px; color: #b31b1b;">GPT-Image family</p>
 <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 6px;">
 <figure style="margin: 0;">
-<img src="images/openai_gpt-image-1-mini__T2I-118.png" alt="GPT-Image-1 Mini render of T2I-118" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<img src="../images/openai/gpt-image-1-mini/T2I-118.png" alt="GPT-Image-1 Mini render of T2I-118" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
 <figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-1 Mini</strong><br><span style="color: #777;">$0.008/img · 41.8s</span><br><strong>Q=3.62</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh3 aes4 pho4 ana3.5</span></figcaption>
 </figure>
 <figure style="margin: 0;">
-<img src="images/openai_gpt-image-1.5__T2I-118.png" alt="GPT-Image-1.5 render of T2I-118" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<img src="../images/openai/gpt-image-1.5/T2I-118.png" alt="GPT-Image-1.5 render of T2I-118" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
 <figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-1.5</strong><br><span style="color: #777;">$0.032/img · 41.2s</span><br><strong>Q=3.75</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh3 aes4 pho4 ana4</span></figcaption>
 </figure>
 <figure style="margin: 0;">
-<img src="images/openai_gpt-image-1__T2I-118.png" alt="GPT-Image-1 (legacy) render of T2I-118" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<img src="../images/openai/gpt-image-1/T2I-118.png" alt="GPT-Image-1 (legacy) render of T2I-118" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
 <figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-1 (legacy)</strong><br><span style="color: #777;">$0.040/img · 56.7s</span><br><strong>Q=3.50</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh3 aes4 ana3.5</span></figcaption>
 </figure>
 <figure style="margin: 0;">
-<img src="images/openai_gpt-image-2__T2I-118.png" alt="GPT-Image-2 render of T2I-118" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<img src="../images/openai/gpt-image-2/T2I-118.png" alt="GPT-Image-2 render of T2I-118" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
 <figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-2</strong><br><span style="color: #777;">$0.030/img · 207.2s</span><br><strong>Q=3.75</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh4 aes4 txt3 ana4</span></figcaption>
 </figure>
 </div>
 <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 700; margin: 14px 0 6px; color: #b31b1b;">Imagen family</p>
 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 6px;">
 <figure style="margin: 0;">
-<img src="images/google_imagen-4-fast__T2I-118.png" alt="Imagen 4 Fast render of T2I-118" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<img src="../images/google/imagen-4-fast/T2I-118.png" alt="Imagen 4 Fast render of T2I-118" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
 <figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>Imagen 4 Fast</strong><br><span style="color: #777;">$0.020/img · 5.6s</span><br><strong>Q=3.14</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh3 aes3 pho3 ana3.5</span></figcaption>
 </figure>
 <figure style="margin: 0;">
-<img src="images/google_imagen-3__T2I-118.png" alt="Imagen 3 (legacy) render of T2I-118" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<img src="../images/google/imagen-3/T2I-118.png" alt="Imagen 3 (legacy) render of T2I-118" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
 <figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>Imagen 3 (legacy)</strong><br><span style="color: #777;">$0.040/img · 7.9s</span><br><strong>Q=3.25</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh3 aes3.5 pho3.5 ana3</span></figcaption>
 </figure>
 <figure style="margin: 0;">
-<img src="images/google_imagen-4-ultra__T2I-118.png" alt="Imagen 4 Ultra render of T2I-118" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<img src="../images/google/imagen-4-ultra/T2I-118.png" alt="Imagen 4 Ultra render of T2I-118" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
 <figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>Imagen 4 Ultra</strong><br><span style="color: #777;">$0.060/img · 24.1s</span><br><strong>Q=3.00</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh2 aes3 pho3 ana4</span></figcaption>
 </figure>
 </div>
@@ -883,34 +883,34 @@ A medical-textbook-style fully-labeled cross-sectional anatomical illustration o
 <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 700; margin: 14px 0 6px; color: #b31b1b;">GPT-Image family</p>
 <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-bottom: 6px;">
 <figure style="margin: 0;">
-<img src="images/openai_gpt-image-1-mini__T2I-119.png" alt="GPT-Image-1 Mini render of T2I-119" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<img src="../images/openai/gpt-image-1-mini/T2I-119.png" alt="GPT-Image-1 Mini render of T2I-119" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
 <figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-1 Mini</strong><br><span style="color: #777;">$0.008/img · 39.1s</span><br><strong>Q=2.80</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh2 aes3 pho3 txt4 ana2</span></figcaption>
 </figure>
 <figure style="margin: 0;">
-<img src="images/openai_gpt-image-1.5__T2I-119.png" alt="GPT-Image-1.5 render of T2I-119" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<img src="../images/openai/gpt-image-1.5/T2I-119.png" alt="GPT-Image-1.5 render of T2I-119" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
 <figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-1.5</strong><br><span style="color: #777;">$0.032/img · 37.2s</span><br><strong>Q=3.40</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh3 aes4 pho4 txt3 ana3</span></figcaption>
 </figure>
 <figure style="margin: 0;">
-<img src="images/openai_gpt-image-1__T2I-119.png" alt="GPT-Image-1 (legacy) render of T2I-119" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<img src="../images/openai/gpt-image-1/T2I-119.png" alt="GPT-Image-1 (legacy) render of T2I-119" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
 <figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-1 (legacy)</strong><br><span style="color: #777;">$0.040/img · 55.8s</span><br><strong>Q=3.40</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh3 aes4 pho4 txt4 ana2</span></figcaption>
 </figure>
 <figure style="margin: 0;">
-<img src="images/openai_gpt-image-2__T2I-119.png" alt="GPT-Image-2 render of T2I-119" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<img src="../images/openai/gpt-image-2/T2I-119.png" alt="GPT-Image-2 render of T2I-119" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
 <figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>GPT-Image-2</strong><br><span style="color: #777;">$0.030/img · 170.9s</span><br><strong>Q=3.40</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh3 aes4 pho4 txt4 ana2</span></figcaption>
 </figure>
 </div>
 <p style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; font-weight: 700; margin: 14px 0 6px; color: #b31b1b;">Imagen family</p>
 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 6px;">
 <figure style="margin: 0;">
-<img src="images/google_imagen-4-fast__T2I-119.png" alt="Imagen 4 Fast render of T2I-119" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<img src="../images/google/imagen-4-fast/T2I-119.png" alt="Imagen 4 Fast render of T2I-119" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
 <figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>Imagen 4 Fast</strong><br><span style="color: #777;">$0.020/img · 7.5s</span><br><strong>Q=2.40</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh2 aes3 pho3 txt2 ana2</span></figcaption>
 </figure>
 <figure style="margin: 0;">
-<img src="images/google_imagen-3__T2I-119.png" alt="Imagen 3 (legacy) render of T2I-119" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<img src="../images/google/imagen-3/T2I-119.png" alt="Imagen 3 (legacy) render of T2I-119" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
 <figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>Imagen 3 (legacy)</strong><br><span style="color: #777;">$0.040/img · 8.8s</span><br><strong>Q=2.00</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh2 aes2 pho3 txt1 ana2</span></figcaption>
 </figure>
 <figure style="margin: 0;">
-<img src="images/google_imagen-4-ultra__T2I-119.png" alt="Imagen 4 Ultra render of T2I-119" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
+<img src="../images/google/imagen-4-ultra/T2I-119.png" alt="Imagen 4 Ultra render of T2I-119" loading="lazy" style="width: 100%; aspect-ratio: 1; object-fit: cover; border: 1px solid #ddd;" />
 <figcaption style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 11px; padding: 4px 2px 0; text-align: center;"><strong>Imagen 4 Ultra</strong><br><span style="color: #777;">$0.060/img · 21.7s</span><br><strong>Q=2.40</strong><br><span style="font-family: monospace; font-size: 10px; color: #888;">adh2 aes3 pho3 txt2 ana2</span></figcaption>
 </figure>
 </div>
@@ -1057,27 +1057,27 @@ Imagen 4 Ultra    q=4.908±0.077  judgeA=4.867 judgeB=4.950 |Δ|=0.083
 <div class="gallery-row">
 <div class="gallery-cell gallery-model-header"><div class="model-disp">GPT-Image-1 Mini</div><div class="model-price">$0.008/img</div></div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/openai_gpt-image-1-mini__T2I-001.png" alt="GPT-Image-1 Mini render of T2I-001" loading="lazy" />
+<img src="../images/openai/gpt-image-1-mini/T2I-001.png" alt="GPT-Image-1 Mini render of T2I-001" loading="lazy" />
 <div class="gallery-score">Q=4.69 &middot; 22.3s &middot; $0.008</div>
 <div class="gallery-axes">adh4.25 aes4.5 pho5 ana5</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/openai_gpt-image-1-mini__T2I-011.png" alt="GPT-Image-1 Mini render of T2I-011" loading="lazy" />
+<img src="../images/openai/gpt-image-1-mini/T2I-011.png" alt="GPT-Image-1 Mini render of T2I-011" loading="lazy" />
 <div class="gallery-score">Q=5.00 &middot; 38.3s &middot; $0.008</div>
 <div class="gallery-axes">adh5 aes5 pho5 txt5</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/openai_gpt-image-1-mini__T2I-021.png" alt="GPT-Image-1 Mini render of T2I-021" loading="lazy" />
+<img src="../images/openai/gpt-image-1-mini/T2I-021.png" alt="GPT-Image-1 Mini render of T2I-021" loading="lazy" />
 <div class="gallery-score">Q=4.67 &middot; 16.5s &middot; $0.008</div>
 <div class="gallery-axes">adh5 aes4.5 pho4.5</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/openai_gpt-image-1-mini__T2I-031.png" alt="GPT-Image-1 Mini render of T2I-031" loading="lazy" />
+<img src="../images/openai/gpt-image-1-mini/T2I-031.png" alt="GPT-Image-1 Mini render of T2I-031" loading="lazy" />
 <div class="gallery-score">Q=5.00 &middot; 37.2s &middot; $0.008</div>
 <div class="gallery-axes">adh5 aes5 pho5 ana5</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/openai_gpt-image-1-mini__T2I-041.png" alt="GPT-Image-1 Mini render of T2I-041" loading="lazy" />
+<img src="../images/openai/gpt-image-1-mini/T2I-041.png" alt="GPT-Image-1 Mini render of T2I-041" loading="lazy" />
 <div class="gallery-score">Q=5.00 &middot; 37.7s &middot; $0.008</div>
 <div class="gallery-axes">adh5 aes5 pho5</div>
 </div>
@@ -1085,27 +1085,27 @@ Imagen 4 Ultra    q=4.908±0.077  judgeA=4.867 judgeB=4.950 |Δ|=0.083
 <div class="gallery-row">
 <div class="gallery-cell gallery-model-header"><div class="model-disp">Imagen 4 Fast</div><div class="model-price">$0.020/img</div></div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/google_imagen-4-fast__T2I-001.png" alt="Imagen 4 Fast render of T2I-001" loading="lazy" />
+<img src="../images/google/imagen-4-fast/T2I-001.png" alt="Imagen 4 Fast render of T2I-001" loading="lazy" />
 <div class="gallery-score">Q=4.88 &middot; 6.9s &middot; $0.02</div>
 <div class="gallery-axes">adh4.5 aes5 pho5 ana5</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/google_imagen-4-fast__T2I-011.png" alt="Imagen 4 Fast render of T2I-011" loading="lazy" />
+<img src="../images/google/imagen-4-fast/T2I-011.png" alt="Imagen 4 Fast render of T2I-011" loading="lazy" />
 <div class="gallery-score">Q=4.81 &middot; 7.3s &middot; $0.02</div>
 <div class="gallery-axes">adh4.5 aes5 pho4.75 txt5</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/google_imagen-4-fast__T2I-021.png" alt="Imagen 4 Fast render of T2I-021" loading="lazy" />
+<img src="../images/google/imagen-4-fast/T2I-021.png" alt="Imagen 4 Fast render of T2I-021" loading="lazy" />
 <div class="gallery-score">Q=4.83 &middot; 8.1s &middot; $0.02</div>
 <div class="gallery-axes">adh5 aes4.5 pho5</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/google_imagen-4-fast__T2I-031.png" alt="Imagen 4 Fast render of T2I-031" loading="lazy" />
+<img src="../images/google/imagen-4-fast/T2I-031.png" alt="Imagen 4 Fast render of T2I-031" loading="lazy" />
 <div class="gallery-score">Q=4.31 &middot; 6.3s &middot; $0.02</div>
 <div class="gallery-axes">adh3.25 aes4.5 pho5 ana4.5</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/google_imagen-4-fast__T2I-041.png" alt="Imagen 4 Fast render of T2I-041" loading="lazy" />
+<img src="../images/google/imagen-4-fast/T2I-041.png" alt="Imagen 4 Fast render of T2I-041" loading="lazy" />
 <div class="gallery-score">Q=5.00 &middot; 8.9s &middot; $0.02</div>
 <div class="gallery-axes">adh5 aes5 pho5</div>
 </div>
@@ -1113,27 +1113,27 @@ Imagen 4 Ultra    q=4.908±0.077  judgeA=4.867 judgeB=4.950 |Δ|=0.083
 <div class="gallery-row">
 <div class="gallery-cell gallery-model-header"><div class="model-disp">GPT-Image-1.5</div><div class="model-price">$0.032/img</div></div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/openai_gpt-image-1.5__T2I-001.png" alt="GPT-Image-1.5 render of T2I-001" loading="lazy" />
+<img src="../images/openai/gpt-image-1.5/T2I-001.png" alt="GPT-Image-1.5 render of T2I-001" loading="lazy" />
 <div class="gallery-score">Q=5.00 &middot; 29.3s &middot; $0.032</div>
 <div class="gallery-axes">adh5 aes5 pho5 ana5</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/openai_gpt-image-1.5__T2I-011.png" alt="GPT-Image-1.5 render of T2I-011" loading="lazy" />
+<img src="../images/openai/gpt-image-1.5/T2I-011.png" alt="GPT-Image-1.5 render of T2I-011" loading="lazy" />
 <div class="gallery-score">Q=4.88 &middot; 37.6s &middot; $0.032</div>
 <div class="gallery-axes">adh5 aes5 pho4.5 txt5</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/openai_gpt-image-1.5__T2I-021.png" alt="GPT-Image-1.5 render of T2I-021" loading="lazy" />
+<img src="../images/openai/gpt-image-1.5/T2I-021.png" alt="GPT-Image-1.5 render of T2I-021" loading="lazy" />
 <div class="gallery-score">Q=5.00 &middot; 17.3s &middot; $0.032</div>
 <div class="gallery-axes">adh5 aes5 pho5</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/openai_gpt-image-1.5__T2I-031.png" alt="GPT-Image-1.5 render of T2I-031" loading="lazy" />
+<img src="../images/openai/gpt-image-1.5/T2I-031.png" alt="GPT-Image-1.5 render of T2I-031" loading="lazy" />
 <div class="gallery-score">Q=4.81 &middot; 39.0s &middot; $0.032</div>
 <div class="gallery-axes">adh5 aes5 pho4.25 ana5</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/openai_gpt-image-1.5__T2I-041.png" alt="GPT-Image-1.5 render of T2I-041" loading="lazy" />
+<img src="../images/openai/gpt-image-1.5/T2I-041.png" alt="GPT-Image-1.5 render of T2I-041" loading="lazy" />
 <div class="gallery-score">Q=5.00 &middot; 42.2s &middot; $0.032</div>
 <div class="gallery-axes">adh5 aes5 pho5</div>
 </div>
@@ -1141,27 +1141,27 @@ Imagen 4 Ultra    q=4.908±0.077  judgeA=4.867 judgeB=4.950 |Δ|=0.083
 <div class="gallery-row">
 <div class="gallery-cell gallery-model-header"><div class="model-disp">GPT-Image-2</div><div class="model-price">$0.030/img</div></div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/openai_gpt-image-2__T2I-001.png" alt="GPT-Image-2 render of T2I-001" loading="lazy" />
+<img src="../images/openai/gpt-image-2/T2I-001.png" alt="GPT-Image-2 render of T2I-001" loading="lazy" />
 <div class="gallery-score">Q=4.94 &middot; 55.8s &middot; $0.045</div>
 <div class="gallery-axes">adh4.75 aes5 pho5 ana5</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/openai_gpt-image-2__T2I-011.png" alt="GPT-Image-2 render of T2I-011" loading="lazy" />
+<img src="../images/openai/gpt-image-2/T2I-011.png" alt="GPT-Image-2 render of T2I-011" loading="lazy" />
 <div class="gallery-score">Q=5.00 &middot; 75.7s &middot; $0.03</div>
 <div class="gallery-axes">adh5 aes5 pho5 txt5</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/openai_gpt-image-2__T2I-021.png" alt="GPT-Image-2 render of T2I-021" loading="lazy" />
+<img src="../images/openai/gpt-image-2/T2I-021.png" alt="GPT-Image-2 render of T2I-021" loading="lazy" />
 <div class="gallery-score">Q=4.83 &middot; 50.8s &middot; $0.03</div>
 <div class="gallery-axes">adh5 aes4.5 pho5</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/openai_gpt-image-2__T2I-031.png" alt="GPT-Image-2 render of T2I-031" loading="lazy" />
+<img src="../images/openai/gpt-image-2/T2I-031.png" alt="GPT-Image-2 render of T2I-031" loading="lazy" />
 <div class="gallery-score">Q=5.00 &middot; 56.7s &middot; $0.03</div>
 <div class="gallery-axes">adh5 aes5 pho5 ana5</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/openai_gpt-image-2__T2I-041.png" alt="GPT-Image-2 render of T2I-041" loading="lazy" />
+<img src="../images/openai/gpt-image-2/T2I-041.png" alt="GPT-Image-2 render of T2I-041" loading="lazy" />
 <div class="gallery-score">Q=4.83 &middot; 56.8s &middot; $0.03</div>
 <div class="gallery-axes">adh5 aes5 pho4.5</div>
 </div>
@@ -1169,27 +1169,27 @@ Imagen 4 Ultra    q=4.908±0.077  judgeA=4.867 judgeB=4.950 |Δ|=0.083
 <div class="gallery-row">
 <div class="gallery-cell gallery-model-header"><div class="model-disp">Imagen 4 Ultra</div><div class="model-price">$0.060/img</div></div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/google_imagen-4-ultra__T2I-001.png" alt="Imagen 4 Ultra render of T2I-001" loading="lazy" />
+<img src="../images/google/imagen-4-ultra/T2I-001.png" alt="Imagen 4 Ultra render of T2I-001" loading="lazy" />
 <div class="gallery-score">Q=5.00 &middot; 14.0s &middot; $0.06</div>
 <div class="gallery-axes">adh5 aes5 pho5 ana5</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/google_imagen-4-ultra__T2I-011.png" alt="Imagen 4 Ultra render of T2I-011" loading="lazy" />
+<img src="../images/google/imagen-4-ultra/T2I-011.png" alt="Imagen 4 Ultra render of T2I-011" loading="lazy" />
 <div class="gallery-score">Q=4.88 &middot; 16.3s &middot; $0.06</div>
 <div class="gallery-axes">adh5 aes5 pho4.5 txt5</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/google_imagen-4-ultra__T2I-021.png" alt="Imagen 4 Ultra render of T2I-021" loading="lazy" />
+<img src="../images/google/imagen-4-ultra/T2I-021.png" alt="Imagen 4 Ultra render of T2I-021" loading="lazy" />
 <div class="gallery-score">Q=4.83 &middot; 14.7s &middot; $0.06</div>
 <div class="gallery-axes">adh5 aes4.5 pho5</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/google_imagen-4-ultra__T2I-031.png" alt="Imagen 4 Ultra render of T2I-031" loading="lazy" />
+<img src="../images/google/imagen-4-ultra/T2I-031.png" alt="Imagen 4 Ultra render of T2I-031" loading="lazy" />
 <div class="gallery-score">Q=5.00 &middot; 17.8s &middot; $0.06</div>
 <div class="gallery-axes">adh5 aes5 pho5 ana5</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/google_imagen-4-ultra__T2I-041.png" alt="Imagen 4 Ultra render of T2I-041" loading="lazy" />
+<img src="../images/google/imagen-4-ultra/T2I-041.png" alt="Imagen 4 Ultra render of T2I-041" loading="lazy" />
 <div class="gallery-score">Q=4.83 &middot; 15.7s &middot; $0.06</div>
 <div class="gallery-axes">adh5 aes4.5 pho5</div>
 </div>
@@ -1211,17 +1211,17 @@ Imagen 4 Ultra    q=4.908±0.077  judgeA=4.867 judgeB=4.950 |Δ|=0.083
 <div class="gallery-row" style="grid-template-columns: 110px repeat(3, 1fr);">
 <div class="gallery-cell gallery-model-header"><div class="model-disp">GPT-Image-1 Mini</div><div class="model-price">$0.008/img</div></div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/openai_gpt-image-1-mini__T2I-111.png" alt="GPT-Image-1 Mini render of T2I-111" loading="lazy" />
+<img src="../images/openai/gpt-image-1-mini/T2I-111.png" alt="GPT-Image-1 Mini render of T2I-111" loading="lazy" />
 <div class="gallery-score">Q=2.50 &middot; 39.5s &middot; $0.008</div>
 <div class="gallery-axes">adh2 aes3 txt2 ana3</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/openai_gpt-image-1-mini__T2I-118.png" alt="GPT-Image-1 Mini render of T2I-118" loading="lazy" />
+<img src="../images/openai/gpt-image-1-mini/T2I-118.png" alt="GPT-Image-1 Mini render of T2I-118" loading="lazy" />
 <div class="gallery-score">Q=3.62 &middot; 41.8s &middot; $0.008</div>
 <div class="gallery-axes">adh3 aes4 pho4 ana3.5</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/openai_gpt-image-1-mini__T2I-119.png" alt="GPT-Image-1 Mini render of T2I-119" loading="lazy" />
+<img src="../images/openai/gpt-image-1-mini/T2I-119.png" alt="GPT-Image-1 Mini render of T2I-119" loading="lazy" />
 <div class="gallery-score">Q=2.80 &middot; 39.1s &middot; $0.008</div>
 <div class="gallery-axes">adh2 aes3 pho3 txt4 ana2</div>
 </div>
@@ -1229,17 +1229,17 @@ Imagen 4 Ultra    q=4.908±0.077  judgeA=4.867 judgeB=4.950 |Δ|=0.083
 <div class="gallery-row" style="grid-template-columns: 110px repeat(3, 1fr);">
 <div class="gallery-cell gallery-model-header"><div class="model-disp">Imagen 4 Fast</div><div class="model-price">$0.020/img</div></div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/google_imagen-4-fast__T2I-111.png" alt="Imagen 4 Fast render of T2I-111" loading="lazy" />
+<img src="../images/google/imagen-4-fast/T2I-111.png" alt="Imagen 4 Fast render of T2I-111" loading="lazy" />
 <div class="gallery-score">Q=2.50 &middot; 7.2s &middot; $0.02</div>
 <div class="gallery-axes">adh2 aes3 txt2 ana3</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/google_imagen-4-fast__T2I-118.png" alt="Imagen 4 Fast render of T2I-118" loading="lazy" />
+<img src="../images/google/imagen-4-fast/T2I-118.png" alt="Imagen 4 Fast render of T2I-118" loading="lazy" />
 <div class="gallery-score">Q=3.14 &middot; 5.6s &middot; $0.02</div>
 <div class="gallery-axes">adh3 aes3 pho3 ana3.5</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/google_imagen-4-fast__T2I-119.png" alt="Imagen 4 Fast render of T2I-119" loading="lazy" />
+<img src="../images/google/imagen-4-fast/T2I-119.png" alt="Imagen 4 Fast render of T2I-119" loading="lazy" />
 <div class="gallery-score">Q=2.40 &middot; 7.5s &middot; $0.02</div>
 <div class="gallery-axes">adh2 aes3 pho3 txt2 ana2</div>
 </div>
@@ -1247,41 +1247,41 @@ Imagen 4 Ultra    q=4.908±0.077  judgeA=4.867 judgeB=4.950 |Δ|=0.083
 <div class="gallery-row" style="grid-template-columns: 110px repeat(3, 1fr);">
 <div class="gallery-cell gallery-model-header"><div class="model-disp">GPT-Image-1.5</div><div class="model-price">$0.032/img</div></div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/openai_gpt-image-1.5__T2I-111.png" alt="GPT-Image-1.5 render of T2I-111" loading="lazy" />
+<img src="../images/openai/gpt-image-1.5/T2I-111.png" alt="GPT-Image-1.5 render of T2I-111" loading="lazy" />
 <div class="gallery-score">Q=2.75 &middot; 42.3s &middot; $0.032</div>
 <div class="gallery-axes">adh2 aes3 txt3 ana3</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/openai_gpt-image-1.5__T2I-118.png" alt="GPT-Image-1.5 render of T2I-118" loading="lazy" />
+<img src="../images/openai/gpt-image-1.5/T2I-118.png" alt="GPT-Image-1.5 render of T2I-118" loading="lazy" />
 <div class="gallery-score">Q=3.75 &middot; 41.2s &middot; $0.032</div>
 <div class="gallery-axes">adh3 aes4 pho4 ana4</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/openai_gpt-image-1.5__T2I-119.png" alt="GPT-Image-1.5 render of T2I-119" loading="lazy" />
+<img src="../images/openai/gpt-image-1.5/T2I-119.png" alt="GPT-Image-1.5 render of T2I-119" loading="lazy" />
 <div class="gallery-score">Q=3.40 &middot; 37.2s &middot; $0.032</div>
 <div class="gallery-axes">adh3 aes4 pho4 txt3 ana3</div>
 </div>
 </div>
 <div class="gallery-row" style="grid-template-columns: 110px repeat(3, 1fr);">
 <div class="gallery-cell gallery-model-header"><div class="model-disp">GPT-Image-2</div><div class="model-price">$0.030/img</div></div>
-<div class="gallery-cell gallery-img-cell"><img src="images/openai_gpt-image-2__T2I-111.png" alt="GPT-Image-2 render of T2I-111" loading="lazy" /><div class="gallery-score">Q=3.60 &middot; 189.3s &middot; $0.030</div><div class="gallery-axes">adh3 aes4 pho4 txt3 ana4</div></div>
-<div class="gallery-cell gallery-img-cell"><img src="images/openai_gpt-image-2__T2I-118.png" alt="GPT-Image-2 render of T2I-118" loading="lazy" /><div class="gallery-score">Q=3.75 &middot; 207.2s &middot; $0.030</div><div class="gallery-axes">adh4 aes4 txt3 ana4</div></div>
-<div class="gallery-cell gallery-img-cell"><img src="images/openai_gpt-image-2__T2I-119.png" alt="GPT-Image-2 render of T2I-119" loading="lazy" /><div class="gallery-score">Q=3.40 &middot; 170.9s &middot; $0.030</div><div class="gallery-axes">adh3 aes4 pho4 txt4 ana2</div></div>
+<div class="gallery-cell gallery-img-cell"><img src="../images/openai/gpt-image-2/T2I-111.png" alt="GPT-Image-2 render of T2I-111" loading="lazy" /><div class="gallery-score">Q=3.60 &middot; 189.3s &middot; $0.030</div><div class="gallery-axes">adh3 aes4 pho4 txt3 ana4</div></div>
+<div class="gallery-cell gallery-img-cell"><img src="../images/openai/gpt-image-2/T2I-118.png" alt="GPT-Image-2 render of T2I-118" loading="lazy" /><div class="gallery-score">Q=3.75 &middot; 207.2s &middot; $0.030</div><div class="gallery-axes">adh4 aes4 txt3 ana4</div></div>
+<div class="gallery-cell gallery-img-cell"><img src="../images/openai/gpt-image-2/T2I-119.png" alt="GPT-Image-2 render of T2I-119" loading="lazy" /><div class="gallery-score">Q=3.40 &middot; 170.9s &middot; $0.030</div><div class="gallery-axes">adh3 aes4 pho4 txt4 ana2</div></div>
 </div>
 <div class="gallery-row" style="grid-template-columns: 110px repeat(3, 1fr);">
 <div class="gallery-cell gallery-model-header"><div class="model-disp">Imagen 4 Ultra</div><div class="model-price">$0.060/img</div></div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/google_imagen-4-ultra__T2I-111.png" alt="Imagen 4 Ultra render of T2I-111" loading="lazy" />
+<img src="../images/google/imagen-4-ultra/T2I-111.png" alt="Imagen 4 Ultra render of T2I-111" loading="lazy" />
 <div class="gallery-score">Q=2.50 &middot; 23.7s &middot; $0.06</div>
 <div class="gallery-axes">adh2 aes3 txt2 ana3</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/google_imagen-4-ultra__T2I-118.png" alt="Imagen 4 Ultra render of T2I-118" loading="lazy" />
+<img src="../images/google/imagen-4-ultra/T2I-118.png" alt="Imagen 4 Ultra render of T2I-118" loading="lazy" />
 <div class="gallery-score">Q=3.00 &middot; 24.1s &middot; $0.06</div>
 <div class="gallery-axes">adh2 aes3 pho3 ana4</div>
 </div>
 <div class="gallery-cell gallery-img-cell">
-<img src="images/google_imagen-4-ultra__T2I-119.png" alt="Imagen 4 Ultra render of T2I-119" loading="lazy" />
+<img src="../images/google/imagen-4-ultra/T2I-119.png" alt="Imagen 4 Ultra render of T2I-119" loading="lazy" />
 <div class="gallery-score">Q=2.40 &middot; 21.7s &middot; $0.06</div>
 <div class="gallery-axes">adh2 aes3 pho3 txt2 ana2</div>
 </div>

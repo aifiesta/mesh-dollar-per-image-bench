@@ -21,12 +21,13 @@ try:
 except ImportError:
     raise SystemExit("Pillow required: pip install pillow")
 
-REPO = Path(__file__).resolve().parent
+HERE = Path(__file__).resolve().parent
+REPO = HERE.parent
 SRC_IMAGES = REPO / "images"
-PDF_IMAGES = REPO / "images_pdf"
-PAPER_HTML = REPO / "paper.html"
-PAPER_PDF_HTML = REPO / "paper_pdf.html"
-PAPER_PDF = REPO / "paper.pdf"
+PDF_IMAGES = HERE / "images_pdf"
+PAPER_HTML = HERE / "paper.html"
+PAPER_PDF_HTML = HERE / "paper_pdf.html"
+PAPER_PDF = HERE / "mesh-dollar-per-image-bench.pdf"
 
 CHROME_PATHS = [
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
@@ -51,14 +52,21 @@ def compress_images() -> tuple[int, int]:
     PDF_IMAGES.mkdir()
     total_src = total_dst = 0
     n = 0
-    for p in sorted(SRC_IMAGES.glob("*.png")):
+    for p in sorted(SRC_IMAGES.rglob("*.png")):
         if p.name.startswith("sanity_"):
             continue
         with Image.open(p) as im:
             im.thumbnail((MAX_DIM, MAX_DIM), Image.LANCZOS)
             if im.mode != "RGB":
                 im = im.convert("RGB")
-            out = PDF_IMAGES / (p.stem + ".jpg")
+            # Compose flat name from provider/model/stem so it matches rewrite_paths.
+            rel = p.relative_to(SRC_IMAGES).with_suffix("")
+            parts = rel.parts
+            if len(parts) == 3:
+                flat = f"{parts[0]}_{parts[1]}__{parts[2]}.jpg"
+            else:
+                flat = "_".join(parts) + ".jpg"
+            out = PDF_IMAGES / flat
             im.save(out, "JPEG", quality=QUALITY, optimize=True)
         total_src += p.stat().st_size
         total_dst += out.stat().st_size
@@ -68,7 +76,12 @@ def compress_images() -> tuple[int, int]:
 
 def rewrite_paths() -> None:
     html = PAPER_HTML.read_text()
-    out = re.sub(r"images/([^./\"]+)\.(png|webp)", r"images_pdf/\1.jpg", html)
+    # Flatten ../images/<provider>/<model>/<id>.png → images_pdf/<provider>_<model>__<id>.jpg
+    def _flat(m: "re.Match[str]") -> str:
+        provider, model, stem = m.group(1), m.group(2), m.group(3)
+        return f"images_pdf/{provider}_{model}__{stem}.jpg"
+    out = re.sub(r"\.\./images/([^/]+)/([^/]+)/([^./\"]+)\.(png|webp)", _flat, html)
+    # Rewrite chart/table refs to point at sibling dirs (kept absolute via ../)
     PAPER_PDF_HTML.write_text(out)
 
 

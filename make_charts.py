@@ -24,7 +24,8 @@ from pathlib import Path
 from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parent
-DEFAULT_INPUT = REPO_ROOT / "pilot_results.csv"
+DEFAULT_INPUT = REPO_ROOT / "data" / "pilot_results.csv"
+DEFAULT_OUTDIR = REPO_ROOT / "charts"
 
 
 def _load_summaries(path: Path) -> list[dict[str, Any]]:
@@ -331,7 +332,7 @@ def render_all(summaries: list[dict[str, Any]], outdir: Path) -> list[Path]:
 def main() -> int:
     p = argparse.ArgumentParser()
     p.add_argument("--input", default=str(DEFAULT_INPUT))
-    p.add_argument("--outdir", default=str(REPO_ROOT))
+    p.add_argument("--outdir", default=str(DEFAULT_OUTDIR))
     args = p.parse_args()
     summaries = _load_summaries(Path(args.input))
     paths = render_all(summaries, Path(args.outdir))
